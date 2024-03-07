@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Library Books Form</title>
+</head>
+<body>
+    <h1>A Simple Form</h1>
+    <p><em>Form Fundamentals</em></p>
+    <form autocomplete="on">
+        <fieldset>
+            <legend>Customer Info</legend>
+            <label for="cusname">Name:</label>
+            <input type="text" name="cusname" id="cusname" autofocus required placeholder="Enter your name"><br>
+            <label for="telephone">Telephone:</label>
+            <input type="tel" name="telephone" id="telephone" required pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" placeholder="Pattern: 234-567-987"><br>
+            <label for="mail">Email address:</label>
+            <input type="email" name="mail" id="mail" required multiple placeholder="Enter your email address"><br>
+        </fieldset>
+        <fieldset>
+            <legend>Books</legend>
+            <label for="book">Book Title:</label>
+            <input name="book" id="book" list="books" placeholder="Choose a book"><br>
+            <datalist id="books">
+                <option value="HTML5 - Bruce Lawson and Remy Sharp"></option>
+                <option value="HTML5: Up and Running - Mark Pilgrim"></option>
+                <option value="Head First HTML5 Programming - Eric Freeman"></option>
+                <option value="Mastering HTML, CSS and JavaScript - Laura Lemay"></option>
+            </datalist>
+            <label for="quantity">Quantity (Maximum 5):</label>
+            <input type="number" name="quantity" id="quantity" min="1" max="5" placeholder="1"><br>
+        </fieldset>
+        <input type="submit" value="Submit">
+    </form>
+</body>
+</html>

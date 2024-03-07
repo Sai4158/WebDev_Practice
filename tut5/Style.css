@@ -1,0 +1,19 @@
+.NAME {
+  color: rgb(0, 0, 0);
+  text-align: center;
+  background-color: rgb(173, 173, 229);
+}
+
+textarea {
+  color: rgb(53, 110, 110);
+  font-size: x-large;
+}
+
+.GENDER {
+  color: azure;
+  text-align: center;
+}
+
+.GENDER {
+  color: fuchsia;
+}
