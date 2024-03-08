@@ -46,9 +46,20 @@
         if (time < 12) {
           console.log("Good morning on a weekday!");
         } else {
-          console.log("Good afternoon on a weekday!");
+          console.log("Good afternoon on a weekdays!");
         }
       }
+
+      //ternary operation "?"
+
+      let isRaining = true;
+      //? will use the boolean vaule up and if its true it will use the first before :
+      // if its flase it will use the second statement for the false
+      let weatherMessage = isRaining
+        ? "Bring an umbrella"
+        : "No need for an umbrella";
+
+      console.log(weatherMessage);
     </script>
   </body>
 </html>
