@@ -1,0 +1,15 @@
+body {
+  background: linear-gradient(99deg, rgb(158, 158, 224), rgb(209, 154, 154));
+}
+
+.textw {
+  font-size: 40px;
+  filter: invert(50);
+  transition: 1s;
+}
+
+.textw:hover {
+  transition: 1s;
+  filter: invert(0);
+  font-size: 60px;
+}
