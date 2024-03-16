@@ -1,0 +1,38 @@
+body {
+  background-color: rgb(7, 42, 42);
+}
+section {
+  color: white;
+  margin-top: 100px;
+  margin-left: 350px;
+  background-color: rgb(59, 59, 59);
+  border-radius: 30px;
+  box-shadow: red 0px 5px 90px;
+  width: 1200px;
+  height: 500px;
+}
+
+.img1 {
+  padding-left: 50px;
+  padding-top: 50px;
+  border-radius: 20%;
+  height: 300px;
+}
+.left {
+  width: 50px;
+}
+
+.right {
+  margin-top: -190px;
+  margin-left: 500px;
+  width: 50vh;
+  font-size: 30px;
+}
+
+button {
+  font-size: 39px;
+  color: white;
+  background-color: black;
+  height: 70px;
+  width: 320px;
+}
