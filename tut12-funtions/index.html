@@ -109,6 +109,19 @@
       function hello2() {
         console.log(2 * 5);
       }
+
+      //function hoisting -2
+      myname();
+
+      function myname() {
+        let a = "Hello";
+        let b = " Sai";
+        let c = a + b;
+        for (i = 0; i < 5; i++) {
+          console.log(c);
+        }
+        return c;
+      }
     </script>
   </body>
 </html>
