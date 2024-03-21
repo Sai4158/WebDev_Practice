@@ -1,0 +1,115 @@
+//this is Function Scope:
+function outerFunction() {
+  let message = "I am inside the function";
+  console.log(message);
+}
+outerFunction();
+
+//function-2
+function hello() {
+  let helloo = "hello 123";
+  console.log(helloo);
+}
+hello();
+
+// this is a Closures funtions
+function outer() {
+  let message = "Hello";
+
+  function inner() {
+    console.log(message);
+  }
+
+  return inner;
+}
+let final = outer();
+final();
+
+//Closures - 2
+function abc() {
+  let gg = "hello 999";
+
+  function def() {
+    console.log(gg);
+  }
+  //must put the return functions
+  return def;
+}
+//print using the created object
+let fin = abc();
+fin();
+
+//Callbacks:
+function fetchData(callback) {
+  setTimeout(function () {
+    let data = "This is the data";
+    callback(data);
+    //this is print after 5 secs
+  }, 5000);
+}
+
+function displayData(data) {
+  console.log(data);
+}
+fetchData(displayData);
+
+//Callbacks -2
+function getData(call) {
+  setTimeout(function () {
+    let data1 = "print this";
+    call(data);
+  }, 2000);
+}
+function dis(data1) {
+  console.log(data1);
+}
+displayData(dis);
+
+//Named and Anonymous Functions:
+function namedFunction() {
+  console.log("I am named");
+}
+
+const anonymousFunction = function () {
+  console.log("I am anonymous");
+};
+
+namedFunction(); // Output: I am named
+anonymousFunction(); // Output: I am anonymous
+
+//Named and Anonymous Functions -2
+function h1() {
+  console.log("hiiii");
+}
+
+const asy = function h2() {
+  console.log("heyyy");
+};
+
+h1();
+asy();
+
+//Function Hoisting:
+hoistedFunction();
+function hoistedFunction() {
+  console.log("I am hoisted");
+}
+
+//Function Hoisting-2
+hello2();
+function hello2() {
+  console.log(2 * 5);
+}
+
+//function hoisting -2
+myname();
+
+function myname() {
+  let a = "Hello";
+  let b = " Sai";
+  let c = a + b;
+  for (i = 0; i < 5; i++) {
+    console.log(c);
+  }
+  return c;
+}
