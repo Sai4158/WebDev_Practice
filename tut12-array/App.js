@@ -1,0 +1,43 @@
+//Arrays in javaScrip
+let fruits = ["apple", "banana", "cherry", "date"];
+console.log(fruits); // Output: 'apple'
+
+//Arrays in javaScrip calling one array
+let fruitss = ["apple", 121, "cherry", "date"];
+//use []to call array (index is at 0)
+console.log(typeof fruitss[1]);
+
+for (let i = 0; i < 5; i++) {
+  console.log("hello" + i);
+}
+
+//push array = will add new info the last
+fruits.push("elderberry");
+console.log(fruits);
+
+//POP array will remove the last element
+fruits.pop();
+console.log(fruits);
+
+//Shift Method: will remove the first element in the array
+fruits.shift();
+console.log(fruits);
+
+//unShift method
+let heklo = ["sf", "fwef", "wef", "whyrt"];
+console.log(heklo);
+//unShift method will add that in the front
+heklo.unshift("sai Rang");
+console.log(heklo);
+
+//unshift method add it - same method as above
+//this is how u can add it in the front
+heklo.unshift("bmw", "crv", "ef");
+console.log(heklo);
+
+//this find the lenght
+const fruites = ["Banana", "Orange", "Apple", "Mango"];
+console.log(fruites.length);
+
+//there are so many array methods
+//https://www.w3schools.com/js/js_array_methods.asp
