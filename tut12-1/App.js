@@ -1,0 +1,60 @@
+// Conditional statements
+let temp = 75;
+
+if (temp > 34) {
+  console.log("It is very hot today");
+}
+//inculde = if u want to
+else if (temp < 30) {
+  console.log("cool today");
+} else {
+  console.log("Normal temp today");
+}
+
+// if else and else if
+let AGE = 45;
+if (AGE < 18) {
+  console.log("ur a teenage");
+} else if (AGE < 21) {
+  console.log("ur a adult");
+} else if (AGE < 50) {
+  console.log("middle aged");
+} else {
+  console.log("bye ur old");
+}
+
+//nested conditional statements
+let isWeekend = true;
+let time = 34;
+
+if (isWeekend) {
+  if (time < 12) {
+    console.log("Good morning on the weekend!");
+  } else {
+    console.log("Good afternoon on the weekend!");
+  }
+} else {
+  if (time < 12) {
+    console.log("Good morning on a weekday!");
+  } else {
+    console.log("Good afternoon on a weekdays!");
+  }
+}
+
+//ternary operation "?"
+
+let isRaining = true;
+//? will use the boolean vaule up and if its true it will use the first before :
+// if its flase it will use the second statement for the false
+let weatherMessage = isRaining
+  ? "Bring an umbrella"
+  : "No need for an umbrella";
+
+console.log(weatherMessage);
+
+//ternary operation
+let he = true;
+let him = he ? "correct" : "not correct";
+console.log(him); //letter senstitive console not Console
+
+//
