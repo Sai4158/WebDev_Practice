@@ -57,3 +57,62 @@ console.log("");
 console.log(card.card1());
 console.log(card.card2());
 console.log(card.card3());
+
+console.log("");
+
+//Object and Methods:
+let circle = {
+  radius: 5,
+  area() {
+    return Math.PI * this.radius * this.radius;
+  },
+};
+
+console.log(circle.area());
+
+console.log("");
+
+//Object and Methods -2
+let tri = {
+  rai: 5,
+  are() {
+    return Math.PI + this.rai;
+  },
+};
+
+console.log(tri.are());
+
+console.log("");
+
+//Object and Methods -3
+
+//object
+let cat = {
+  food: 1,
+  water: 2,
+  //method inside a functions
+  dog() {
+    return this.food + this.water;
+  },
+};
+console.log(cat.dog());
+
+//this will print the date
+const d = new Date();
+console.log(d);
+console.log("");
+
+//Object Constructors
+
+//class
+class Person {
+  constructor(firstname, lastname) {
+    this.firstname = firstname;
+    this.lastname = lastname;
+  }
+  name() {
+    return `hello my name is ${this.firstname} and lastname is ${this.lastname}`;
+  }
+}
+const sai = new Person("Sai", "Ran");
+console.log(sai.name());
