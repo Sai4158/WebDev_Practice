@@ -4,14 +4,24 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
+    <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
     <h1 id="myh1">Hello</h1>
     <p id="myp">My name is sai</p>
     <a id="mya" target="_blank"> youtube </a>
+
+    <h1 class="myh11">drsgvwre</h1>
+
     <script>
+      //myh1 =  this will update the classname
+      //make sure to use .
+      const element = document.querySelector(".myh11");
+      element.classList.add("myh1new");
+      element.classList.remove("myh11");
+
       // const name  = document.document.getElementById( id here)
-      const heading = document.getElementById("myh1");
+      const heading = document.getElementById(".myh1");
       heading.style.color = "red";
 
       //this for the para
