@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body id="button">
+    <h1>Hello everyone</h1>
+    <p id="sai">I am Sai</p>
+
+    <script>
+      //this is how u change a classname //inlcude id name here
+      const element = document.getElementById("sai");
+      element.classList.add("ias");
+      element.classList.remove("sai");
+
+      //this is for the button by creating new class
+      //create element
+      const newElement = document.createElement("button");
+      newElement.textContent = "click me";
+      const button = document.getElementById("button");
+      button.appendChild(newElement);
+    </script>
+  </body>
+</html>
