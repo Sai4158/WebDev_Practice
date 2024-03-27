@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body id="button">
-    <h1>Hello everyone</h1>
+    <h1 id="button1"">Hello everyone</h1>
     <p id="sai">I am Sai</p>
 
     <script>
@@ -22,6 +22,19 @@
       newElement.textContent = "click me";
       const button = document.getElementById("button");
       button.appendChild(newElement);
+
+      //this will create a new button and add it
+
+      //tell what u want to create here 
+      const newElement1 = document.createElement("button");
+
+      //Text here on the button
+      newElement1.textContent = "CLICKKK";
+
+      //Id here
+      const button1 = document.getElementById("button1");
+      button1.appendChild(newElement1);
+     
     </script>
   </body>
 </html>
