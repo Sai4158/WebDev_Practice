@@ -1,0 +1,17 @@
+.text {
+  height: 25px;
+  padding: 50px;
+  background-color: black;
+  /*========== x, y, blur, Strength  */
+  box-shadow: 0px 50px 10000000px -10px;
+  color: rgb(255, 42, 0);
+}
+
+.text1 {
+  padding: 50px 100px;
+  color: aliceblue;
+}
+
+body {
+  background-color: rgb(26, 26, 26);
+}

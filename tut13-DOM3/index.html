@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <h1 id="myh1">Hello</h1>
+    <p id="myp">My name is sai</p>
+    <button id="mybutton">Click here</button>
+
+    <div class="text">
+      <textarea id="text1" class="text" cols="30" rows="10">
+DONT COPY THIS</textarea
+      >
+    </div>
+
+    <script>
+      //when button is clikecked it will alert this
+      const mybutton = document.getElementById("mybutton");
+
+      //event listener wait for then click,
+      //then it will do whats insdie the function aft6e the click
+      mybutton.addEventListener("click", function () {
+        alert("button is clicked");
+      });
+
+      //Alerts user when CRTL + C is pressed.
+      const text1 = document.getElementById("text1");
+      text1.addEventListener("copy", function () {
+        alert("CRTL + C IS DECTED");
+      });
+    </script>
+  </body>
+</html>
