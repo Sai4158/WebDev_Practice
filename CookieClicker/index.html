@@ -7,31 +7,24 @@
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body id="mybody">
-    <p>Counter: <span id="counter">0</span></p>
-    <button id="Ibutton">Increase</button>
-    <button id="Dbutton">Decrease</button>
+    <div class="updater">
+      <img
+        class="img"
+        src="https://www.skeeternutfree.com/wp-content/uploads/2015/04/ART_Cookie_1_DC.png"
+        alt=""
+      />
+    </div>
 
-    <script src="app.js">
+    <p class="counterr">Cookie Counter: <span id="counter">0</span></p>
 
-      const counter = document.getElementById("counter");
-      const Ibutton = document.getElementById("Ibutton");
+    <div class="leftbutton">
+      <button id="Ibutton">Increase</button>
+    </div>
 
-      //set the count value to 0
-      let count = 0;
+    <div class="rightbutton">
+      <button id="Dbutton">Decrease</button>
+    </div>
 
-      Ibutton.addEventListener("click", function () {
-        //update when clicked
-        count++;
-        //updates the code
-        counter.textContent = count;
-      });
-
-      const Dbutton = document.getElementById("Dbutton");
-
-      Dbutton.addEventListener("click", function () {
-        count--;
-        counter.textContent = count;
-      });
-    </script>
+    <script src="app.js"></script>
   </body>
 </html>
