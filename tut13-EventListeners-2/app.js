@@ -1,4 +1,5 @@
 //when ever there is a key it log
+
 //KEYDOWN = will check when key is pressed
 document.addEventListener("keydown", function (event) {
   console.log(event.key);
@@ -29,7 +30,6 @@ document.addEventListener("mousedown", function (event) {
   //this log x when the mouse is clicked
   console.log("Event type:" + event.clientX);
 });
-
 //button
 const button = document.getElementById("mybutton");
 
@@ -38,3 +38,10 @@ function button1(event) {
 }
 //when button is clicked it will button1 function
 button.addEventListener("click", button1);
+
+//button -2
+const button0 = document.getElementById("mybutton2");
+function button11(event) {
+  console.log("button is clicked");
+}
+button0.addEventListener("click", button11);
