@@ -2,12 +2,11 @@
 
 //KEYDOWN = will check when key is pressed
 document.addEventListener("keydown", function (event) {
+  //event.key = will log the key that was present
   console.log(event.key);
-
   //in this div
-  const key = document.getElementById("key");
   const pressed = event.key;
-
+  const key = document.getElementById("keyword");
   //create new para
   const newElement = document.createElement("p");
   newElement.textContent = `you pressed the key ${pressed}`;
@@ -16,6 +15,7 @@ document.addEventListener("keydown", function (event) {
   key.appendChild(newElement);
 });
 
+//end
 //will log when the mouse is pressed
 document.addEventListener("mousedown", function (event) {
   console.log(event.key);
