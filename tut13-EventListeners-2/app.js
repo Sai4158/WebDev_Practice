@@ -45,3 +45,16 @@ function button11(event) {
   console.log("button is clicked");
 }
 button0.addEventListener("click", button11);
+
+//it doesnt go in order, delay
+//will print all instantly then it will log the delay
+
+console.log(10);
+
+//timeout/delay
+setTimeout(() => {
+  console.log(20);
+}, 2000);
+
+console.log(30);
+console.log(40);
