@@ -1,7 +1,7 @@
 // promises
 
 let ac = new Promise((reslove, reject) => {
-  let number = true;
+  let number = flase;
   if (number) {
     reslove("operation reslove");
   } else {

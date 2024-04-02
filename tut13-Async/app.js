@@ -3,11 +3,13 @@
 async function fetchData() {
   return new Promise((resolve, reject) => {
     const grant = false;
+   
     if (grant) {
       resolve(grant);
     } else {
       reject("error");
     }
+    
   });
 }
 
