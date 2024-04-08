@@ -21,4 +21,24 @@ const dir = path1.dirname(file1);
 console.log("Directory: " + dir);
 
 const name = path1.basename(file1);
-console.log("filename: " + name);
+console.log("filename: " + name + "\n");
+
+//will join this
+//dir = curret dir above
+//__dirname = will get the current file path from vs code
+const fullPath = path1.join(__dirname, "files", "example.txt", "final");
+console.log("Full Path:", fullPath);
+
+//path-3
+const path3 = require("path");
+const filepath2 = "abc/hello/floder";
+
+const dir2 = path3.dirname(filepath2);
+console.log("full path: " + dir2 + "\n");
+
+const base1 = path3.basename(filepath2);
+console.log("File name: " + base1 + "\n");
+
+//join
+const join1 = path.join(__dirname, "helleo", "bye");
+console.log(join1);
