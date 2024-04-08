@@ -20,3 +20,13 @@ rd.writeFile("tut15-Intro-to-nodejs/cars2.txt", "I like cars", (err) => {
     console.log("done!");
   }
 });
+
+//read file
+const rdd = require("fs");
+rdd.readFile("tut15-Intro-to-nodejs/test2.txt", "utf-8", (err, data) => {
+  if (err) {
+    console.error(err);
+  } else {
+    console.log(data);
+  }
+});
