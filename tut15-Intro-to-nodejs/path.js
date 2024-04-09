@@ -41,4 +41,14 @@ console.log("File name: " + base1 + "\n");
 
 //join
 const join1 = path.join(__dirname, "helleo", "bye");
-console.log(join1);
+console.log(join1 + "\n");
+
+//path 4
+const path4 = require("path");
+const file4 = "hello/hi/hey";
+
+const dir4 = path4.dirname(file4);
+console.log("path: " + dir4);
+
+const base4 = path4.basename(file4);
+console.log("File: " + base4);
