@@ -52,3 +52,7 @@ console.log("path: " + dir4);
 
 const base4 = path4.basename(file4);
 console.log("File: " + base4);
+
+//join for path 4
+const join4 = path4.join(__dirname, "Sai");
+console.log("new path: " + join4);
