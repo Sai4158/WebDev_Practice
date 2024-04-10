@@ -8,7 +8,6 @@ const server = http.createServer((req, res) => {
   res.writeHead(200, { "Content-Type": "text/plain" });
   res.end("Hello, Node.js!, I am Sai");
 });
-
 const port = 3000;
 server.listen(port, () => {
   console.log(`Server running at http://localhost:${port}/`);
@@ -20,8 +19,19 @@ const srr = gt.createServer((req, res) => {
   res.writeHead(200, { "content-type": "text/plain" });
   res.end("I like to drive cars");
 });
-
 const port1 = 3500;
 srr.listen(port1, () => {
-  console.log(`server running at http://localhost:${3500}/`);
+  console.log(`server running at http://localhost:${port1}/`);
+});
+
+//
+//node js port-2
+const https2 = require("http");
+const server2 = https2.createServer((req, res) => {
+  res.writeHead(200, { "content-type": "text/plain" });
+  res.end("I like coding");
+});
+const port12 = 3400;
+server2.listen(port12, () => {
+  console.log(`Server is running at http://localhost:${port12}/`);
 });
