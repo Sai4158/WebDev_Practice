@@ -5,8 +5,7 @@ const fs = require("fs");
 
 //create server
 const server = http.createServer((req, res) => {
-
-    //read file in node js
+  //read file in node js
   fs.readFile("node.js", (err, data) => {
     if (err) {
       //sending a 404 status code
@@ -25,3 +24,6 @@ const port = 3400;
 server.listen(port, () => {
   console.log(`Server is running at http://localhost:${port}/`);
 });
+
+
+//I
