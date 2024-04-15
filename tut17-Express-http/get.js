@@ -7,12 +7,15 @@ app.get("/", (req, res) => {
   res.send("Hello this is page one");
 });
 
-//this is page2 
+//this is page2
 app.get("/about", (req, res) => {
   res.send("this is page two");
 });
 
-const port = 3000;
-app.listen(3000, () => {
+const port = 3100;
+app.listen(3100, () => {
   console.log(`port is running at ${port}`);
 });
+
+
+
