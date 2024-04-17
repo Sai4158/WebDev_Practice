@@ -8,6 +8,11 @@ app.get("/redirect", (req, res) => {
   res.redirect("https://www.tesla.com");
 });
 
+//2nd redirect
+app.get("/r", (req, res) => {
+  res.redirect("https://www.apple.com");
+});
+
 // Setting a custom status code
 app.get("/notfound", (req, res) => {
   res.status(404).send("not found");
