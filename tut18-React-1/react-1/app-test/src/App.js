@@ -29,6 +29,10 @@ function App() {
           <li>car 4</li>
         </ul>
       </div>
+
+      <div>
+        <title>Air Quality Checker</title>
+      </div>
     </>
   );
 }
