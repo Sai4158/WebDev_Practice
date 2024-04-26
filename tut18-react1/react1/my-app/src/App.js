@@ -1,16 +1,19 @@
 import Apple from "./apple";
 import Sample from "./Nested Components/Sample";
 import "./App.css";
-import "./sample.css";
+
+let a = "apple";
+let b = "banana";
 
 function App() {
   return (
-    <div className="App">
-      {/* Use the component with a capital letter */}
+    <div>
       <Apple />
       <Sample />
 
-      <h1>this is sample css file </h1>
+      <h1>
+        I like {a}, {b}
+      </h1>
     </div>
   );
 }
