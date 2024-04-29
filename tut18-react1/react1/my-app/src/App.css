@@ -1,6 +1,17 @@
 body {
-  border: 5px solid red;
-  background: linear-gradient(180deg, rgba(255, 0, 0, 0), rgba(255, 0, 0, 1));
+  border: 5px solid green;
+  background: linear-gradient(180deg, rgba(255, 0, 0, 0), rgb(43, 209, 82));
   background-repeat: none;
   background-size: cover;
+}
+
+.img2 {
+  width: 100%;
+  max-width: 200px;
+}
+
+.img1 {
+  width: 100%;
+  max-width: 200px;
+  border-radius: 50%;
 }
