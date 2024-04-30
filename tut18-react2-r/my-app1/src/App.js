@@ -10,13 +10,19 @@ const user = {
   phone: 2342323,
 };
 
+const mycar = {
+  model: "crv",
+  make: "honda",
+  year: 2018,
+};
+
 function App() {
   return (
     <div className="App">
       {user.name} and {user.age}
-      <First name="Sai" />
+      <First car={mycar} />
       <Second name="abhi" />
-      <Third name="pran" />
+      <Third car={mycar} />
       <Fourth name="tim" />
     </div>
   );
