@@ -9,8 +9,6 @@ const Use = () => {
   setCar("BMW");
   console.log(car);
   return <div>number</div>;
-
-  
 };
 
 export default Use;
