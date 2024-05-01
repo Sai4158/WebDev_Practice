@@ -24,7 +24,7 @@ function App() {
       <First car={mycar} />
       <Second name="abhi" />
       <Third car={mycar} />
-      <Fourth name="tim" />
+      <Fourth name="jhon" />
       <Use />
     </div>
   );
