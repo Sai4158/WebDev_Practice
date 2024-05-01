@@ -1,9 +1,9 @@
 import "./App.css";
+import Use from "./Use";
 import First from "./container/first";
 import Fourth from "./container/fourth";
 import Second from "./container/second";
 import Third from "./container/third";
-import Statemgm from "./Statemgm";
 
 const user = {
   name: "sai",
@@ -25,7 +25,7 @@ function App() {
       <Second name="abhi" />
       <Third car={mycar} />
       <Fourth name="tim" />
-      <Statemgm />
+      <Use />
     </div>
   );
 }
