@@ -1,9 +1,7 @@
-import React from 'react'
+import React from "react";
 
 const Fourth = () => {
-  return (
-    <div>Fourth</div>
-  )
-}
+  return <div>Trueeeeeeeee</div>;
+};
 
-export default Fourth
+export default Fourth;
