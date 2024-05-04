@@ -1,13 +1,14 @@
 import logo from "./logo.svg";
 import "./App.css";
 import { useState } from "react";
+import First from "./Component/First";
+import Second from "./Component/Second";
 
 function App() {
   //use state
-  const [sampleCondition, setCondition] = useState(true);
-  sampleCondition ? "this is true Statment" : "I am false";
+  const [sampleCondition, setCondition] = useState(false);
 
-  return <div></div>;
+  return <div>{sampleCondition ? <First /> : <Second />}</div>;
 }
 
 export default App;
