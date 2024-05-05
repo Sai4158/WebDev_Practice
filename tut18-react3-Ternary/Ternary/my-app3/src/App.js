@@ -9,12 +9,15 @@ import Fourth from "./Component/Fourth";
 function App() {
   //use state
   const [sampleCondition, setCondition] = useState(false);
+  const [trueOrFalse, setTrueOrFalse] = useState(false);
 
   return (
     <div>
       {sampleCondition ? <First /> : <Second />}
-
+      <br />
       <div>{sampleCondition ? <Third /> : <Fourth />}</div>
+      <br />
+      <div>{trueOrFalse ? <First /> : <Second />}</div>
     </div>
   );
 }
