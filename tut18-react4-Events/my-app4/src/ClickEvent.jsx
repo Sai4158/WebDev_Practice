@@ -20,6 +20,12 @@ const ClickEvent = () => {
     setNumber((Number = 0));
   };
 
+  const TENX = () => {
+    if (number > 1) {
+      setNumber(number * 10);
+    }
+  };
+
   return (
     <div>
       <h1>{number}</h1>
@@ -27,6 +33,7 @@ const ClickEvent = () => {
         <button onClick={Increment}>Increment</button>
         <button onClick={Decreament}>Decreament</button>
         <button onClick={reset}>Reset</button>
+        <button onClick={TENX}>10X</button>
       </div>
     </div>
   );

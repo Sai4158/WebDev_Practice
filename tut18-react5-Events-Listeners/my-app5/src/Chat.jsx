@@ -19,7 +19,7 @@ useEffect(() => {
   return () => {
     window.removeEventListener("resize", updateScreenSize);
   };
-}, []);
+}, []);s
 
 return (
   <div>
