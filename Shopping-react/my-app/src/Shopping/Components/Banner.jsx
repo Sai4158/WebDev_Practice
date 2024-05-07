@@ -1,9 +1,12 @@
-import React from 'react'
+import React from "react";
 
 const Banner = () => {
   return (
-    <div>Banner</div>
-  )
-}
+    <div className="bannerSection">
+      <div className="bannerbox"> <img src="assets/GentsBanner.gif" alt="" /></div>
+     
+    </div>
+  );
+};
 
-export default Banner
+export default Banner;

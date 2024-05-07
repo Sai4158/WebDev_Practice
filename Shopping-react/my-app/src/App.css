@@ -12,10 +12,44 @@ body {
 
 .headerSection {
   display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  background-color: rgb(100, 100, 212);
 }
-
-.center ul li {
+.title {
+  font-size: 1rem;
+}
+.center ul {
   list-style: none;
   display: inline-flex;
-  margin: 0px 10px;
+  margin: 0px 15px;
+}
+
+.left {
+  flex: 4;
+  border: 5px solid black;
+}
+.center {
+  flex: 4;
+  border: 5px solid black;
+}
+
+.right {
+  flex: 4;
+  border: 5px solid black;
+  display: flex;
+  justify-content: space-between;
+  padding: 0px 15px;
+}
+
+.search {
+  flex: 2;
+  border: 5px solid black;
+}
+
+.bannerbox {
+  margin: 10px 0px;
+}
+.bannerbox img {
+  width: 100%;
 }

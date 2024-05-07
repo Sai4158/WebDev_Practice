@@ -4,7 +4,7 @@ const Header = () => {
   return (
     <div className="headerSection">
       <div className="left">
-        <h2> Shopping Store</h2>
+        <h1> Shopping Store</h1>
       </div>
       <div className="center">
         <ul>Women</ul>
@@ -12,13 +12,12 @@ const Header = () => {
         <ul>Children</ul>
         <ul>Electronic</ul>
       </div>
+      <div className="search">
+        <input type="text" placeholder="search" />
+      </div>
       <div className="right">
-        <div className="signin">
-          Sign/Signup
-        </div>
-        <div className="cart">
-          Cart
-        </div>
+        <div className="signin">Sign/Signup</div>
+        <div className="cart">Cart</div>
       </div>
     </div>
   );
