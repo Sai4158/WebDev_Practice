@@ -1,10 +1,9 @@
 import React from "react";
+import { Ladies } from "../data";
 
-const Collections = (props) => {
-  //get the info from the data js
+const WomenCollection = (props) => {
   const { title, image1, image2, image3, image4, image5, image6 } =
-    props.gentsFashion;
-
+    props.LadiesFashion;
   return (
     <div className="collectionSection">
       <h2>{title}</h2>
@@ -20,4 +19,4 @@ const Collections = (props) => {
   );
 };
 
-export default Collections;
+export default WomenCollection;

@@ -53,3 +53,12 @@ body {
 .bannerbox img {
   width: 100%;
 }
+
+.menImages {
+  display: flex;
+}
+
+.menImages img {
+  width: 220px;
+  height: 220px;
+}

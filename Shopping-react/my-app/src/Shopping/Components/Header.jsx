@@ -6,15 +6,18 @@ const Header = () => {
       <div className="left">
         <h1> Shopping Store</h1>
       </div>
+
       <div className="center">
         <ul>Women</ul>
         <ul>Men</ul>
         <ul>Children</ul>
         <ul>Electronic</ul>
       </div>
+
       <div className="search">
         <input type="text" placeholder="search" />
       </div>
+
       <div className="right">
         <div className="signin">Sign/Signup</div>
         <div className="cart">Cart</div>
