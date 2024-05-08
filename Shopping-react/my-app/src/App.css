@@ -3,17 +3,24 @@
   padding: 0px;
   box-sizing: border-box;
   font-family: Arial, Helvetica, sans-serif;
-  font-size: 50px;
+  font-size: 25px;
 }
 
 body {
+}
+
+.search input {
+  padding: 10px;
+  width: 20rem;
+  border-radius: 23px;
 }
 
 .headerSection {
   display: flex;
   justify-content: space-between;
   padding: 10px;
-  background-color: rgb(100, 100, 212);
+  padding-top: 20px;
+  background-color: rgb(177, 218, 82);
 }
 .title {
   font-size: 1rem;
@@ -25,25 +32,21 @@ body {
 }
 
 .left {
-  flex: 4;
-  border: 5px solid black;
+  flex: 2;
 }
 .center {
   flex: 4;
-  border: 5px solid black;
 }
 
 .right {
-  flex: 4;
-  border: 5px solid black;
+  flex: 1;
   display: flex;
   justify-content: space-between;
   padding: 0px 15px;
 }
 
 .search {
-  flex: 2;
-  border: 5px solid black;
+  flex: 3;
 }
 
 .bannerbox {
@@ -55,7 +58,8 @@ body {
 
 .menImages {
   display: flex;
-  gap: 10px;
+  margin-left: 30px;
+  gap: 90px;
 }
 
 .menImages img {
