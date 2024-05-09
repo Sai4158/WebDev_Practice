@@ -1,0 +1,19 @@
+.formSection {
+  display: flex;
+  background-color: black;
+  justify-content: center;
+  align-items: center;
+  height: 50vh;
+}
+
+.inputdiv {
+  width: 15rem;
+  height: 2rem;
+}
+
+.submit {
+  padding: 5px 10px;
+  border-radius: 5px;
+  margin-top: 5px;
+  background-color: rgb(0, 132, 255);
+}
