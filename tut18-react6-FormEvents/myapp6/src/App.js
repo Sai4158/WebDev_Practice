@@ -1,10 +1,12 @@
 import "./App.css";
-import FormExample from "./Component/FormExample";
+import Combine from "./Component/Combine";
+import Test from "./Component/Test";
 
 function App() {
   return (
     <div>
-      <FormExample />
+      <Combine />
+      <Test />
     </div>
   );
 }
