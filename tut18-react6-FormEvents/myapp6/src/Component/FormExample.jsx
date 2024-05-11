@@ -21,8 +21,9 @@ const FormExample = () => {
   return (
     <div className="formSection">
       <h2>Hello, {userdetails}</h2>
+
       <div>
-        <form onClick={update}>
+        <form onSubmit={update}>
           <input
             className="inputdiv"
             type="text"

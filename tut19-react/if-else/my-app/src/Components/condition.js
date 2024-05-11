@@ -14,7 +14,8 @@ class ElementVariablesExample extends Component {
     let content;
     if (this.state.isLoggedIn) {
       content = <p>Welcome, User!</p>;
-    } else {
+    } 
+    else {
       content = <p>Please log in</p>;
     }
 
