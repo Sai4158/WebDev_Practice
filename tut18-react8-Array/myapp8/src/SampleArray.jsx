@@ -27,6 +27,13 @@ const SampleArray = () => {
       {players.map((item1) => {
         return <div>{item1.chess}</div>;
       })}
+
+      {/*this how you do it by the index  */}
+      {players[0].tennis}
+
+      {players.map((item2) => {
+        return <div>{item2.chess}</div>;
+      })}
     </div>
   );
 };
