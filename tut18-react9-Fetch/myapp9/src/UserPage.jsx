@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
 
-//get the api lin
+//get the api link
 const userDetails = "https://jsonplaceholder.typicode.com/posts";
 
 const UserPage = () => {
