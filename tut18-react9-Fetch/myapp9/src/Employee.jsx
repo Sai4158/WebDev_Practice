@@ -15,6 +15,16 @@ const Employee = () => {
     e.preventDefault();
     console.log(empDetails);
 
+    try {
+      const response = await fetch("http://mongodb://localhost:27017");
+    } catch (error) {
+      // this will show the error deatails
+      console.log(error);
+
+      //this will show on the screen
+      alert("Sorry data failed to post");
+    }
+
     // const response = await fetch("http://mongodb://localhost:27017");
   };
 
