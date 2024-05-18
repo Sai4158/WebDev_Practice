@@ -3,6 +3,8 @@ import { useState } from "react";
 
 const Short = () => {
   const [game, setGame] = useState(true);
+  const [name, setName] = useState(false);
+  const [test, setTest] = useState(false);
 
   const Mygame = () => {
     return (
@@ -12,10 +14,21 @@ const Short = () => {
     );
   };
 
+  const Myname = () => {
+    return (
+      <div>
+        <h2>Hello my name is sai</h2>
+      </div>
+    );
+  };
+
   return (
     <div>
-      {/* make sure the componets must be capital */}
+      {/* make sure the componetsm ust be capital */}
+
       <div>{game && <Mygame />}</div>
+
+      <div>{name && <Myname />}</div>
     </div>
   );
 };
