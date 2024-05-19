@@ -5,7 +5,6 @@ const Short = () => {
   const [game, setGame] = useState(true);
   const [name, setName] = useState(false);
   const [test, setTest] = useState(false);
-
   const Mygame = () => {
     return (
       <div>
