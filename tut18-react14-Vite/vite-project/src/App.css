@@ -1,0 +1,15 @@
+.NavSection {
+  border: 2px solid red;
+  display: flex;
+  background-color: beige;
+  justify-content: space-evenly;
+  color: black;
+  align-items: center;
+}
+
+.NavSection ul li {
+  display: inline-flex;
+  margin: 20px;
+  list-style: none;
+  font-size: 2rem;
+}
