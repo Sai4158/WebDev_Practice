@@ -1,10 +1,13 @@
 import "./App.css";
 import Rest from "./Rest";
+import Inputbox from "./component/Inputbox";
 
 function App() {
   return (
     <div>
-      <Rest />
+      {/* <Rest /> */}
+
+      <Inputbox />
     </div>
   );
 }
