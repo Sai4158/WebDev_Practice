@@ -3,9 +3,10 @@ import React, { useState } from "react";
 const InputBox = () => {
   const [state1, setState1] = useState(0);
   const [state2, setState2] = useState(0);
+  const [state3, setState3] = useState(0);
 
   const add = () => {
-    return parseInt(state1) + parseInt(state2);
+    return parseInt(state1) + parseInt(state2) + parseInt(state3);
   };
 
   const handleState1Change = (e) => {
@@ -16,6 +17,9 @@ const InputBox = () => {
     setState2(e.target.value);
   };
 
+  const handleState3Change = (e) => {
+    setState3(e.target.value);
+  };
   const click = () => {};
 
   return (
@@ -32,6 +36,12 @@ const InputBox = () => {
         type="text"
         placeholder="enter text here"
         onChange={handleState2Change}
+      />
+      <input
+        value={state3}
+        type="text"
+        placeholder="enter text here"
+        onChange={handleState3Change}
       />
 
       <button type="submit" onClick={click}>
