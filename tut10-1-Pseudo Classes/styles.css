@@ -1,0 +1,19 @@
+/* the button will be red when clicked.  */
+button:active {
+  color: red;
+}
+
+/* input box will be higlighted when clicked on it */
+.sample input:focus {
+  background-color: aqua;
+}
+
+/* this will turn the first child color blue  */
+.listfruit ol li:first-child {
+  color: blue;
+}
+
+/* this will turn the last child color red  */
+.listfruit ol li:last-child {
+  color: rgb(255, 3, 45);
+}
