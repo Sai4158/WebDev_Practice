@@ -1,7 +1,7 @@
 import React from "react";
 import Bn from "./Bn";
 
-const Hyd = ({ name }) => {
+const HYD = ({ name }) => {
   return (
     <div>
       <Bn name={name} />
@@ -9,4 +9,4 @@ const Hyd = ({ name }) => {
   );
 };
 
-export default Hyd;
+export default HYD;
