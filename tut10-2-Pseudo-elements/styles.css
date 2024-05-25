@@ -8,3 +8,15 @@
   content: "this is my para";
   color: red;
 }
+
+/* linear-gradient */
+.samplebox {
+  background: linear-gradient(to top, pink, blue);
+  height: 300px;
+}
+
+/* radial-gradient */
+.samplebox2 {
+  background: radial-gradient(circle, red, green);
+  height: 300px;
+}
