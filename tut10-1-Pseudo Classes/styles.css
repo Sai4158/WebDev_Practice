@@ -17,3 +17,15 @@ button:active {
 .listfruit ol li:last-child {
   color: rgb(255, 3, 45);
 }
+
+/* this for the checked or the checkbox */
+/* when clicked it turn into red */
+input[type="checkbox"]:checked + label {
+  color: red;
+  font-size: larger;
+}
+
+/* class name, type - checkbox: checked + label */
+.input1[type="checkbox"]:checked + label {
+  color: green;
+}
