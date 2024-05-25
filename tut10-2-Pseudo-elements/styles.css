@@ -1,0 +1,10 @@
+.test-message p::before {
+  content: "this is my para";
+  color: green;
+}
+
+/* this for para to put before and after  */
+.test-message p::after {
+  content: "this is my para";
+  color: red;
+}
