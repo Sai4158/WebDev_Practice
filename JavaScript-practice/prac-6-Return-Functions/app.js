@@ -24,3 +24,20 @@ function score(a, b) {
 document.write(score(3, 4));
 
 //practice
+
+//practice -  functions with parameters
+function game(x, y) {
+  return document.write("mouse x is at " + x + " ,mouse y is at " + y);
+}
+game("125", "200");
+
+document.write("<br>");
+
+//will promt and ask name, will print hello and the name
+var name = prompt("enter your name here please");
+
+function guest(currentName) {
+  return document.write("Hello " + currentName);
+}
+
+guest(name);
