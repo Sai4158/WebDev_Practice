@@ -24,3 +24,14 @@ document.write(sports);
 document.write("<br>");
 sports.unshift("cars");
 document.write(sports);
+document.write("<br>");
+document.write("<br>");
+
+document.write("this will combine both arrays and then print it ");
+
+//concat method
+let score = [11, 3, 435, 6, 345];
+let player = ["amir", "shart", "ewf", "hufffes", "sai"];
+
+let newPlayers = score.concat(player);
+document.write(newPlayers);
