@@ -19,3 +19,8 @@ document.write(sports);
 document.write("<br>");
 sports.shift();
 document.write(sports);
+
+//unshift will add a element in the array first
+document.write("<br>");
+sports.unshift("cars");
+document.write(sports);
