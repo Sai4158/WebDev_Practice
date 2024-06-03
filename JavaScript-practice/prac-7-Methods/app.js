@@ -35,3 +35,15 @@ let player = ["amir", "shart", "ewf", "hufffes", "sai"];
 
 let newPlayers = score.concat(player);
 document.write(newPlayers);
+
+// join method - will make a new element
+document.write("<br>");
+document.write("<br>");
+
+let team = [5, 23, 4, 34, "abhi", "suhfdw", "sai"];
+
+//what ever you put in the join will be seprated by that
+let newTeam = team.join("/");
+// 5/23/4/34/abhi/suhfdw/sai
+
+document.write(newTeam);
