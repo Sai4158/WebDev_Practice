@@ -56,9 +56,37 @@ let students1 = ["anil", "balu", "karthik", 10, 20, 30, 40];
 document.write(students1);
 
 //using slice to print
+//slice - will print those index values
 document.write("<br>");
 let mystudents = students1.slice(0, 4);
 document.write(mystudents);
 
+//Splice method in js
+//splice will remove those values
+document.write("<br>");
+document.write("<br>");
 
+let cars = ["audi", "benz", "range rover", "bmw"];
+document.write(cars);
 
+document.write("<br>");
+
+//will print these index's only from 0 to 3 and will remove anything else
+//but if you put anythig it will replace it
+cars.splice(0, 3, "hello");
+document.write(cars);
+document.write("<br>");
+
+//can you also replace like this
+// at index 3 only reaplce 1 with "I love cars"
+//if I put 2 instead of 1 it will remove next 2 values sINCE i want to replace it I put 1 there
+cars.splice(3, 1, "I love cars");
+
+document.write(cars);
+document.write("<br>");
+
+// this wont remove anything but add the value next to it
+
+cars.splice(2, 0, "I like bmw");
+
+document.write(cars);
