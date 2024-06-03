@@ -1,6 +1,6 @@
 //methods in js
 
-let sports = ["cricket", "baseball"];
+let sports = [" cricket", " baseball", " basketball", " pickleball", " gym"];
 
 //push will show in the last
 sports.push("tennis");
@@ -15,3 +15,7 @@ document.write("<br>");
 sports.pop();
 document.write(sports);
 
+//shift will remove the first array element
+document.write("<br>");
+sports.shift();
+document.write(sports);
