@@ -47,3 +47,18 @@ let newTeam = team.join("/");
 // 5/23/4/34/abhi/suhfdw/sai
 
 document.write(newTeam);
+
+//SLICE METHOD - returns a shallow copy of a portion of an array into a new array
+document.write("<br>");
+document.write("<br>");
+
+let students1 = ["anil", "balu", "karthik", 10, 20, 30, 40];
+document.write(students1);
+
+//using slice to print
+document.write("<br>");
+let mystudents = students1.slice(0, 4);
+document.write(mystudents);
+
+
+
