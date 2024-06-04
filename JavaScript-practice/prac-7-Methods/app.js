@@ -90,3 +90,24 @@ document.write("<br>");
 cars.splice(2, 0, "I like bmw");
 
 document.write(cars);
+
+///prac
+document.write("<br>");
+document.write("<br>");
+
+//splice practice
+let mycarsss = ["range", "rover", "bmw", "skoda", "vw", "lambo", "m5"];
+let mypref = mycarsss.splice(2, 0, "I like beammer");
+
+//if you print the orginal array it will show all
+document.write(mycarsss);
+document.write("<br>");
+
+//if you print the splice array it will show the removed stuff
+document.write(mypref);
+
+//so slice will remove
+
+//splice will remove or reaplce
+//0,2 -  will remove
+// 2,1, "i like cars" -  at index 2 it will remove once and replace with the text
