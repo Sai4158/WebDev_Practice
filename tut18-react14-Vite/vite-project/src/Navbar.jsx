@@ -5,6 +5,7 @@ const Navbar = () => {
   return (
     <div className="NavSection">
       <ul>
+        {/* this to = "" will send you to that /link or href */}
         <Link to="/First">
           <li>First page</li>
         </Link>
@@ -19,6 +20,10 @@ const Navbar = () => {
 
         <Link to="/Fourth">
           <li>Fourth page</li>
+        </Link>
+
+        <Link to="/last">
+          <li>last page</li>
         </Link>
       </ul>
     </div>
