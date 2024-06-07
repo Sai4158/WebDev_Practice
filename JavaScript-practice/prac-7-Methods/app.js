@@ -111,3 +111,11 @@ document.write(mypref);
 //splice will remove or reaplce
 //0,2 -  will remove
 // 2,1, "i like cars" -  at index 2 it will remove once and replace with the text
+document.write("<br>");
+document.write("<br>");
+let mryr = mycarsss.splice(1);
+//if you print the splice array it will show the removed stuff
+document.write("<br>");
+document.write("<br>");
+
+document.write(mryr);
