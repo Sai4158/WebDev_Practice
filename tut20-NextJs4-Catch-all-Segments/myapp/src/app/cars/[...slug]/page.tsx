@@ -3,6 +3,10 @@ const page = ({ params }) => {
     return (
       <div>
         <h1> {params.slug[1]}</h1> <br /> <h1>Thank you for buying a bmw</h1>
+        <br />
+        <h1>
+          <a href="/cars/bmw">go back</a>
+        </h1>
       </div>
     );
   } else if (params.slug.length === 1) {
