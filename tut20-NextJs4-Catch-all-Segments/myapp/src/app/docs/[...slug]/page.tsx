@@ -1,8 +1,13 @@
 import React from "react";
 
 const docs = ({ params }) => {
-  if (params.slug.length === 2) {
-    return <h1>views for docs {params.slug[0]}</h1>;
+  if (params.slug.length) {
+    return (
+      <h1>
+        views for docs {params.slug[0]} and {params.slug[1]} and{" "}
+        {params.slug[2]} AND {params.slug[3]}
+      </h1>
+    );
   } else if (params.slug.length === 1) {
     return <h1>views for docs {params.slug[0]}</h1>;
   }
