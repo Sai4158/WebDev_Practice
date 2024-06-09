@@ -13,14 +13,16 @@ const HomePage = () => {
           <span class="ml-3 text-xl text-white">Sai Rangineeni</span>
         </a>
         <nav className="md:ml-auto flex flex-wrap items-center text-base justify-center ">
-          <a className="mr-5  hover:text-white-900">Home page </a>
+          <a href="/" className="mr-5  hover:text-white-900">
+            Home page
+          </a>
           <a className="mr-5 hover:text-white-900">Education</a>
           <a className="mr-5 hover:text-white-900">Skills</a>
           <a className="mr-5 hover:text-white-900">Contact me</a>
         </nav>
 
         {/* this is for the button */}
-        <a href="">
+        <a href="/portfolio">
           <button className="inline-flex items-center border-0 py-1 px-2 w-30 gap-3 transition-all hover:bg-gray-700  rounded text-white mt-4 md:mt-0">
             <span className="hover:scale-110 transition-all ">Portfolio</span>
             <img
