@@ -17,6 +17,9 @@ const page = ({
         </h1>
       </div>
     );
+  }
+  if (parseInt(params.cars) > 1000) {
+    notfound();
   } else if (params.slug.length === 1) {
     return (
       <div>
