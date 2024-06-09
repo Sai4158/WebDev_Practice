@@ -1,6 +1,11 @@
-import React from "react";
-
-const docs = ({ params }) => {
+const docs = ({
+  params,
+}: {
+  params: {
+    slug: string;
+    docs: string;
+  };
+}) => {
   // if else statements
   if (params.slug.length) {
     return (

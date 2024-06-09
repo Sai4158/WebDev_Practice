@@ -1,4 +1,12 @@
-const page = ({ params }) => {
+import notfound from "@/app/not-found";
+const page = ({
+  params,
+}: {
+  params: {
+    cars: string;
+    slug: string;
+  };
+}) => {
   if (params.slug.length === 2) {
     return (
       <div>
