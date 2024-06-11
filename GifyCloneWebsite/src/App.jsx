@@ -13,9 +13,8 @@ import SingleGif from "./pages/SingleGif";
 import Favorite from "./pages/Favorite";
 import HomePage from "./pages/HomePage";
 
-
 // this is the router, where you decide assing the compnonet to each page
-// this is basically like a brower route but in diffrent style 
+// this is basically like a brower route but in diffrent style
 const router = createBrowserRouter([
   {
     element: <AppLayouts />,
