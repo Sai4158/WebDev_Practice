@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { HiBars2 } from "react-icons/hi2";
+import { HiMiniBars3 } from "react-icons/hi2";
 
 const Header = () => {
   // this will be a empty array.
@@ -24,14 +24,15 @@ const Header = () => {
         </Link>
 
         <button onClick={() => SetShowCatgories(!showCategories)}>
-          <HiBars2
+          {/* using react icons */}
+          <HiMiniBars3
             // this is a ternory operator, it will stay gradient when clicked.
             className={`px-0.5 hover:gradient
                 ${
                   showCategories ? "gradient" : ""
                 }  border-b-4 hidden lg:block`}
             // this icon does have inbulit size, so you can change it
-            size={35}
+            size={30}
           />
         </button>
       </div>
