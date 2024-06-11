@@ -13,3 +13,6 @@ document.write("<br>");
 student = "  sai   ";
 console.log(student);
 document.write(student.trim());
+
+// will show the char of the index 3 or just the letter
+document.write(student.char(1));
