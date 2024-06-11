@@ -13,3 +13,11 @@ for (i = 1; i < 10; i++) {
 // 7. hello I am sai
 // 8. hello I am sai
 // 9. hello I am sai
+document.write("<br>");
+
+// this is the while loop
+let x = 0;
+while (x <= 10) {
+  document.write(x + ". hello I am bmw" + "<br>");
+  x++;
+}
