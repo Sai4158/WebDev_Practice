@@ -9,6 +9,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "greet-by-time": "^1.0.1"
+    "@datastax/astra-db-ts": "^1.2.1",
+    "dotenv": "^16.4.5",
+    "greet-by-time": "^1.0.1",
+    "langchain": "^0.2.5",
+    "openai": "^4.50.0"
   }
 }
