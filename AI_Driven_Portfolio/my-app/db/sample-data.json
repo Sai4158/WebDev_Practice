@@ -1,0 +1,32 @@
+[
+  {
+    "id": 1,
+    "info": "Sai Rangineeni",
+    "description": "Aspiring Human-Centered Design and Development professional in his second year at Pennsylvania State University, pursuing a B.S. in Human-Centered Design and Development. Expected to graduate in May 2026. Proficient in Java, HTML, CSS, JavaScript, and Tailwind CSS. Expanding skills in Node.js, Express.js, SQL, and various design and development tools. Passionate about using technology to solve real-world problems."
+  },
+  {
+    "id": 2,
+    "info": "Education",
+    "description": "Second Year at Pennsylvania State University, B.S. in Human-Centered Design and Development. Expected Graduation: May 2026."
+  },
+  {
+    "id": 3,
+    "info": "Profession",
+    "description": "Aspiring Human-Centered Design and Development Professional. Experienced in leading engineering teams, building and programming robots, and developing innovative tech projects."
+  },
+  {
+    "id": 4,
+    "info": "Projects",
+    "description": "Led the FTC Robotics team as Lead Engineer, built a competition robot from scratch using CAD. Engineered a marble ladder automata, converted a traditional bicycle into an electric bike, built a drone from scratch. Recently won the Comcast OpenAI challenge at the Philly Codefest, creating an AI-powered chat assistant."
+  },
+  {
+    "id": 5,
+    "info": "GitHub",
+    "description": "Open-sourced projects including a winning AI-powered chat assistant from the Philly Codefest. GitHub: https://github.com/sai4158"
+  },
+  {
+    "id": 6,
+    "info": "LinkedIn",
+    "description": "Connect with Sai on LinkedIn to follow his journey in Human-Centered Design and Development at Penn State. LinkedIn: https://www.linkedin.com/in/sairangineeni"
+  }
+]
