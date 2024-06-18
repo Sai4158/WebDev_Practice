@@ -17,3 +17,14 @@ num.map((numm) => {
 
 document.write("<br>" + num);
 // ,4,5,6,45,6
+
+document.write("<br>");
+
+//get element by its class name and chnage the text
+var myrev = document.getElementsByClassName("revenue");
+
+//you need to use text content to modify the text
+myrev.textcontent = "growth";
+
+//this will be show in the console
+console.log(myrev);
