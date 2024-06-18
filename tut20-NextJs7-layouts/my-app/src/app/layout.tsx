@@ -13,11 +13,15 @@ export default function RootLayout({
       {/* body then header then children then footer */}
       <body>
         <header>
-          <h1 style={{ background: "green" }}>this is header</h1>
+          <h1 style={{ background: "green", height: "50vh" }}>
+            this is header
+          </h1>
         </header>
         {children}
         <footer>
-          <h1 style={{ background: "gray" }}>this is a footer</h1>
+          <h1 style={{ background: "gray", height: "50vh" }}>
+            this is a footer
+          </h1>
         </footer>
       </body>
     </html>
