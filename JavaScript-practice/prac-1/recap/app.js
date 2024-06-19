@@ -28,3 +28,4 @@ myrev.textcontent = "growth";
 
 //this will be show in the console
 console.log(myrev);
+
