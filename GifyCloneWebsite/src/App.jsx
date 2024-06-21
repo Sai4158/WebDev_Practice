@@ -12,6 +12,7 @@ import Search from "./pages/Search";
 import SingleGif from "./pages/SingleGif";
 import Favorite from "./pages/Favorite";
 import HomePage from "./pages/HomePage";
+import GifProvider from "./Context/context";
 
 // this is the router, where you decide assing the compnonet to each page
 // this is basically like a brower route but in diffrent style
@@ -45,7 +46,12 @@ const router = createBrowserRouter([
 
 //pass the router to router as props.
 function App() {
-  return <RouterProvider router={router} />;
+  return (
+    <GifProvider>
+      {" "}
+      <RouterProvider router={router} />
+    </GifProvider>
+  );
 }
 
 export default App;
