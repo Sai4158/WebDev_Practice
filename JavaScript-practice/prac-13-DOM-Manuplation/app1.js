@@ -19,3 +19,4 @@ b.innerHTML = "<h1>Hello I am sai too</h2>";
 const tagTest = document.getElementsByTagName("p")[1];
 tagTest.textContent = "Hello I am sai";
 console.log(tagTest);
+g

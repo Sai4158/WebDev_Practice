@@ -18,23 +18,40 @@ const Header = () => {
           </h1>
         </Link>
 
-        {/* render catogoreis  */}
-        <Link className="px-4 py-1 hover:gradient border-b-4 hidden lg:block">
-          Reactions
-        </Link>
+        <div className="font-bold text-md flex gap-2 item-center">
+          {/* render catogoreis  */}
+          <Link className="px-4 py-1 hover:gradient border-b-4 hidden lg:block">
+            Reactions
+          </Link>
 
-        <button onClick={() => SetShowCatgories(!showCategories)}>
-          {/* using react icons */}
-          <HiMiniBars3
-            // this is a ternory operator, it will stay gradient when clicked.
-            className={`px-0.5 hover:gradient
+          <button onClick={() => SetShowCatgories(!showCategories)}>
+            {/* using react icons */}
+            <HiMiniBars3
+              // this is a ternory operator, it will stay gradient when clicked.
+              className={`px-0.5 hover:gradient
                 ${
                   showCategories ? "gradient" : ""
                 }  border-b-4 hidden lg:block`}
-            // this icon does have inbulit size, so you can change it
-            size={30}
-          />
-        </button>
+              // this icon does have inbulit size, so you can change it
+              size={30}
+            />
+          </button>
+          <div className="h-9 bg-gray-700 pt-1.5 px-6 cursor-pointer rounded">
+            <Link to="/favorites"> Favorites gif</Link>
+          </div>
+          <button>
+            <HiMiniBars3 className="text-sky-400 block lg:hidden " size={30} />
+          </button>
+        </div>
+        {showCategories && (
+          <div className="absolute rigth-0 top-14 px-10 pt-6 w-full gradient z-20">
+            <span>Catogires</span>
+            <hr />
+            <div>
+              <Link className="font-bold"> Reactions</Link>
+            </div>
+          </div>
+        )}
       </div>
     </nav>
   );
