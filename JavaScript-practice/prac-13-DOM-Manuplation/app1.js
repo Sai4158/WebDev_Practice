@@ -13,4 +13,9 @@ const b = document.getElementById("company1");
 //inner html will add it h1 tags in the html code
 b.innerHTML = "<h1>Hello I am sai too</h2>";
 
-// text conctext in js
+//get element by its tag name
+//tag include para p tag, heading  tag
+// for index 1 change first p tag and not the rest
+const tagTest = document.getElementsByTagName("p")[1];
+tagTest.textContent = "Hello I am sai";
+console.log(tagTest);
