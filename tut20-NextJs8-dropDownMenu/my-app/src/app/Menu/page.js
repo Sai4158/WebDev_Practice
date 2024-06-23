@@ -1,13 +1,21 @@
 "use client";
+
 import React, { useState } from "react";
 
 const page = () => {
-  const [open, Setopen] = useState(false);
-  const toggleDropdown = () => Setopen(!open);
+  const [open, setOpen] = useState(false);
+  const toggleDropdown = () => setOpen(!open);
 
   return (
     <div>
-      <button onClick={toggleDropdown}>menu</button>
+      <button onClick={toggleDropdown}>Menu</button>
+      {open && (
+        <div className="absolute">
+          <a href="sai" className="block ">
+            Home
+          </a>
+        </div>
+      )}
     </div>
   );
 };
