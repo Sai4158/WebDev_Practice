@@ -1,12 +1,11 @@
 "use client";
 import React, { useState } from "react";
-import Page from "../sai/Page";
 const page = () => {
   const [open, setOpen] = useState(false);
   const [openn, setopenn] = useState(false);
 
   const toggleDropdown = () => setOpen(!open);
-  const toggleDropdownnn = () => setOpen(!open);
+  const toggleDropdownnn = () => setopenn(!open);
 
   return (
     <div>
@@ -16,7 +15,6 @@ const page = () => {
           <a href="sai" className=" ">
             Home
           </a>
-          <Page />
         </div>
       )}
 

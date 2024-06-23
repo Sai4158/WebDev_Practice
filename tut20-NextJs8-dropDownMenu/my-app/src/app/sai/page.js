@@ -1,6 +1,6 @@
 import React from "react";
 
-const Page = () => {
+const page = () => {
   return (
     <div>
       <iframe src="https://sai4158.github.io/" frameborder="0"></iframe>
@@ -8,4 +8,4 @@ const Page = () => {
   );
 };
 
-export default Page;
+export default page;
