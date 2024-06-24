@@ -4,7 +4,7 @@ import React from "react";
 //this for the meta data
 // improved seo
 export const metadata = {
-    //this will also change website title
+  //this will also change website title
   title: "This is about the next",
   description: "Genrated by next.js",
 };
