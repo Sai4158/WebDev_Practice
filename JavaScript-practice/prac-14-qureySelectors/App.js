@@ -5,7 +5,12 @@ const abc = document.querySelector("#hello");
 
 abc.textContent = "Amazon";
 
-//so this will print and li tags here 
+//so this will print and li tags here
 //this is using the query Selector all
 const list = document.querySelectorAll("li");
 document.write(list);
+
+//using for loop to change all the text at once
+for (let x = 0; x < list.length; x++) {
+  list[x].textContent = "I LOVE CODING";
+}
