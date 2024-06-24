@@ -4,3 +4,8 @@
 const abc = document.querySelector("#hello");
 
 abc.textContent = "Amazon";
+
+//so this will print and li tags here 
+//this is using the query Selector all
+const list = document.querySelectorAll("li");
+document.write(list);
