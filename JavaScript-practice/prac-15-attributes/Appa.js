@@ -1,11 +1,13 @@
-// attributes in js
-//this will get the id name
-const att = document.querySelector("hello").attributes.id;
-
+// Attributes in JS
+// This will get the id name and print it
+const att = document.querySelector("#hello").getAttribute("id");
 document.write(att);
 
-//set attribute
-const attSet = document.querySelector("hello");
-// THIS IS WILL TAKE 2 PARAMETERS, one - what you want chnage
-// 2- the property of it
+// Set attribute
+const attSet = document.querySelector("#hello");
+// This will take 2 parameters: the attribute to change and the value to set
 attSet.setAttribute("style", "border: 5px solid black");
+
+// Remove attribute
+const removeAtt = document.querySelector("div");
+removeAtt.removeAttribute("ol");
