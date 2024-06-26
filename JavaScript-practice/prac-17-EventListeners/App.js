@@ -37,3 +37,12 @@ const keyPressed = function () {
 const keyDown = function () {
   document.querySelector("body").style.backgroundColor = "red";
 };
+
+loginbtn.onclick = showLogin;
+
+function showLogin() {
+  sideNavBar.style.display = "None";
+  <div>
+    <h2>Hello I am Sai</h2>
+  </div>;
+}
