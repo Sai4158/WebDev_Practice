@@ -4,7 +4,7 @@ const page = () => {
   return (
     <div>
       <div>
-        <Link href="/blog">Blog</Link>
+        <Link href="/Blog">Blog</Link>
       </div>
     </div>
   );
