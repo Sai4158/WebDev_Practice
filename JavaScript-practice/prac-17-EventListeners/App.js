@@ -46,3 +46,28 @@ function showLogin() {
     <h2>Hello I am Sai</h2>
   </div>;
 }
+
+document
+  .getElementById("loginbtn")
+  .addEventListener("mouseover", addEventListener, function () {
+    this.style.background = "green";
+  });
+
+const target = document.getElementById("target");
+const addEventButton = document.getElementById("addEvent");
+const removeEventButton = document.getElementById("removeEvent");
+
+function handleMouseOver() {
+  alert("Mouse over detected!");
+}
+
+// Add the mouseover event listener
+addEventButton.addEventListener("click", function () {
+  target.addEventListener("mouseover", handleMouseOver);
+  alert("Mouseover event added ");
+});
+
+removeEventButton.addEventListener("click", function () {
+  target.removeEventListener("mouseover", handleMouseOver);
+  alert("Mouseover event removed");
+});
