@@ -6,7 +6,8 @@ const AddTask = () => {
     <div>
       <button className="btn btn-primary w-full">
         Add new task
-        <AiOutlinePlus />
+        {/* this is how you add custome size to the icon */}
+        <AiOutlinePlus className="ml-2" size={18} />
       </button>
     </div>
   );
