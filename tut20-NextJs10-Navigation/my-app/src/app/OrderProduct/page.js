@@ -1,17 +1,30 @@
 "use client";
+import { useRouter } from "next/navigation";
 import React from "react";
 
-const page = () => {
+export default function page() {
+  const router = useRouter();
+
   const handleClick = () => {
-    document.write("Hello I am Sai");
+    console.log("Placing your order");
+
+    //will send it that site
+    router.push("/Blog");
+
+    //will replace it
+    router.replace("/Blog");
+
+    //will go back
+    router.back("/Blog");
+
+    //will go to the next page
+    router.forward("/Blog");
   };
 
   return (
-    <div>
-      <h1>This is the order page</h1>
+    <>
+      <h1>Order product</h1>
       <button onClick={handleClick}>Place order</button>
-    </div>
+    </>
   );
-};
-
-export default page;
+}
