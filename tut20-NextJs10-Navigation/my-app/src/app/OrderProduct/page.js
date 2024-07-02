@@ -10,15 +10,6 @@ export default function page() {
 
     //will send it that site
     router.push("/Blog");
-
-    //will replace it
-    router.replace("/Blog");
-
-    //will go back
-    router.back("/Blog");
-
-    //will go to the next page
-    router.forward("/Blog");
   };
 
   return (

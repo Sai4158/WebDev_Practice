@@ -1,8 +1,15 @@
+"use client";
+import { useRouter } from "next/navigation";
 import React from "react";
 
 const page = () => {
+  const router = useRouter();
+  const but = () => {
+    router.push("/OrderProduct");
+  };
   return (
     <div>
+      <button onClick={but}>click to go back</button>
       <div className="card bg-base-100 w-96 shadow-xl">
         <figure>
           <img
