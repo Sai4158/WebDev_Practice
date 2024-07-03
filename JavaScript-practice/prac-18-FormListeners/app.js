@@ -16,3 +16,8 @@ mainform.addEventListener("submit", function (e) {
   //   this is for the reset
   mainform.reset();
 });
+
+//this is when the input button is clicked it will be in diffrent color
+username.addEventListener("focus", function (e) {
+  e.target.style.background = "pink";
+});
