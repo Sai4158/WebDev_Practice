@@ -12,4 +12,7 @@ mainform.addEventListener("submit", function (e) {
   const myusername = username.value;
 
   inputname11.textContent = myusername;
+
+  //   this is for the reset
+  mainform.reset();
 });
