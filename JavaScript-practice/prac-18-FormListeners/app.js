@@ -21,3 +21,8 @@ mainform.addEventListener("submit", function (e) {
 username.addEventListener("focus", function (e) {
   e.target.style.background = "pink";
 });
+
+// this will be transparent when clicked 
+username.addEventListener("blur", function (e) {
+  e.target.style.background = "";
+});
