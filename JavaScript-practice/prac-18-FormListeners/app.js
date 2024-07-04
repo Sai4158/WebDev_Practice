@@ -1,4 +1,5 @@
 // form events in js
+const body = document.getElementsByTagName("body");
 
 const mainform = document.getElementById("Myform");
 
@@ -22,7 +23,11 @@ username.addEventListener("focus", function (e) {
   e.target.style.background = "pink";
 });
 
-// this will be transparent when clicked 
+// this will be transparent when clicked
 username.addEventListener("blur", function (e) {
   e.target.style.background = "";
+});
+
+body.addEventListener("click", function (e) {
+  e.target.style.background = "green";
 });
