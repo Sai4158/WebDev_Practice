@@ -1,5 +1,4 @@
-// form events in js
-const body = document.getElementsByTagName("body");
+const body = document.getElementsByTagName("body")[0];
 
 const mainform = document.getElementById("Myform");
 
@@ -14,11 +13,11 @@ mainform.addEventListener("submit", function (e) {
 
   inputname11.textContent = myusername;
 
-  //   this is for the reset
+  // this is for the reset
   mainform.reset();
 });
 
-//this is when the input button is clicked it will be in diffrent color
+// this is when the input button is clicked it will be in different color
 username.addEventListener("focus", function (e) {
   e.target.style.background = "pink";
 });
@@ -28,6 +27,9 @@ username.addEventListener("blur", function (e) {
   e.target.style.background = "";
 });
 
-body.addEventListener("click", function (e) {
-  e.target.style.background = "green";
-});
+// change background to green when submit button is clicked
+mainform
+  .querySelector("button[type='submit']")
+  .addEventListener("click", function (e) {
+    body.style.background = "green";
+  });
