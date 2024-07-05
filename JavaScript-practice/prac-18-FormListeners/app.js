@@ -32,4 +32,5 @@ mainform
   .querySelector("button[type='submit']")
   .addEventListener("click", function (e) {
     body.style.background = "green";
+    body.style.fontSize = 20;
   });
