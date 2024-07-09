@@ -25,7 +25,7 @@ export default function Home() {
             thrilled to announce that the project is open-sourced on GitHub.
           </p>
           <button className="mt-6 px-6 py-3 bg-white text-black font-semibold rounded-md shadow hover:bg-gray-100">
-            Contact
+            <a href="/Contact">Contact</a>
           </button>
         </section>
       </main>
