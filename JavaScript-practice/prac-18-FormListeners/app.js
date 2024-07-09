@@ -34,3 +34,11 @@ mainform
     body.style.background = "green";
     body.style.fontSize = 20;
   });
+
+//this is for the colors
+const mynewColors = document.getElementById("colors");
+const myboxnew = document.getElementById("box");
+
+mynewColors.addEventListener("change", function () {
+  myboxnew.style.background = mynewColors.value;
+});
