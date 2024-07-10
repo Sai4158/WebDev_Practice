@@ -17,8 +17,8 @@ const Navbar = () => {
   };
 
   return (
-    <header className="fixed top-3 left- w-full bg-transparent text-white z-50">
-      <nav className="max-w-[85rem] w-full mx-auto px-4 flex items-center justify-between py-4">
+    <header className="fixed top-3 left- w-full bg-transparent  text-white z-50 ">
+      <nav className="max-w-[85rem] w-full mx-auto px-4 flex items-center  justify-between py-4">
         <div className="flex items-center justify-between w-full">
           <a className="text-2xl font-semibold" href="/">
             Sai Rangineeni
@@ -66,7 +66,7 @@ const Navbar = () => {
 
       {/* when the sc is small it will hide all */}
       {isMenuOpen && (
-        <div className="sm:hidden bg-gray-800 bg-opacity-90 p-4 space-y-4 mt-2 rounded shadow-lg">
+        <div className="sm:hidden bg-gray-800 bg-opacity-90 p-4 space-y-4 mt-2 rounded shadow-lg ">
           <a
             className="block font-medium text-white hover:text-gray-300"
             href="/"

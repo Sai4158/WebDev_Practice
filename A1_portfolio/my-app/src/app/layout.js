@@ -13,7 +13,10 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={inter.className}>
-        <Navbar />
+        <div className="backdrop-blur-lg">
+          <Navbar />
+        </div>
+
         {children}
       </body>
     </html>
