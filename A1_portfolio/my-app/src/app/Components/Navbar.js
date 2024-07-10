@@ -21,7 +21,7 @@ const Navbar = () => {
       <nav className="max-w-[85rem] w-full mx-auto px-4 flex items-center justify-between py-4">
         <div className="flex items-center justify-between w-full">
           <a className="text-2xl font-semibold" href="/">
-            Portfolio
+            Sai Rangineeni
           </a>
           <div className="sm:hidden">
             <button
