@@ -1,18 +1,18 @@
 "use client";
 
-import Navbar from "@/app/Components/Navbar";
-import { FaLinkedin, FaGithub, FaEnvelope, FaPhone } from "react-icons/fa";
+import { FaLinkedin, FaGithub } from "react-icons/fa";
 
 export default function Home() {
   return (
     <div>
-      <main className="pt-20 px-4">
+      <main className="pt-14 pb-14 px-4">
+        {/* section 1  */}
         <section id="experience" className="mt-20">
           <h2 className="text-3xl font-semibold text-center">Experience</h2>
           <div className="max-w-4xl mx-auto mt-10">
-            <div className="mb-8">
-              <h3 className="text-2xl font-semibold">Education</h3>
-              <p className="mt-2">
+            <div className="bg-white bg-opacity-10 p-6 rounded-lg shadow-md mb-8">
+              <h3 className="text-2xl font-semibold mb-2">Education</h3>
+              <p>
                 <strong>High School:</strong> Garnet Valley High School
                 <br />
                 <strong>University:</strong> Third year student at The
@@ -21,9 +21,11 @@ export default function Home() {
                 Technology. Expected Graduation: May 2026
               </p>
             </div>
-            <div className="mb-8">
-              <h3 className="text-2xl font-semibold">Internship</h3>
-              <p className="mt-2">
+
+            {/* this is for the box */}
+            <div className="bg-black bg-opacity-25 p-6 rounded-lg shadow-md mb-8">
+              <h3 className="text-2xl font-semibold mb-2">Internship</h3>
+              <p>
                 <strong>Company:</strong> CTFGuide
                 <br />
                 <strong>Role:</strong> Software Engineer Intern
@@ -32,16 +34,20 @@ export default function Home() {
                 <br />
                 <strong>Location:</strong> State College, PA (Hybrid)
                 <br />
+                <br />
                 Responsible for building out user settings at CTFGuide. Used
                 React.js, TailwindCSS, Next.js, Git, and followed agile
                 development practices.
               </p>
             </div>
-            <div className="mb-8">
-              <h3 className="text-2xl font-semibold">Skills</h3>
-              <p className="mt-2">
+
+            {/* section 3  */}
+            <div className="bg-white bg-opacity-10 p-6 rounded-lg shadow-md">
+              <h3 className="text-2xl font-semibold mb-2">Skills</h3>
+              <p>
                 <strong>Proficient in:</strong>
                 <br />
+                <strong>Expanding in:</strong>
               </p>
             </div>
           </div>
