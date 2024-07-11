@@ -39,6 +39,7 @@ export default function Projects() {
             <p>
               <strong>Hackathon:</strong> Winning Project at Philly Codefest
             </p>
+            <br />
             <a
               href="https://github.com/Laphatize/comcast-inquire"
               target="_blank"
@@ -101,6 +102,7 @@ export default function Projects() {
             <p>
               <strong>Hackathon:</strong> HackPSU Spring 2024
             </p>
+            <br />
             <a
               href="https://github.com/umoment-tech"
               target="_blank"
@@ -175,11 +177,17 @@ export default function Projects() {
           >
             <h2 className="text-2xl font-semibold mb-2">Air-Pollution-App</h2>
             <p className="mb-2">
-              Real-time air quality data. Built with HTML, CSS, JavaScript.
+              Air Pollution App is a simple web tool built with HTML, CSS, and
+              JavaScript. <br /> <br />
+              It uses latitude and longitude inputs to fetch and display
+              real-time air quality data from the OpenWeatherMap API.
             </p>
+            <br />
+            <br />
             <p>
               <strong>Languages:</strong> JavaScript, CSS, HTML
             </p>
+            <br />
             <a
               href="https://github.com/Sai4158/Air-Pollution-App"
               target="_blank"
