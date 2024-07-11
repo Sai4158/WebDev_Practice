@@ -13,7 +13,7 @@ const page = () => {
             </p>
           </section>
 
-          <section className="max-w-6xl mx-auto mt-10 grid gap-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+          <section className="max-w-6xl mx-auto mt-10 grid gap-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             {/* UMoments Project */}
             <div
               className="bg-white bg-opacity-10 p-6 rounded-lg shadow-md cursor-pointer"
