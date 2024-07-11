@@ -3,7 +3,7 @@
 export default function Projects() {
   return (
     <div>
-      <main className="pt-20 px-4 mb-14">
+      <main className="pt-20 px-4 mb-14 ">
         <section className="text-center mt-10">
           <h1 className="text-4xl font-bold">Hackathons & Projects</h1>
           <p className="text-lg mt-2">
@@ -11,10 +11,10 @@ export default function Projects() {
           </p>
         </section>
 
-        <section className="max-w-6xl mx-auto mt-10 grid gap-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 masonry">
+        <section className="max-w-6xl mx-auto mt-10 grid gap-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 masonry ">
           {/* Comcast Inquire */}
           <div
-            className="bg-white bg-opacity-10 p-6 rounded-lg shadow-md cursor-pointer break-inside"
+            className="bg-white bg-opacity-10 p-6 rounded-lg shadow-md cursor-pointer break-inside hover:scale-105 transition-all"
             onClick={() =>
               window.open(
                 "https://github.com/Laphatize/comcast-inquire",
@@ -81,15 +81,18 @@ export default function Projects() {
 
           {/* UMoments Project */}
           <div
-            className="bg-white bg-opacity-10 p-6 rounded-lg shadow-md cursor-pointer break-inside"
+            className="bg-white bg-opacity-10 p-6 rounded-lg shadow-md cursor-pointer break-inside hover:scale-105 transition-all	"
             onClick={() =>
               window.open("https://devpost.com/software/umoment", "_blank")
             }
           >
             <h2 className="text-2xl font-semibold mb-2">UMoments</h2>
             <p className="mb-2">
-              Centralized hub for university events. Built with Next.js,
-              TailwindCSS, Express.js, Node.js, Auth0, MongoDB.
+              UMoments serves as a centralized hub for university students to
+              discover and keep track of events happening on and around campus.
+              <br /> <br />
+              Built with Next.js, TailwindCSS, Express.js, Node.js, Auth0,
+              MongoDB.
             </p>
             <br />
             <p>
@@ -117,10 +120,52 @@ export default function Projects() {
               </a>
             </div>
           </div>
+          {/* Pizza Bill Generator Project */}
+          <div
+            className="bg-white bg-opacity-10 p-6 rounded-lg shadow-md cursor-pointer break-inside hover:scale-105 transition-all"
+            onClick={() =>
+              window.open(
+                "https://github.com/Sai4158/JavaPractice/tree/master/src/pizza_bill_genrator_project",
+                "_blank"
+              )
+            }
+          >
+            <h2 className="text-2xl font-semibold mb-2">
+              Pizza Bill Generator
+            </h2>
+            <p className="mb-2">
+              A comprehensive pizza billing system that demonstrates OOP
+              principles, including inheritance, encapsulation, and
+              polymorphism. The project calculates the final bill based on
+              selected toppings and extras.
+            </p>
+            <p>
+              <strong>Features:</strong>
+            </p>
+            <ul className="list-disc list-inside mb-2">
+              <li>Base pizza options for vegetarian and non-vegetarian</li>
+              <li>
+                Additional toppings and extras such as extra cheese and chicken
+              </li>
+              <li>Takeaway option with additional packaging cost</li>
+              <li>Encapsulation of price calculation and bill generation</li>
+            </ul>
+            <p>
+              <strong>Languages:</strong> Java
+            </p>
+            <a
+              href="https://github.com/Sai4158/JavaPractice/tree/master/src/pizza_bill_genrator_project"
+              target="_blank"
+              className="text-blue-500 hover:text-blue-400"
+              onClick={(e) => e.stopPropagation()}
+            >
+              GitHub Repo
+            </a>
+          </div>
 
           {/* Air-Pollution-App Project */}
           <div
-            className="bg-white bg-opacity-10 p-6 rounded-lg shadow-md cursor-pointer break-inside"
+            className="bg-white bg-opacity-10 p-6 rounded-lg shadow-md cursor-pointer break-inside hover:scale-105 transition-all"
             onClick={() =>
               window.open(
                 "https://sai4158.github.io/Air-Pollution-App/",
@@ -155,9 +200,88 @@ export default function Projects() {
             </div>
           </div>
 
+          {/* Banking App Project */}
+          <div
+            className="bg-white bg-opacity-10 p-6 rounded-lg shadow-md cursor-pointer break-inside hover:scale-105 transition-all"
+            onClick={() =>
+              window.open(
+                "https://github.com/Sai4158/JavaPractice/tree/master/src/bankingApp",
+                "_blank"
+              )
+            }
+          >
+            <h2 className="text-2xl font-semibold mb-2">Banking App</h2>
+            <p className="mb-2">
+              A simple banking application demonstrating OOP principles. It
+              includes features for depositing and withdrawing money, and
+              managing account details such as account number, balance, name,
+              email, and phone.
+            </p>
+            <p>
+              <strong>Features:</strong>
+            </p>
+            <ul className="list-disc list-inside mb-2">
+              <li>
+                Account creation with details: number, balance, name, email,
+                phone
+              </li>
+              <li>Deposit and withdraw money with balance checks</li>
+              <li>Getter and setter methods for account attributes</li>
+            </ul>
+            <p>
+              <strong>Languages:</strong> Java
+            </p>
+            <a
+              href="https://github.com/Sai4158/JavaPractice/tree/master/src/bankingApp"
+              target="_blank"
+              className="text-blue-500 hover:text-blue-400"
+              onClick={(e) => e.stopPropagation()}
+            >
+              GitHub Repo
+            </a>
+          </div>
+
+          {/* Telecommunication Project */}
+          <div
+            className="bg-white bg-opacity-10 p-6 rounded-lg shadow-md cursor-pointer break-inside hover:scale-105 transition-all"
+            onClick={() =>
+              window.open(
+                "https://github.com/Sai4158/JavaPractice/tree/master/src/telecommunicationProject",
+                "_blank"
+              )
+            }
+          >
+            <h2 className="text-2xl font-semibold mb-2">
+              Telecommunication Project
+            </h2>
+            <p className="mb-2">
+              A comprehensive project showcasing various Java concepts applied
+              in a real-world telecommunication system.
+            </p>
+            <p>
+              <strong>Features:</strong>
+            </p>
+            <ul className="list-disc list-inside mb-2">
+              <li>Management of user data and telecommunications</li>
+              <li>Implementation of advanced OOP principles</li>
+              <li>Error handling and data validation</li>
+            </ul>
+            <p>
+              <strong>Languages:</strong> Java
+            </p>
+            <a
+              href="https://github.com/Sai4158/JavaPractice/tree/master/src/telecommunicationProject"
+              target="_blank"
+              className="text-blue-500 hover:text-blue-400"
+              onClick={(e) => e.stopPropagation()}
+            >
+              GitHub Repo
+            </a>
+          </div>
+
           {/* Icecream-store Project */}
           <div
-            className="bg-white bg-opacity-10 p-6 rounded-lg shadow-md cursor-pointer break-inside"
+            className="bg-white bg-opacity-10 p-6 rounded-lg shadow-md cursor-pointer break-inside hover:scale-105 transition-all"
             onClick={() =>
               window.open("https://github.com/Sai4158/Icecream-store", "_blank")
             }
@@ -182,7 +306,7 @@ export default function Projects() {
 
           {/* Random-Color-Generator Project */}
           <div
-            className="bg-white bg-opacity-10 p-6 rounded-lg shadow-md cursor-pointer break-inside"
+            className="bg-white bg-opacity-10 p-6 rounded-lg shadow-md cursor-pointer break-inside hover:scale-105 transition-all"
             onClick={() =>
               window.open(
                 "https://sai4158.github.io/Random-Color-Generator/",
@@ -222,7 +346,7 @@ export default function Projects() {
 
           {/* Cookie-Clicker Project */}
           <div
-            className="bg-white bg-opacity-10 p-6 rounded-lg shadow-md cursor-pointer break-inside"
+            className="bg-white bg-opacity-10 p-6 rounded-lg shadow-md cursor-pointer break-inside hover:scale-105 transition-all"
             onClick={() =>
               window.open("https://sai4158.github.io/Cookie-Clicker/", "_blank")
             }
@@ -256,7 +380,7 @@ export default function Projects() {
 
           {/* Other projects */}
           <div
-            className="bg-white bg-opacity-10 p-6 rounded-lg shadow-md cursor-pointer break-inside"
+            className="bg-white bg-opacity-10 p-6 rounded-lg shadow-md cursor-pointer break-inside hover:scale-105 transition-all"
             onClick={() => window.open("https://github.com/Sai4158", "_blank")}
           >
             <h2 className="text-2xl font-semibold mb-2">Other Projects</h2>
