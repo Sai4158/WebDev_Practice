@@ -1,9 +1,6 @@
-import Navbar from "./Components/Navbar";
-
 export default function Home() {
   return (
     <div>
-      <Navbar />
       <main className="pt-20 px-4">
         <section className="text-center">
           <img
