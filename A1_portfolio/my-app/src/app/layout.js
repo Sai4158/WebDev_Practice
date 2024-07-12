@@ -16,7 +16,6 @@ export default function RootLayout({ children }) {
         <div className="backdrop-blur-lg">
           <Navbar />
         </div>
-
         {children}
       </body>
     </html>
