@@ -4,26 +4,23 @@ import emailjs from "emailjs-com";
 import { FaLinkedin, FaGithub, FaEnvelope } from "react-icons/fa";
 
 const Contact = () => {
+  const serviceID = process.env.REACT_APP_EMAILJS_SERVICE_ID;
+  const templateID = process.env.REACT_APP_EMAILJS_TEMPLATE_ID;
+  const userID = process.env.REACT_APP_EMAILJS_USER_ID;
+
   function sendEmail(e) {
     e.preventDefault();
 
-    emailjs
-      .sendForm(
-        process.env.REACT_APP_EMAILJS_SERVICE_ID,
-        process.env.REACT_APP_EMAILJS_TEMPLATE_ID,
-        e.target,
-        process.env.REACT_APP_EMAILJS_USER_ID
-      )
-      .then(
-        (result) => {
-          console.log(result.text);
-          alert("Message sent successfully!");
-        },
-        (error) => {
-          console.log(error.text);
-          alert("Failed to send the message. Please try again.");
-        }
-      );
+    emailjs.sendForm(serviceID, templateID, e.target, userID).then(
+      (result) => {
+        console.log(result.text);
+        alert("Message sent successfully!");
+      },
+      (error) => {
+        console.log(error.text);
+        alert("Failed to send the message. Please try again.");
+      }
+    );
     e.target.reset();
   }
 
