@@ -17,7 +17,7 @@ const Navbar = () => {
   };
 
   return (
-    <header className="fixed top-3 left- w-full bg-transparent  text-white z-50 ">
+    <header className="fixed top-7 left- w-full bg-transparent  text-white z-50 ">
       <nav className="max-w-[85rem] w-full mx-auto px-4 flex items-center  justify-between py-4">
         <div className="flex items-center justify-between w-full">
           <a className="text-2xl font-semibold" href="/">
