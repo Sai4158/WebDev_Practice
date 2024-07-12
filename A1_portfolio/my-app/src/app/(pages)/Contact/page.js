@@ -2,6 +2,8 @@
 import React from "react";
 import emailjs from "emailjs-com";
 import { FaLinkedin, FaGithub, FaEnvelope } from "react-icons/fa";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const page = () => {
   function sendEmail(e) {
@@ -17,17 +19,29 @@ const page = () => {
       .then(
         (result) => {
           console.log(result.text);
-          alert("Message sent successfully!");
+          toast.success("Message sent successfully!", {
+            position: "bottom-center",
+          });
+          toast.success("Message sent successfully!", {
+            position: "top-center",
+          });
         },
         (error) => {
           console.log(error.text);
-          alert("Failed to send the message. Please try again or email me.");
+          toast.error(
+            "Failed to send the message. Please try again or email me.",
+            {
+              position: "bottom-center",
+            }
+          );
         }
       );
     e.target.reset();
   }
+
   return (
     <main className="pt-14 pb-14 px-4">
+      <ToastContainer />
       <div className="mt-12">
         <div className="max-w-6xl mx-auto mt-10 p-6">
           <h1 className="text-4xl font-bold text-center mb-6 text-white">
