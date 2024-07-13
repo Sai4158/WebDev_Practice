@@ -55,7 +55,7 @@ const page = () => {
   }
 
   return (
-    <main className="pt-14 pb-14 px-4">
+    <main className="pt-14 pb-14 px-4 z-10">
       <ToastContainer />
       <div className="mt-12">
         <div className="max-w-6xl mx-auto mt-10 p-6">
