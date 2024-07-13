@@ -68,9 +68,10 @@ const Navbar = () => {
         ></div>
       )}
       <div
-        className={`fixed top-0 right-0 w-64 bg-gray-800 bg-opacity-80 backdrop-blur-lg p-6 z-50 transform transition-transform duration-300 ${
-          isMenuOpen ? "translate-x-0" : "translate-x-full"
-        } rounded-l-lg shadow-lg sm:hidden`}
+        className={`fixed top-0 right-0 w-64 
+           bg-gray-800 bg-opacity-80 backdrop-blur-lg p-6 z-50 transform transition-transform duration-300 ${
+             isMenuOpen ? "translate-x-0" : "translate-x-full"
+           } rounded-l-lg shadow-lg sm:hidden`}
       >
         <button
           onClick={toggleMenu}
