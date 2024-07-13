@@ -1,7 +1,8 @@
 "use client";
 import React, { useState } from "react";
 import emailjs from "emailjs-com";
-import { FaLinkedin, FaGithub, FaEnvelope } from "react-icons/fa";
+import { FaLinkedin, FaGithub } from "react-icons/fa";
+import { SiGmail } from "react-icons/si";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { ClipLoader } from "react-spinners";
@@ -47,7 +48,7 @@ const ContactPage = () => {
 
   return (
     <div>
-      <main className="pt-14 pb-3 px-4">
+      <main className="pt-4 pb-3 px-4">
         <ToastContainer />
         <section id="contact" className="mt-20">
           <h2 className="text-3xl font-semibold text-center text-white">
@@ -124,7 +125,7 @@ const ContactPage = () => {
                   href="https://www.linkedin.com/in/sairangineeni/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-blue-500 hover:text-blue-400 transition duration-300"
+                  className="text-white hover:text-blue-400 transition duration-300"
                 >
                   <FaLinkedin size={30} />
                 </a>
@@ -132,15 +133,15 @@ const ContactPage = () => {
                   href="https://github.com/Sai4158"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-blue-500 hover:text-blue-400 transition duration-300"
+                  className="text-white hover:text-gray-700 transition duration-300"
                 >
                   <FaGithub size={30} />
                 </a>
                 <a
                   href="mailto:sairangineeni1@gmail.com"
-                  className="text-blue-500 hover:text-blue-400 transition duration-300"
+                  className=" hover:text-red-400 transition duration-300"
                 >
-                  <FaEnvelope size={30} />
+                  <SiGmail size={30} />
                 </a>
               </div>
             </div>
