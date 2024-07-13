@@ -6,14 +6,14 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { ClipLoader } from "react-spinners";
 
-const page = () => {
+const ContactPage = () => {
   const [loading, setLoading] = useState(false);
 
   //   this is for the function to send the email
   function sendEmail(e) {
     e.preventDefault();
 
-    // set sppinner to true when button is clicked
+    // set spinner to true when button is clicked
     setLoading(true);
 
     emailjs
@@ -29,8 +29,6 @@ const page = () => {
           toast.success("Message sent successfully!", {
             position: "top-center",
           });
-          //   in the then use the false so it will stop spinning
-          //  .then is rendered when id are fectched
           setLoading(false);
         },
         (error) => {
@@ -39,14 +37,7 @@ const page = () => {
             "Failed to send the message. Please try again or email me.",
             {
               position: "bottom-center",
-            },
-
-            toast.error(
-              "Failed to send the message. Please try again or email me.",
-              {
-                position: "top-center",
-              }
-            )
+            }
           );
           setLoading(false);
         }
@@ -55,17 +46,17 @@ const page = () => {
   }
 
   return (
-    <div className="z-30 ">
-      <main className="pt-14 pb-14 px-4">
+    <div>
+      <main className="pt-14 pb-3 px-4">
         <ToastContainer />
-        <div className="mt-12 ">
-          <div className="max-w-6xl mx-auto mt-10 p-6">
-            <h1 className="text-4xl font-bold text-center mb-6 text-white">
-              Contact Me
-            </h1>
+        <section id="contact" className="mt-20">
+          <h2 className="text-3xl font-semibold text-center text-white">
+            Contact Me
+          </h2>
+          <div className="max-w-3xl mx-auto mt-10">
             <form
               onSubmit={sendEmail}
-              className="max-w-md mx-auto bg-white bg-opacity-20 backdrop-blur-lg p-6 rounded-lg shadow-lg"
+              className="bg-white bg-opacity-10 p-6 rounded-lg shadow-md mb-8"
             >
               <div className="mb-4">
                 <label
@@ -117,7 +108,7 @@ const page = () => {
                   className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline transition duration-300"
                   disabled={loading}
                 >
-                  {/* if the loaidn true then spinner if flase then it will come to word send */}
+                  {/* if the loading is true then spinner if false then it will show "Send" */}
                   {loading ? (
                     <ClipLoader size={24} color={"#ffffff"} />
                   ) : (
@@ -154,10 +145,10 @@ const page = () => {
               </div>
             </div>
           </div>
-        </div>
+        </section>
       </main>
     </div>
   );
 };
 
-export default page;
+export default ContactPage;
