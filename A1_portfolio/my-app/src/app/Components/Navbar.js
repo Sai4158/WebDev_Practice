@@ -31,7 +31,7 @@ const Navbar = () => {
             {isMenuOpen ? <FaTimes /> : <FaBars />}
           </button>
         </div>
-        <div className="hidden sm:flex space-x-8 ">
+        <div className="hidden sm:flex space-x-8">
           <a
             className="flex items-center font-medium hover:text-gray-300"
             href="/"
@@ -74,6 +74,7 @@ const Navbar = () => {
         className={`fixed inset-y-0 right-0 w-64 bg-gray-900 h-96 p-6 rounded-l-3xl transform transition-transform duration-1000 ${
           isMenuOpen ? "translate-x-0" : "translate-x-full"
         } sm:hidden z-50`}
+        style={{ display: isMenuOpen ? "block" : "none" }}
       >
         <button
           onClick={toggleMenu}

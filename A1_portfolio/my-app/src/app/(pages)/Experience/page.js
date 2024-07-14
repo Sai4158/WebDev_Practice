@@ -1,6 +1,6 @@
 "use client";
 
-export default function Home() {
+export default function page() {
   return (
     <div>
       <main className="pt-14 pb-14 px-4">
