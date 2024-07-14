@@ -18,7 +18,7 @@ const Navbar = () => {
   };
 
   return (
-    <header className="fixed top-0 left-0 w-full text-white z-50">
+    <header className=" top-0 left-0 w-full text-white z-50">
       <nav className="max-w-[85rem] w-full mx-auto px-4 flex items-center justify-between py-4">
         <a className="text-2xl font-semibold" href="/">
           Sai Rangineeni

@@ -48,9 +48,9 @@ const ContactPage = () => {
 
   return (
     <div>
-      <main className="pt-4 pb-3 px-4">
+      <main className="pt-1 pb-3 px-4">
         <ToastContainer />
-        <section id="contact" className="mt-20">
+        <section id="contact">
           <h2 className="text-3xl font-semibold text-center text-white">
             Contact Me
           </h2>

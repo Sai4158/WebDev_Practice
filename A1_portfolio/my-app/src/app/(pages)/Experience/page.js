@@ -3,9 +3,9 @@
 export default function page() {
   return (
     <div>
-      <main className="pt-14 pb-14 px-4">
+      <main className="pt-1 pb-4 px-4">
         {/* section 1  */}
-        <section id="experience" className="mt-20">
+        <section id="experience" className="">
           <h2 className="text-3xl font-semibold text-center">Experience</h2>
           <div className="max-w-4xl mx-auto mt-10">
             <div className="bg-white bg-opacity-10 p-6 rounded-lg shadow-md mb-8">

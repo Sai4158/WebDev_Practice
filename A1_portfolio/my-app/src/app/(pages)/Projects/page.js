@@ -3,10 +3,10 @@
 export default function Projects() {
   return (
     <div>
-      <main className="pt-20 px-4 mb-14 ">
-        <section className="text-center mt-10">
+      <main className="pt-2 px-4 mb-14 ">
+        <section className="text-center ">
           <h1 className="text-4xl font-bold">Hackathons & Projects</h1>
-          <p className="text-lg mt-2">
+          <p className="text-lg mt-4">
             A showcase of my hackathons and projects experiences.
           </p>
         </section>
