@@ -4,11 +4,11 @@ import { FaLinkedin, FaGithub, FaEnvelope } from "react-icons/fa";
 export default function Home() {
   return (
     <div>
-      <main className=" pb-2 px-4">
-        <div className="flex items-center justify-center min-h-screen">
-          <div className="relative w-full max-w-5xl bg-opacity-40 p-10 rounded-lg shadow-lg overflow-hidden bg-black ">
+      <main className=" px-4">
+        <div className="flex  justify-center h-50">
+          <div className="relative w-full max-w-7xl bg-opacity-40 px-10 pb-10 rounded-lg shadow-lg overflow-hidden bg-black">
             {/* Background Image */}
-            <div className="absolute  hidden lg:block">
+            <div className="absolute inset-0 hidden lg:block">
               <img
                 src="https://i.ibb.co/dQGwy7w/Sai-Profile-pic.jpg"
                 alt="Sai Rangineeni"
@@ -17,10 +17,10 @@ export default function Home() {
             </div>
 
             {/* Content Section */}
-            <div className="relative flex flex-col md:flex-row items-center justify-center w-full h-full ">
+            <div className="relative flex flex-col md:flex-row items-center justify-center w-full h-full">
               {/* Profile Picture Section */}
-              <div className="relative w-full md:w-1/3 flex justify-center md:justify-end p-16">
-                <div className="relative w-48 h-48 md:w-60 md:h-60 rounded-lg overflow-hidden shadow-lg transform transition-transform hover:scale-105">
+              <div className="relative w-full md:w-1/3 flex justify-center md:justify-end p-8 md:p-16">
+                <div className="relative w-48 h-48 md:w-80 md:h-80 rounded-lg overflow-hidden shadow-lg transform transition-transform hover:scale-105">
                   <img
                     src="https://i.ibb.co/dQGwy7w/Sai-Profile-pic.jpg"
                     alt="Sai Rangineeni"
