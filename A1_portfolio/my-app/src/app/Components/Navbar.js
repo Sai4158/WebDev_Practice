@@ -18,17 +18,20 @@ const Navbar = () => {
   };
 
   return (
-    <header className="fixed top-0 left-0 w-full  text-white z-50">
+    <header className="fixed top-0 left-0 w-full text-white z-50">
       <nav className="max-w-[85rem] w-full mx-auto px-4 flex items-center justify-between py-4">
         <a className="text-2xl font-semibold" href="/">
           Sai Rangineeni
         </a>
         <div className="sm:hidden">
-          <button onClick={toggleMenu} className="text-2xl focus:outline-none">
-            <FaBars />
+          <button
+            onClick={toggleMenu}
+            className="text-2xl bg-gray-900 p-2 rounded focus:outline-none"
+          >
+            {isMenuOpen ? <FaTimes /> : <FaBars />}
           </button>
         </div>
-        <div className="hidden sm:flex space-x-8">
+        <div className="hidden sm:flex space-x-8 ">
           <a
             className="flex items-center font-medium hover:text-gray-300"
             href="/"
@@ -68,9 +71,9 @@ const Navbar = () => {
         ></div>
       )}
       <div
-        className={`fixed top-0 right-0 w-64 bg-gray-900 p-6 z-50 transform transition-transform duration-300 ${
+        className={`fixed inset-y-0 right-0 w-64 bg-gray-900 h-96 p-6 rounded-l-3xl transform transition-transform duration-1000 ${
           isMenuOpen ? "translate-x-0" : "translate-x-full"
-        } rounded-l-lg shadow-lg sm:hidden`}
+        } sm:hidden z-50`}
       >
         <button
           onClick={toggleMenu}
@@ -78,6 +81,7 @@ const Navbar = () => {
         >
           <FaTimes />
         </button>
+
         <nav className="mt-10 space-y-4">
           <a
             className="block text-white font-medium hover:text-gray-300"
@@ -87,6 +91,8 @@ const Navbar = () => {
             <FaHome className="mr-2 inline" />
             Home
           </a>
+          <br />
+          <br />
           <a
             className="block text-white font-medium hover:text-gray-300"
             href="/Experience"
@@ -95,6 +101,8 @@ const Navbar = () => {
             <FaUser className="mr-2 inline" />
             Experience
           </a>
+          <br />
+          <br />
           <a
             className="block text-white font-medium hover:text-gray-300"
             href="/Projects"
@@ -103,6 +111,8 @@ const Navbar = () => {
             <FaProjectDiagram className="mr-2 inline" />
             Projects
           </a>
+          <br />
+          <br />
           <a
             className="block text-white font-medium hover:text-gray-300"
             href="/Contact"
@@ -111,6 +121,8 @@ const Navbar = () => {
             <FaEnvelope className="mr-2 inline" />
             Contact
           </a>
+          <br />
+          <br />
         </nav>
       </div>
     </header>
