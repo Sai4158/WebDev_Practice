@@ -18,7 +18,7 @@ const Navbar = () => {
   };
 
   return (
-    <header className=" top-0 left-0 w-full text-white z-50">
+    <header className="mt-5 pl-3 pr-5 left-0 w-full text-white z-50">
       <nav className="max-w-[85rem] w-full mx-auto px-4 flex items-center justify-between py-4">
         <a className="text-2xl font-semibold" href="/">
           Sai Rangineeni
@@ -64,24 +64,22 @@ const Navbar = () => {
       </nav>
 
       {/* Sidebar for mobile */}
-      {isMenuOpen && (
-        <div
-          className="fixed inset-0 bg-black bg-opacity-50 z-40"
-          onClick={toggleMenu}
-        ></div>
-      )}
       <div
-        className={`fixed inset-y-0 right-0 w-64 bg-gray-900 h-96 p-6 rounded-l-3xl transform transition-transform duration-1000 ${
+        className={`fixed inset-y-0 right-0 w-64 bg-gray-900 h[50px] p-6 rounded-l-3xl transform transition-transform duration-[1500ms] ${
           isMenuOpen ? "translate-x-0" : "translate-x-full"
         } sm:hidden z-50`}
-        style={{ display: isMenuOpen ? "block" : "none" }}
       >
+        <br />
+        <br />
         <button
           onClick={toggleMenu}
-          className="text-2xl text-white absolute top-4 right-4 focus:outline-none"
+          className="text-2xl text-white absolute top-20 left-6 focus:outline-none hover:scale-110 hover:text-red-600"
         >
-          <FaTimes />
+          <FaTimes size={40} />
         </button>
+        <br />
+        <br />
+        <br />
 
         <nav className="mt-10 space-y-4">
           <a
@@ -126,6 +124,13 @@ const Navbar = () => {
           <br />
         </nav>
       </div>
+
+      <div
+        className={`fixed inset-0 bg-black transition-opacity duration-[1500ms] ${
+          isMenuOpen ? "opacity-50" : "opacity-0 pointer-events-none"
+        } z-40`}
+        onClick={toggleMenu}
+      ></div>
     </header>
   );
 };

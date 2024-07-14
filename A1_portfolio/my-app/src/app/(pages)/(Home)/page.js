@@ -4,7 +4,7 @@ import { FaLinkedin, FaGithub, FaEnvelope } from "react-icons/fa";
 export default function Home() {
   return (
     <div>
-      <main className="pt-3 pb-2 px-4">
+      <main className=" pb-2 px-4">
         <div className="flex items-center justify-center min-h-screen">
           <div className="relative w-full max-w-5xl bg-opacity-40 p-10 rounded-lg shadow-lg overflow-hidden bg-black ">
             {/* Background Image */}
