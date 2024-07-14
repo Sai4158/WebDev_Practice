@@ -20,7 +20,7 @@ export default function Home() {
             <div className="relative flex flex-col md:flex-row items-center justify-center w-full h-full">
               {/* Profile Picture Section */}
               <div className="relative w-full md:w-1/3 flex justify-center md:justify-end p-4 md:p-8 lg:p-16">
-                <div className="relative w-48 h-64 md:w-80 md:h-56 rounded-lg overflow-hidden shadow-lg transform transition-transform hover:scale-105">
+                <div className="relative w-64 h-48 md:w-80 md:h-56 rounded-lg overflow-hidden shadow-lg transform transition-transform hover:scale-105">
                   <img
                     src="https://i.ibb.co/dQGwy7w/Sai-Profile-pic.jpg"
                     alt="Sai Rangineeni"
