@@ -23,6 +23,17 @@ export default function Page() {
               <h3 className="text-2xl font-semibold mb-2">Internship</h3>
               <div className="flex items-center">
                 <div className="flex-1">
+                  <div className="flex-none  lg:hidden md:hidden ">
+                    <img
+                      src="/Ctfguide.png"
+                      alt="CTFGuide Logo"
+                      width={100}
+                      height={100}
+                      className="hover:opacity-80 cursor-pointer"
+                      onClick={() => router.push("https://ctfguide.com")}
+                    />
+                  </div>
+                  <br />
                   <p>
                     <strong>Company:</strong> CTFGuide
                     <br />
@@ -41,7 +52,7 @@ export default function Page() {
                   </p>
                 </div>
                 {/* using div to make it next to each other using flex */}
-                <div className="flex-none ml-4">
+                <div className="flex-none ml-4 sm:block hidden ">
                   <img
                     src="/Ctfguide.png"
                     alt="CTFGuide Logo"
