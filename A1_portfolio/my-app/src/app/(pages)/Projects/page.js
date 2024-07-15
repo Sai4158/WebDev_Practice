@@ -3,7 +3,7 @@
 export default function Projects() {
   return (
     <div>
-      <main className="pt-2 px-4 mb-14 ">
+      <main className="pt-2 px-4 pb-12 mb-14 ">
         <section className="text-center ">
           <h1 className="text-4xl font-bold">Hackathons & Projects</h1>
           <p className="text-lg mt-4">

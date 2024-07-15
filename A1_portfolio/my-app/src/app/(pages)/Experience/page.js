@@ -3,7 +3,7 @@
 export default function Page() {
   return (
     <div>
-      <main className="pt-1 pb-4 px-4">
+      <main className="pt-1 pb-20 px-4">
         <section id="experience" className="">
           <h2 className="text-3xl font-semibold text-center">Experience</h2>
           <div className="max-w-4xl mx-auto mt-10">

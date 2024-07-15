@@ -48,7 +48,7 @@ const ContactPage = () => {
 
   return (
     <div>
-      <main className="pt-1 pb-3 px-4">
+      <main className="pt-1 mb-64 px-4">
         <ToastContainer />
         <section id="contact">
           <h2 className="text-3xl font-semibold text-center text-white">
@@ -136,7 +136,7 @@ const ContactPage = () => {
                   href="https://github.com/Sai4158"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-white hover:text-gray-700 transition duration-300"
+                  className="text-white hover:text-gray-600 transition duration-300"
                 >
                   <FaGithub size={30} />
                 </a>

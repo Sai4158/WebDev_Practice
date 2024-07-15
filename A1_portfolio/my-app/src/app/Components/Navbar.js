@@ -20,9 +20,15 @@ const Navbar = () => {
   return (
     <header className="mt-5 pl-3 pr-5 left-0 w-full text-white z-50">
       <nav className="max-w-[85rem] w-full mx-auto px-4 flex items-center justify-between py-4">
-        <a className="text-2xl font-semibold" href="/">
-          Sai Rangineeni
+        <a className="text-2xl font-medium relative group" href="/">
+          <span className="absolute  opacity-0 group-hover:opacity-100 transition-opacity duration-600 text-blue-200">
+            Home
+          </span>
+          <span className=" group-hover:opacity-0 transition-opacity duration-700   ">
+            Welcome!
+          </span>
         </a>
+
         <div className="sm:hidden">
           <button
             onClick={toggleMenu}
