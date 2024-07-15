@@ -71,6 +71,7 @@ const ContactPage = () => {
                   name="from_name"
                   id="from_name"
                   required
+                  placeholder="Enter Name"
                   className="shadow appearance-none border border-transparent rounded w-full py-2 px-3 text-gray-900 leading-tight focus:outline-none focus:shadow-outline bg-white bg-opacity-70 backdrop-blur-md transition duration-300"
                 />
               </div>
@@ -86,6 +87,7 @@ const ContactPage = () => {
                   name="reply_to"
                   id="reply_to"
                   required
+                  placeholder="Enter Email"
                   className="shadow appearance-none border border-transparent rounded w-full py-2 px-3 text-gray-900 leading-tight focus:outline-none focus:shadow-outline bg-white bg-opacity-70 backdrop-blur-md transition duration-300"
                 />
               </div>
@@ -100,6 +102,7 @@ const ContactPage = () => {
                   name="message"
                   id="message"
                   required
+                  placeholder=". . ."
                   className="shadow appearance-none border border-transparent rounded w-full py-2 px-3 text-gray-900 leading-tight focus:outline-none focus:shadow-outline bg-white bg-opacity-70 backdrop-blur-md transition duration-300"
                 ></textarea>
               </div>
