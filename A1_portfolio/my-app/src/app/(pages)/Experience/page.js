@@ -102,7 +102,7 @@ export default function Page() {
                     <br />
                     Focused on building and optimizing user settings and profile
                     settings using <b>Next.js</b>, <b>JavaScript</b>,{" "}
-                    <b>TailwindCSS</b>, <b>React.js</b>, <b>Git</b>, and{" "}
+                    <b>TailwindCSS</b>, <b>Express.js</b>, <b>Git</b>, and{" "}
                     <b>Agile development</b>.
                   </p>
                 </div>
