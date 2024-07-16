@@ -148,6 +148,8 @@ export default function Page() {
                   "MongoDB",
                   "Tailwind CSS",
                   "HTML5",
+                  "Vite",
+                  "Wireframes",
                   "Web Design",
                   "Web Development",
                   "Git",
