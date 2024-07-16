@@ -48,11 +48,7 @@ export default function Home() {
                 </p>
                 <p className="text-lg md:text-md text-gray-300 mb-6">
                   Please explore my portfolio to see my projects and{" "}
-                  <a
-                    href="/Experience"
-                    target="_blank"
-                    className="hover:underline"
-                  >
+                  <a href="/Experience" className="hover:underline">
                     <b>experience</b>
                   </a>
                   . Feel free to reach out to me for any opportunities or
