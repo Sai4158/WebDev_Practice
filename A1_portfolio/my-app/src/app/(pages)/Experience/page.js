@@ -152,7 +152,6 @@ export default function Page() {
                   "Web Development",
                   "Git",
                   "CAD",
-                  "Audio Engineering",
                   "FL Studio",
                   "Adobe Audition",
                   "Adobe Illustrator",
