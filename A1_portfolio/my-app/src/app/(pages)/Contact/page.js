@@ -51,9 +51,7 @@ const ContactPage = () => {
       <main className="pt-1 mb-64 px-4">
         <ToastContainer />
         <section id="contact">
-          <h2 className="text-3xl font-semibold text-center text-white">
-            Contact Me
-          </h2>
+          <h2 className="text-3xl  text-center text-white">Contact Me</h2>
           <div className="max-w-3xl mx-auto mt-10">
             <form
               onSubmit={sendEmail}
@@ -72,7 +70,7 @@ const ContactPage = () => {
                   id="from_name"
                   required
                   placeholder="Enter Name"
-                  className="shadow appearance-none border border-transparent rounded w-full py-2 px-3 text-gray-900 leading-tight focus:outline-none focus:shadow-outline bg-white bg-opacity-70 backdrop-blur-md transition duration-300"
+                  className=" shadow appearance-none border border-transparent rounded w-full py-2 px-3 text-black font-normal leading-tight focus:outline-none focus:shadow-outline bg-white  bg-opacity-70 backdrop-blur-md transition duration-300"
                 />
               </div>
               <div className="mb-4">
@@ -88,7 +86,7 @@ const ContactPage = () => {
                   id="reply_to"
                   required
                   placeholder="Enter Email"
-                  className="shadow appearance-none border border-transparent rounded w-full py-2 px-3 text-gray-900 leading-tight focus:outline-none focus:shadow-outline bg-white bg-opacity-70 backdrop-blur-md transition duration-300"
+                  className="shadow appearance-none border border-transparent rounded w-full py-2 px-3 text-black font-normal leading-tight focus:outline-none focus:shadow-outline bg-white bg-opacity-70 backdrop-blur-md transition duration-300"
                 />
               </div>
               <div className="mb-4">
@@ -103,13 +101,13 @@ const ContactPage = () => {
                   id="message"
                   required
                   placeholder=". . ."
-                  className="shadow appearance-none border border-transparent rounded w-full py-2 px-3 text-gray-900 leading-tight focus:outline-none focus:shadow-outline bg-white bg-opacity-70 backdrop-blur-md transition duration-300"
+                  className="shadow appearance-none border border-transparent rounded w-full py-2 px-3 text-black font-normal leading-tight focus:outline-none focus:shadow-outline bg-white  bg-opacity-70 backdrop-blur-md transition duration-300"
                 ></textarea>
               </div>
               <div className="flex items-center justify-between">
                 <button
                   type="submit"
-                  className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline transition duration-300"
+                  className="bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded-lg focus:outline-none focus:shadow-outline transition duration-300 w-32"
                   disabled={loading}
                 >
                   {/* if the loading is true then spinner if false then it will show "Send" */}
