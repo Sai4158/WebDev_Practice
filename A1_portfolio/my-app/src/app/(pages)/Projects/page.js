@@ -3,15 +3,15 @@
 export default function Projects() {
   return (
     <div>
-      <main className="pt-2 px-4 pb-12 mb-14 ">
-        <section className="text-center ">
+      <main className="pt-2 px-4 pb-12 mb-14">
+        <section className="text-center">
           <h1 className="text-4xl font-bold">Hackathons & Projects</h1>
           <p className="text-lg mt-4">
-            A showcase of my hackathons and projects experiences.
+            A showcase of my hackathons and project experiences.
           </p>
         </section>
 
-        <section className="max-w-6xl mx-auto mt-10 grid gap-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 masonry ">
+        <section className="max-w-6xl mx-auto mt-10 grid gap-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 masonry">
           {/* Comcast Inquire */}
           <div
             className="bg-white bg-opacity-10 p-6 rounded-lg shadow-md cursor-pointer break-inside hover:scale-105 transition-all"
@@ -22,24 +22,19 @@ export default function Projects() {
               )
             }
           >
-            <h2 className="text-2xl font-semibold mb-2">Comcast Inquire</h2>
+            <h2 className="text-2xl mb-2">Comcast Inquire</h2>
             <p className="mb-2">
-              Supercharged chat assistant for Comcast sales and marketing. Built
-              with Next.js, Clerk, Redis, Railway, GPT-4, TailwindCSS.
+              Developed a chat assistant leveraging GPT-4 for enhancing Comcast
+              sales and marketing efficiency. Utilized Next.js for server-side
+              rendering, Clerk for authentication, Redis for caching, and
+              Railway for deployment.
             </p>
-            <br />
-            <p>
-              <b>
-                <strong>Winning project</strong>
-              </b>
+            <p className="mb-2">
+              <strong>Winning project</strong> at Philly Codefest.
             </p>
-            <p>
+            <p className="mb-2">
               <strong>Team:</strong> Sai Rangineeni, Pranav Ramesh
             </p>
-            <p>
-              <strong>Hackathon:</strong> Winning Project at Philly Codefest
-            </p>
-            <br />
             <a
               href="https://github.com/Laphatize/comcast-inquire"
               target="_blank"
@@ -82,27 +77,25 @@ export default function Projects() {
 
           {/* UMoments Project */}
           <div
-            className="bg-white bg-opacity-10 p-6 rounded-lg shadow-md cursor-pointer break-inside hover:scale-105 transition-all	"
+            className="bg-white bg-opacity-10 p-6 rounded-lg shadow-md cursor-pointer break-inside hover:scale-105 transition-all"
             onClick={() =>
               window.open("https://devpost.com/software/umoment", "_blank")
             }
           >
-            <h2 className="text-2xl font-semibold mb-2">UMoments</h2>
+            <h2 className="text-2xl mb-2">UMoments</h2>
             <p className="mb-2">
-              UMoments serves as a centralized hub for university students to
-              discover and keep track of events happening on and around campus.
-              <br /> <br />
-              Built with Next.js, TailwindCSS, Express.js, Node.js, Auth0,
-              MongoDB.
+              Created a centralized platform for university students to discover
+              and track campus events. Built with Next.js for fast and dynamic
+              UI, TailwindCSS for styling, Express.js and Node.js for the
+              backend, Auth0 for authentication, and MongoDB for database
+              management.
             </p>
-            <br />
-            <p>
+            <p className="mb-2">
               <strong>Team:</strong> 5 members
             </p>
-            <p>
+            <p className="mb-2">
               <strong>Hackathon:</strong> HackPSU Spring 2024
             </p>
-            <br />
             <a
               href="https://github.com/umoment-tech"
               target="_blank"
@@ -112,6 +105,7 @@ export default function Projects() {
               GitHub Repo
             </a>
             <div className="mt-4">
+              <br />
               <a
                 href="https://umoment-frontend.vercel.app/"
                 target="_blank"
@@ -119,6 +113,39 @@ export default function Projects() {
                 onClick={(e) => e.stopPropagation()}
               >
                 Try it out
+              </a>
+            </div>
+          </div>
+          {/* Personal Engineering Projects */}
+          <div
+            className="bg-white bg-opacity-10 p-6 rounded-lg shadow-md cursor-pointer break-inside hover:scale-105 transition-all"
+            onClick={() =>
+              window.open(
+                "https://cad.onshape.com/documents/6a68262e48e7c9e68fd6c306/w/3fef6bd3b3b6402fe55b3bde/e/55f373827c28c5ed5f97f078?renderMode=0&uiState=65fcf8b5362fd31ffcd07ff2",
+                "_blank"
+              )
+            }
+          >
+            <h2 className="text-2xl mb-2">Engineering Projects</h2>
+            <img
+              src="CAD.png"
+              alt="CAD Project"
+              className="rounded-lg h-44 w-full object-cover mt-2"
+            />
+            <p className="mt-4 mb-2">
+              Engineered a marble ladder automata using CAD. Crafted with laser
+              cutting and 3D printing techniques.
+            </p>
+            <div className="mt-4">
+              {" "}
+              <br />
+              <a
+                href="https://cad.onshape.com/documents/6a68262e48e7c9e68fd6c306/w/3fef6bd3b3b6402fe55b3bde/e/55f373827c28c5ed5f97f078?renderMode=0&uiState=65fcf8b5362fd31ffcd07ff2"
+                target="_blank"
+                className="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600"
+                onClick={(e) => e.stopPropagation()}
+              >
+                CAD Automata Project
               </a>
             </div>
           </div>
@@ -132,28 +159,12 @@ export default function Projects() {
               )
             }
           >
-            <h2 className="text-2xl font-semibold mb-2">
-              Pizza Bill Generator
-            </h2>
+            <h2 className="text-2xl mb-2">Pizza Bill Generator</h2>
             <p className="mb-2">
-              A comprehensive pizza billing system that demonstrates OOP
-              principles, including inheritance, encapsulation, and
-              polymorphism. The project calculates the final bill based on
+              Demonstrated OOP principles through a comprehensive pizza billing
+              system. Included inheritance, encapsulation, and polymorphism
+              concepts. Built with Java, it calculates the final bill based on
               selected toppings and extras.
-            </p>
-            <p>
-              <strong>Features:</strong>
-            </p>
-            <ul className="list-disc list-inside mb-2">
-              <li>Base pizza options for vegetarian and non-vegetarian</li>
-              <li>
-                Additional toppings and extras such as extra cheese and chicken
-              </li>
-              <li>Takeaway option with additional packaging cost</li>
-              <li>Encapsulation of price calculation and bill generation</li>
-            </ul>
-            <p>
-              <strong>Languages:</strong> Java
             </p>
             <a
               href="https://github.com/Sai4158/JavaPractice/tree/master/src/pizza_bill_genrator_project"
@@ -175,19 +186,11 @@ export default function Projects() {
               )
             }
           >
-            <h2 className="text-2xl font-semibold mb-2">Air-Pollution-App</h2>
+            <h2 className="text-2xl mb-2">Air-Pollution-App</h2>
             <p className="mb-2">
-              Air Pollution App is a simple web tool built with HTML, CSS, and
-              JavaScript. <br /> <br />
-              It uses latitude and longitude inputs to fetch and display
-              real-time air quality data from the OpenWeatherMap API.
+              Web tool fetching and displaying real-time air quality data using
+              OpenWeatherMap API. Built with HTML, CSS, and JavaScript.
             </p>
-            <br />
-            <br />
-            <p>
-              <strong>Languages:</strong> JavaScript, CSS, HTML
-            </p>
-            <br />
             <a
               href="https://github.com/Sai4158/Air-Pollution-App"
               target="_blank"
@@ -218,26 +221,12 @@ export default function Projects() {
               )
             }
           >
-            <h2 className="text-2xl font-semibold mb-2">Banking App</h2>
+            <h2 className="text-2xl mb-2">Banking App</h2>
             <p className="mb-2">
-              A simple banking application demonstrating OOP principles. It
-              includes features for depositing and withdrawing money, and
-              managing account details such as account number, balance, name,
-              email, and phone.
-            </p>
-            <p>
-              <strong>Features:</strong>
-            </p>
-            <ul className="list-disc list-inside mb-2">
-              <li>
-                Account creation with details: number, balance, name, email,
-                phone
-              </li>
-              <li>Deposit and withdraw money with balance checks</li>
-              <li>Getter and setter methods for account attributes</li>
-            </ul>
-            <p>
-              <strong>Languages:</strong> Java
+              Demonstrated OOP principles in a simple banking application.
+              Managed account details, deposits, and withdrawals. Built with
+              Java, it includes account number, balance, and personal
+              information management.
             </p>
             <a
               href="https://github.com/Sai4158/JavaPractice/tree/master/src/bankingApp"
@@ -259,23 +248,11 @@ export default function Projects() {
               )
             }
           >
-            <h2 className="text-2xl font-semibold mb-2">
-              Telecommunication Project
-            </h2>
+            <h2 className="text-2xl mb-2">Telecommunication Project</h2>
             <p className="mb-2">
-              A comprehensive project showcasing various Java concepts applied
-              in a real-world telecommunication system.
-            </p>
-            <p>
-              <strong>Features:</strong>
-            </p>
-            <ul className="list-disc list-inside mb-2">
-              <li>Management of user data and telecommunications</li>
-              <li>Implementation of advanced OOP principles</li>
-              <li>Error handling and data validation</li>
-            </ul>
-            <p>
-              <strong>Languages:</strong> Java
+              Implemented a telecommunication system showcasing advanced Java
+              concepts. Focused on user data management, OOP principles, error
+              handling, and data validation.
             </p>
             <a
               href="https://github.com/Sai4158/JavaPractice/tree/master/src/telecommunicationProject"
@@ -294,13 +271,11 @@ export default function Projects() {
               window.open("https://github.com/Sai4158/Icecream-store", "_blank")
             }
           >
-            <h2 className="text-2xl font-semibold mb-2">Icecream-store</h2>
+            <h2 className="text-2xl mb-2">Icecream-store</h2>
             <p className="mb-2">
-              Responsive ice cream store website. Built with React, Vite,
-              TailwindCSS.
-            </p>
-            <p>
-              <strong>Languages:</strong> JavaScript, CSS, HTML
+              Created a responsive ice cream store website. Utilized React for
+              UI components, Vite for development build, and TailwindCSS for
+              styling.
             </p>
             <a
               href="https://github.com/Sai4158/Icecream-store"
@@ -322,15 +297,10 @@ export default function Projects() {
               )
             }
           >
-            <h2 className="text-2xl font-semibold mb-2">
-              Random-Color-Generator
-            </h2>
+            <h2 className="text-2xl mb-2">Random-Color-Generator</h2>
             <p className="mb-2">
-              Random gradient background generator. Built with HTML, CSS,
-              JavaScript.
-            </p>
-            <p>
-              <strong>Languages:</strong> JavaScript, CSS, HTML
+              Developed a tool for generating random gradient backgrounds. Built
+              with HTML, CSS, and JavaScript.
             </p>
             <a
               href="https://github.com/Sai4158/Random-Color-Generator"
@@ -359,12 +329,10 @@ export default function Projects() {
               window.open("https://sai4158.github.io/Cookie-Clicker/", "_blank")
             }
           >
-            <h2 className="text-2xl font-semibold mb-2">Cookie-Clicker</h2>
+            <h2 className="text-2xl mb-2">Cookie-Clicker</h2>
             <p className="mb-2">
-              Simple cookie clicker game. Built with JavaScript, HTML, CSS.
-            </p>
-            <p>
-              <strong>Languages:</strong> JavaScript, CSS, HTML
+              Built a simple cookie clicker game using JavaScript, HTML, and
+              CSS.
             </p>
             <a
               href="https://github.com/Sai4158/Cookie-Clicker"
@@ -391,7 +359,7 @@ export default function Projects() {
             className="bg-white bg-opacity-10 p-6 rounded-lg shadow-md cursor-pointer break-inside hover:scale-105 transition-all"
             onClick={() => window.open("https://github.com/Sai4158", "_blank")}
           >
-            <h2 className="text-2xl font-semibold mb-2">Other Projects</h2>
+            <h2 className="text-2xl mb-2">Other Projects</h2>
             <ul className="list-disc list-inside">
               <li>
                 <a
