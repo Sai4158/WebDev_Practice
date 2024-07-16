@@ -9,7 +9,7 @@ export default function Page() {
         <section id="experience" className="">
           <h2 className="text-3xl text-center mb-10">Experience</h2>
           <div className="max-w-4xl mx-auto">
-            <div className="bg-white bg-opacity-10 p-6 rounded-lg shadow-md mb-8 backdrop-blur-md">
+            <div className="bg-white bg-opacity-10 p-6 rounded-lg shadow-md mb-8 backdrop-blur-md hover:scale-110 transition-transform duration-1000">
               <h3 className="text-2xl mb-2 flex items-center">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -39,7 +39,7 @@ export default function Page() {
               </p>
             </div>
 
-            <div className="bg-black bg-opacity-25 p-6 rounded-lg shadow-md mb-8 backdrop-blur-md">
+            <div className="bg-black bg-opacity-25 p-6 rounded-lg shadow-md mb-8 backdrop-blur-md hover:scale-110 transition-transform duration-1000">
               <h3 className="text-2xl font-semibold mb-2">Internship</h3>
               <div className="flex items-center">
                 <div className="flex-1">
@@ -72,7 +72,7 @@ export default function Page() {
                     development practices.
                   </p>
                 </div>
-                <div className="flex-none ml-4 sm:block hidden">
+                <div className="flex-none ml-4 sm:block hidden ">
                   <img
                     src="/Ctfguide.png"
                     alt="CTFGuide Logo"
@@ -87,7 +87,7 @@ export default function Page() {
               </div>
             </div>
 
-            <div className="bg-white bg-opacity-10 p-6 rounded-lg shadow-md backdrop-blur-md">
+            <div className="bg-white bg-opacity-10 p-6 rounded-lg shadow-md backdrop-blur-md hover:scale-110 transition-transform duration-1000">
               <h3 className="text-2xl font-semibold mb-4">Skills</h3>
               <div className="flex flex-wrap gap-2 mt-6">
                 {[
