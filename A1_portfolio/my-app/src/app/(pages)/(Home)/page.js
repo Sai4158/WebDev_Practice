@@ -6,7 +6,7 @@ export default function Home() {
     <div>
       <main className="px-4">
         <div className="flex justify-center min-h-screen">
-          <div className="relative w-full lg:h-[500px] max-w-7xl bg-opacity-40 px-6 pb-10 rounded-lg shadow-lg overflow-hidden bg-black">
+          <div className="relative w-full lg:h-[525px] max-w-7xl bg-opacity-40 px-6 pb-10 rounded-lg shadow-lg overflow-hidden bg-black">
             {/* Background Image */}
             <div className="absolute inset-0 hidden lg:block">
               <img
@@ -30,21 +30,35 @@ export default function Home() {
               </div>
 
               <div className="w-full md:w-2/3 mt-6 md:mt-0 md:ml-6 text-center md:text-left px-4 md:px-0">
+                <br />
+                <br />
                 <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
                   Sai Rangineeni
                 </h1>
-                <p className="text-lg md:text-xl text-gray-300 mb-4">
-                  PSU Student | Human-Centered Design & Development | Software
-                  Engineer Intern @ CTFGuide
+                <p className="text-lg md:text-md text-gray-300 mb-4">
+                  I'm a <b>PSU student</b> specializing in{" "}
+                  <b>Human-Centered Design & Development</b> with a focus on{" "}
+                  <b>Data Science</b>. I am passionate about Full Stack Web
+                  Development, UI/UX Design, and Software Engineering.
                 </p>
-                <p className="text-lg md:text-xl text-gray-300 mb-4">
-                  React.js, TailwindCSS, Next.js, JavaScript, Node.js, SQL,
-                  MongoDB, Git
+                <p className="text-lg md:text-md text-gray-300 mb-4">
+                  <b>I have hands-on experience with</b> <br />
+                  React.js, Next.js, Java, TailwindCSS, JavaScript, Node.js,
+                  SQL, MongoDB, and Git.
                 </p>
-                <p className="text-lg md:text-xl text-gray-300 mb-6">
-                  Interests: Web Development, UI/UX Design, Agile Development,
-                  Music Production, Graphic Design
+                <p className="text-lg md:text-md text-gray-300 mb-6">
+                  Please explore my portfolio to see my projects and{" "}
+                  <a
+                    href="/Experience"
+                    target="_blank"
+                    className="hover:underline"
+                  >
+                    <b>experience</b>
+                  </a>
+                  . Feel free to reach out to me for any opportunities or
+                  collaborations.
                 </p>
+
                 <a
                   href="/Contact"
                   className="inline-block bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded-full focus:outline-none focus:shadow-outline transition duration-300"
