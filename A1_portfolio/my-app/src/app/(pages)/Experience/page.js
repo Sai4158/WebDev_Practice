@@ -40,7 +40,19 @@ export default function Page() {
             </div>
 
             <div className="bg-black bg-opacity-25 p-6 rounded-lg shadow-md mb-8 backdrop-blur-md hover:scale-105 transition-transform duration-1000 ">
-              <h3 className="text-2xl font-semibold mb-2">Internship</h3>
+              <h3 className="text-2xl font-semibold mb-2 flex items-center">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  height="40px"
+                  viewBox="0 -960 960 960"
+                  width="40px"
+                  fill="white"
+                  className="mr-2"
+                >
+                  <path d="M146.67-120q-27 0-46.84-19.83Q80-159.67 80-186.67v-466.66q0-27 19.83-46.84Q119.67-720 146.67-720H320v-93.33q0-27 19.83-46.84Q359.67-880 386.67-880h186.66q27 0 46.84 19.83Q640-840.33 640-813.33V-720h173.33q27 0 46.84 19.83Q880-680.33 880-653.33v466.66q0 27-19.83 46.84Q840.33-120 813.33-120H146.67Zm0-66.67h666.66v-466.66H146.67v466.66Zm240-533.33h186.66v-93.33H386.67V-720Zm-240 533.33v-466.66 466.66Z" />
+                </svg>
+                Internship
+              </h3>
               <div className="flex items-center">
                 <div className="flex-1">
                   <div className="flex-none lg:hidden md:hidden mb-4">
@@ -88,7 +100,20 @@ export default function Page() {
             </div>
 
             <div className="bg-white bg-opacity-10 p-6 rounded-lg shadow-md backdrop-blur-md hover:scale-105 transition-transform duration-1000">
-              <h3 className="text-2xl font-semibold mb-4">Skills</h3>
+              <h3 className="text-2xl font-semibold mb-4 flex items-center">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  height="40px"
+                  viewBox="0 -960 960 960"
+                  width="40px"
+                  fill="white"
+                  className="mr-2"
+                >
+                  <path d="m320-241.33-240-240 241.33-241.34L369-675 175-481l192.33 192.33L320-241.33ZM638.67-240 591-287.67l194-194L592.67-674 640-721.33l240 240L638.67-240Z" />
+                </svg>
+                Skills
+              </h3>
+
               <div className="flex flex-wrap gap-2 mt-6">
                 {[
                   "Java",
