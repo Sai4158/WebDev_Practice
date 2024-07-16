@@ -59,7 +59,7 @@ const ContactPage = () => {
             >
               <div className="mb-4">
                 <label
-                  className="block text-white text-sm font-bold mb-2"
+                  className="block text-white text-lg mb-2"
                   htmlFor="from_name"
                 >
                   Name
@@ -70,12 +70,12 @@ const ContactPage = () => {
                   id="from_name"
                   required
                   placeholder="Enter Name"
-                  className=" shadow appearance-none border border-transparent rounded w-full py-2 px-3 text-black font-normal leading-tight focus:outline-none focus:shadow-outline bg-white  bg-opacity-70 backdrop-blur-md transition duration-300"
+                  className="placeholder-black  shadow appearance-none border border-transparent rounded w-full py-2 px-3 text-black font-normal leading-tight focus:outline-none focus:shadow-outline bg-white  bg-opacity-70 backdrop-blur-md transition duration-300"
                 />
               </div>
               <div className="mb-4">
                 <label
-                  className="block text-white text-sm font-bold mb-2"
+                  className="block text-white text-lg mb-2"
                   htmlFor="reply_to"
                 >
                   Email
@@ -86,12 +86,12 @@ const ContactPage = () => {
                   id="reply_to"
                   required
                   placeholder="Enter Email"
-                  className="shadow appearance-none border border-transparent rounded w-full py-2 px-3 text-black font-normal leading-tight focus:outline-none focus:shadow-outline bg-white bg-opacity-70 backdrop-blur-md transition duration-300"
+                  className="placeholder-black  shadow appearance-none border border-transparent rounded w-full py-2 px-3 text-black font-normal leading-tight focus:outline-none focus:shadow-outline bg-white bg-opacity-70 backdrop-blur-md transition duration-300"
                 />
               </div>
               <div className="mb-4">
                 <label
-                  className="block text-white text-sm font-bold mb-2"
+                  className="block text-white text-lg  mb-2"
                   htmlFor="message"
                 >
                   Message
@@ -101,7 +101,7 @@ const ContactPage = () => {
                   id="message"
                   required
                   placeholder=". . ."
-                  className="shadow appearance-none border border-transparent rounded w-full py-2 px-3 text-black font-normal leading-tight focus:outline-none focus:shadow-outline bg-white  bg-opacity-70 backdrop-blur-md transition duration-300"
+                  className="placeholder-black  shadow appearance-none border border-transparent rounded w-full py-2 px-3 text-black font-normal leading-tight focus:outline-none focus:shadow-outline bg-white  bg-opacity-70 backdrop-blur-md transition duration-300"
                 ></textarea>
               </div>
               <div className="flex items-center justify-between">
