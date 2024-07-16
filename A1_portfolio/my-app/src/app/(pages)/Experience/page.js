@@ -1,15 +1,28 @@
 "use client";
 
+import React from "react";
+
 export default function Page() {
   return (
     <div>
       <main className="pt-1 pb-20 px-4">
         <section id="experience" className="">
-          <h2 className="text-3xl  text-center">Experience</h2>
-          <div className="max-w-4xl mx-auto mt-10">
-            <div className="bg-white bg-opacity-10 p-6 rounded-lg shadow-md mb-8">
-              <h3 className="text-2xl  mb-2">Education</h3>
-
+          <h2 className="text-3xl text-center mb-10">Experience</h2>
+          <div className="max-w-4xl mx-auto">
+            <div className="bg-white bg-opacity-10 p-6 rounded-lg shadow-md mb-8 backdrop-blur-md">
+              <h3 className="text-2xl mb-2 flex items-center">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  height="40px"
+                  viewBox="0 -960 960 960"
+                  width="40px"
+                  fill="white"
+                  className="mr-2"
+                >
+                  <path d="M479.33-120 192.67-276.67v-240L40-600l439.33-240L920-600v318h-66.67v-280L766-516.67v240L479.33-120Zm0-316 301.34-164-301.34-162-300 162 300 164Zm0 240.33 220-120.66v-162.34L479.33-360l-220-120v163.67l220 120.66ZM480-436Zm-.67 79.33Zm0 0Z" />
+                </svg>
+                Education
+              </h3>
               <p className="leading-loose">
                 <strong>High School:</strong> Garnet Valley High School
                 <br />
@@ -26,22 +39,23 @@ export default function Page() {
               </p>
             </div>
 
-            <div className="bg-black bg-opacity-25 p-6 rounded-lg shadow-md mb-8">
+            <div className="bg-black bg-opacity-25 p-6 rounded-lg shadow-md mb-8 backdrop-blur-md">
               <h3 className="text-2xl font-semibold mb-2">Internship</h3>
               <div className="flex items-center">
                 <div className="flex-1">
-                  <div className="flex-none  lg:hidden md:hidden ">
+                  <div className="flex-none lg:hidden md:hidden mb-4">
                     <img
                       src="/Ctfguide.png"
                       alt="CTFGuide Logo"
                       width={100}
                       height={100}
                       className="hover:opacity-80 cursor-pointer"
-                      onClick={() => router.push("https://ctfguide.com")}
+                      onClick={() =>
+                        window.open("https://ctfguide.com", "_blank")
+                      }
                     />
                   </div>
-                  <br />
-                  <p>
+                  <p className="leading-loose">
                     <strong>Company:</strong> CTFGuide
                     <br />
                     <strong>Role:</strong> Software Engineer Intern
@@ -58,89 +72,55 @@ export default function Page() {
                     development practices.
                   </p>
                 </div>
-                {/* using div to make it next to each other using flex */}
-                <div className="flex-none ml-4 sm:block hidden ">
+                <div className="flex-none ml-4 sm:block hidden">
                   <img
                     src="/Ctfguide.png"
                     alt="CTFGuide Logo"
                     width={200}
                     height={200}
                     className="hover:opacity-80 cursor-pointer"
-                    onClick={() => router.push("https://ctfguide.com")}
+                    onClick={() =>
+                      window.open("https://ctfguide.com", "_blank")
+                    }
                   />
                 </div>
               </div>
             </div>
 
-            <div className="bg-white bg-opacity-10 p-6 rounded-lg shadow-md">
+            <div className="bg-white bg-opacity-10 p-6 rounded-lg shadow-md backdrop-blur-md">
               <h3 className="text-2xl font-semibold mb-4">Skills</h3>
               <div className="flex flex-wrap gap-2 mt-6">
-                <span className="bg-gray-800 text-white py-2 px-4 rounded-full">
-                  Java
-                </span>
-                <span className="bg-gray-800 text-white py-2 px-4 rounded-full">
-                  JavaScript
-                </span>
-                <span className="bg-gray-800 text-white py-2 px-4 rounded-full">
-                  React.js
-                </span>
-                <span className="bg-gray-800 text-white py-2 px-4 rounded-full">
-                  Next.js
-                </span>
-                <span className="bg-gray-800 text-white py-2 px-4 rounded-full">
-                  Express.js
-                </span>
-                <span className="bg-gray-800 text-white py-2 px-4 rounded-full">
-                  Node.js
-                </span>
-                <span className="bg-gray-800 text-white py-2 px-4 rounded-full">
-                  SQL
-                </span>
-                <span className="bg-gray-800 text-white py-2 px-4 rounded-full">
-                  MongoDB
-                </span>
-                <span className="bg-gray-800 text-white py-2 px-4 rounded-full">
-                  Tailwind CSS
-                </span>
-                <span className="bg-gray-800 text-white py-2 px-4 rounded-full">
-                  HTML5
-                </span>
-                <span className="bg-gray-800 text-white py-2 px-4 rounded-full">
-                  Web Design
-                </span>
-                <span className="bg-gray-800 text-white py-2 px-4 rounded-full">
-                  Web Development
-                </span>
-                <span className="bg-gray-800 text-white py-2 px-4 rounded-full">
-                  Git
-                </span>
-                <span className="bg-gray-800 text-white py-2 px-4 rounded-full">
-                  CAD
-                </span>
-                <span className="bg-gray-800 text-white py-2 px-4 rounded-full">
-                  Audio Engineering
-                </span>
-                <span className="bg-gray-800 text-white py-2 px-4 rounded-full">
-                  FL Studio
-                </span>
-                <span className="bg-gray-800 text-white py-2 px-4 rounded-full">
-                  Adobe Audition
-                </span>
-                <span className="bg-gray-800 text-white py-2 px-4 rounded-full">
-                  Adobe Illustrator
-                </span>
-                <span className="bg-gray-800 text-white py-2 px-4 rounded-full">
-                  Video Editing
-                </span>
-                <span className="bg-gray-800 text-white py-2 px-4 rounded-full">
-                  After Effects
-                </span>
-                <span className="bg-gray-800 text-white py-2 px-4 rounded-full">
-                  Adobe Photoshop
-                </span>
-                <span className="bg-gray-800 text-white py-2 px-4 rounded-full">
-                  Microsoft Office
-                </span>
+                {[
+                  "Java",
+                  "JavaScript",
+                  "React.js",
+                  "Next.js",
+                  "Express.js",
+                  "Node.js",
+                  "SQL",
+                  "MongoDB",
+                  "Tailwind CSS",
+                  "HTML5",
+                  "Web Design",
+                  "Web Development",
+                  "Git",
+                  "CAD",
+                  "Audio Engineering",
+                  "FL Studio",
+                  "Adobe Audition",
+                  "Adobe Illustrator",
+                  "Video Editing",
+                  "After Effects",
+                  "Adobe Photoshop",
+                  "Microsoft Office",
+                ].map((skill) => (
+                  <span
+                    key={skill}
+                    className="bg-gray-800 text-white py-2 px-4 rounded-full backdrop-blur-md bg-opacity-60 hover:bg-opacity-100 hover:scale-105 transition-all duration-300"
+                  >
+                    {skill}
+                  </span>
+                ))}
               </div>
             </div>
           </div>
