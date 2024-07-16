@@ -43,12 +43,17 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <head>
-        {/* this is for the favicon */}
+        {/* These meta tags improve SEO */}
         <link rel="icon" href="/icon.svg" sizes="64x64" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="robots" content={metadata.robots} />
+        <meta name="author" content={metadata.author} />
+        <meta property="og:title" content={metadata.og.title} />
+        <meta property="og:description" content={metadata.og.description} />
       </head>
 
       <body className={inter.className}>
-        <div className="z-50 pb-9 ">
+        <div className="z-50 pb-9">
           <Navbar />
         </div>
         {children}
