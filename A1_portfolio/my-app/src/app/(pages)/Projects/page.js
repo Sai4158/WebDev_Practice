@@ -5,8 +5,8 @@ export default function Projects() {
     <div>
       <main className="pt-2 px-4 pb-12 mb-14">
         <section className="text-center">
-          <h1 className="text-4xl font-bold">Hackathons & Projects</h1>
-          <p className="text-lg mt-4">
+          <h1 className="text-4xl ">Hackathons & Projects</h1>
+          <p className="text-md mt-4">
             A showcase of my hackathons and project experiences.
           </p>
         </section>
@@ -25,15 +25,16 @@ export default function Projects() {
             <h2 className="text-2xl mb-2">Comcast Inquire</h2>
             <p className="mb-2">
               Developed a chat assistant leveraging GPT-4 for enhancing Comcast
-              sales and marketing efficiency. Utilized Next.js for server-side
-              rendering, Clerk for authentication, Redis for caching, and
-              Railway for deployment.
+              sales and marketing efficiency. Utilized <b>Next.js</b> for
+              server-side rendering, Clerk for authentication, Redis for
+              caching, and Railway for deployment.
             </p>
+            <br />
             <p className="mb-2">
               <strong>Winning project</strong> at Philly Codefest.
             </p>
             <p className="mb-2">
-              <strong>Team:</strong> Sai Rangineeni, Pranav Ramesh
+              <strong>Team:</strong> Pranav Ramesh, Sai Rangineeni
             </p>
             <a
               href="https://github.com/Laphatize/comcast-inquire"
@@ -85,10 +86,10 @@ export default function Projects() {
             <h2 className="text-2xl mb-2">UMoments</h2>
             <p className="mb-2">
               Created a centralized platform for university students to discover
-              and track campus events. Built with Next.js for fast and dynamic
-              UI, TailwindCSS for styling, Express.js and Node.js for the
-              backend, Auth0 for authentication, and MongoDB for database
-              management.
+              and track campus events. Built with <b>Next.js</b> for fast and
+              dynamic UI, <b>TailwindCSS</b> for styling, <b>Express.js</b> and{" "}
+              <b>Node.js</b> for the backend, Auth0 for authentication, and
+              MongoDB for database management.
             </p>
             <p className="mb-2">
               <strong>Team:</strong> 5 members
@@ -116,6 +117,7 @@ export default function Projects() {
               </a>
             </div>
           </div>
+
           {/* Personal Engineering Projects */}
           <div
             className="bg-white bg-opacity-10 p-6 rounded-lg shadow-md cursor-pointer break-inside hover:scale-105 transition-all"
@@ -137,7 +139,6 @@ export default function Projects() {
               cutting and 3D printing techniques.
             </p>
             <div className="mt-4">
-              {" "}
               <br />
               <a
                 href="https://cad.onshape.com/documents/6a68262e48e7c9e68fd6c306/w/3fef6bd3b3b6402fe55b3bde/e/55f373827c28c5ed5f97f078?renderMode=0&uiState=65fcf8b5362fd31ffcd07ff2"
@@ -149,6 +150,7 @@ export default function Projects() {
               </a>
             </div>
           </div>
+
           {/* Pizza Bill Generator Project */}
           <div
             className="bg-white bg-opacity-10 p-6 rounded-lg shadow-md cursor-pointer break-inside hover:scale-105 transition-all"
@@ -163,8 +165,8 @@ export default function Projects() {
             <p className="mb-2">
               Demonstrated OOP principles through a comprehensive pizza billing
               system. Included inheritance, encapsulation, and polymorphism
-              concepts. Built with Java, it calculates the final bill based on
-              selected toppings and extras.
+              concepts. Built with <b>Java</b>, it calculates the final bill
+              based on selected toppings and extras.
             </p>
             <a
               href="https://github.com/Sai4158/JavaPractice/tree/master/src/pizza_bill_genrator_project"
@@ -189,7 +191,8 @@ export default function Projects() {
             <h2 className="text-2xl mb-2">Air-Pollution-App</h2>
             <p className="mb-2">
               Web tool fetching and displaying real-time air quality data using
-              OpenWeatherMap API. Built with HTML, CSS, and JavaScript.
+              OpenWeatherMap API. Built with <b>HTML</b>, <b>CSS</b>, and{" "}
+              <b>JavaScript</b>.
             </p>
             <a
               href="https://github.com/Sai4158/Air-Pollution-App"
@@ -225,7 +228,7 @@ export default function Projects() {
             <p className="mb-2">
               Demonstrated OOP principles in a simple banking application.
               Managed account details, deposits, and withdrawals. Built with
-              Java, it includes account number, balance, and personal
+              <b> Java</b>, it includes account number, balance, and personal
               information management.
             </p>
             <a
@@ -250,7 +253,8 @@ export default function Projects() {
           >
             <h2 className="text-2xl mb-2">Telecommunication Project</h2>
             <p className="mb-2">
-              Implemented a telecommunication system showcasing advanced Java
+              Implemented a telecommunication system showcasing advanced{" "}
+              <b>Java </b>
               concepts. Focused on user data management, OOP principles, error
               handling, and data validation.
             </p>
@@ -273,9 +277,9 @@ export default function Projects() {
           >
             <h2 className="text-2xl mb-2">Icecream-store</h2>
             <p className="mb-2">
-              Created a responsive ice cream store website. Utilized React for
-              UI components, Vite for development build, and TailwindCSS for
-              styling.
+              Created a responsive ice cream store website. Utilized{" "}
+              <b>React</b> for UI components, <b>Vite</b> for development build,
+              and <b>TailwindCSS</b> for styling.
             </p>
             <a
               href="https://github.com/Sai4158/Icecream-store"
@@ -300,7 +304,7 @@ export default function Projects() {
             <h2 className="text-2xl mb-2">Random-Color-Generator</h2>
             <p className="mb-2">
               Developed a tool for generating random gradient backgrounds. Built
-              with HTML, CSS, and JavaScript.
+              with <b>HTML</b>, <b>CSS</b>, and <b>JavaScript</b>.
             </p>
             <a
               href="https://github.com/Sai4158/Random-Color-Generator"
@@ -331,8 +335,9 @@ export default function Projects() {
           >
             <h2 className="text-2xl mb-2">Cookie-Clicker</h2>
             <p className="mb-2">
-              Built a simple cookie clicker game using JavaScript, HTML, and
-              CSS.
+              Built a simple cookie clicker game using <b>JavaScript</b>,{" "}
+              <b>HTML</b>, and
+              <b>CSS</b>.
             </p>
             <a
               href="https://github.com/Sai4158/Cookie-Clicker"
