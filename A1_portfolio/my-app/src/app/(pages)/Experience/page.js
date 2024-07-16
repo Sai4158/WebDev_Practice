@@ -24,23 +24,24 @@ export default function Page() {
                 Education
               </h3>
               <p className="leading-loose">
-                <strong>High School:</strong> Garnet Valley High School
+                <a
+                  href="https://www.psu.edu/"
+                  target="_blank"
+                  className="hover:underline transition-transform font-semibold"
+                >
+                  The Pennsylvania State University
+                </a>
+                , <b>Human-Centered Design & Development</b>,{" "}
+                <b>Data Science</b>
                 <br />
+                Dean's List: Spring 2024, GPA: 3.94
                 <br />
-                <strong>University:</strong> Third year student at The
-                Pennsylvania State University, majoring in{" "}
-                <b>Human-Centered Design & Development</b> with a focus on{" "}
-                <b>Data Science</b> in the College of Information Sciences &
-                Technology.
-                <br />
-                <strong>Dean's List:</strong> Spring 2024
-                <br />
-                <strong>Expected Graduation:</strong> May 2026
+                Graduation: May 2026
               </p>
             </div>
 
             <div className="bg-black bg-opacity-25 p-6 rounded-lg shadow-md mb-8 backdrop-blur-md hover:scale-105 transition-transform duration-1000 ">
-              <h3 className="text-2xl font-semibold mb-2 flex items-center">
+              <h3 className="text-2xl  mb-2 flex items-center">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   height="40px"
@@ -67,7 +68,7 @@ export default function Page() {
                       }
                     />
                   </div>
-                  <p className="leading-loose">
+                  {/* <p className="leading-loose">
                     <strong>Company:</strong> CTFGuide
                     <br />
                     <strong>Role:</strong> Software Engineer Intern
@@ -82,6 +83,27 @@ export default function Page() {
                     My role involved working extensively with Next.js,
                     Javascript, TailwindCSS, React.js, Git, and agile
                     development practices.
+                  </p> */}
+
+                  <p className="leading-loose">
+                    <a
+                      href="https://ctfguide.com/"
+                      target="_blank"
+                      className="hover:underline hover:text-blue-400 transition-transform"
+                    >
+                      <b>CTFGuide</b>
+                    </a>{" "}
+                    , Software Engineer Intern
+                    <br />
+                    Duration: May 2024 - Present (3 months)
+                    <br />
+                    Location: State College, PA (Hybrid)
+                    <br />
+                    <br />
+                    Focused on building and optimizing user settings and profile
+                    settings using <b>Next.js</b>, <b>JavaScript</b>,{" "}
+                    <b>TailwindCSS</b>, <b>React.js</b>, <b>Git</b>, and{" "}
+                    <b>Agile development</b>.
                   </p>
                 </div>
                 <div className="flex-none ml-4 sm:block hidden ">
@@ -100,7 +122,7 @@ export default function Page() {
             </div>
 
             <div className="bg-white bg-opacity-10 p-6 rounded-lg shadow-md backdrop-blur-md hover:scale-105 transition-transform duration-1000">
-              <h3 className="text-2xl font-semibold mb-4 flex items-center">
+              <h3 className="text-2xl mb-4 flex items-center">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   height="40px"
