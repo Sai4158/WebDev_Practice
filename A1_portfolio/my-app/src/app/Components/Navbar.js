@@ -29,7 +29,7 @@ const Navbar = () => {
           </span>
         </a>
 
-        <div className="sm:hidden">
+        <div className="sm:hidden z-50">
           <button
             onClick={toggleMenu}
             className="text-2xl bg-gray-900 p-2 rounded focus:outline-none"
