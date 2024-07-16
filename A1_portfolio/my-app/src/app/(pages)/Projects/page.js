@@ -14,7 +14,7 @@ export default function Projects() {
         <section className="max-w-6xl mx-auto mt-10 grid gap-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 masonry">
           {/* Comcast Inquire */}
           <div
-            className="bg-white bg-opacity-10 p-6 rounded-lg shadow-md cursor-pointer break-inside hover:scale-105 transition-all"
+            className="bg-white bg-opacity-10 p-6 rounded-lg shadow-md cursor-pointer break-inside hover:scale-105 transition-transform duration-700"
             onClick={() =>
               window.open(
                 "https://github.com/Laphatize/comcast-inquire",
@@ -78,7 +78,7 @@ export default function Projects() {
 
           {/* UMoments Project */}
           <div
-            className="bg-white bg-opacity-10 p-6 rounded-lg shadow-md cursor-pointer break-inside hover:scale-105 transition-all"
+            className="bg-white bg-opacity-10 p-6 rounded-lg shadow-md cursor-pointer break-inside hover:scale-105 transition-transform duration-700"
             onClick={() =>
               window.open("https://devpost.com/software/umoment", "_blank")
             }
@@ -121,7 +121,7 @@ export default function Projects() {
 
           {/* Personal Engineering Projects */}
           <div
-            className="bg-white bg-opacity-10 p-6 rounded-lg shadow-md cursor-pointer break-inside hover:scale-105 transition-all"
+            className="bg-white bg-opacity-10 p-6 rounded-lg shadow-md cursor-pointer break-inside hover:scale-105 transition-transform duration-700"
             onClick={() =>
               window.open(
                 "https://cad.onshape.com/documents/6a68262e48e7c9e68fd6c306/w/3fef6bd3b3b6402fe55b3bde/e/55f373827c28c5ed5f97f078?renderMode=0&uiState=65fcf8b5362fd31ffcd07ff2",
@@ -154,7 +154,7 @@ export default function Projects() {
 
           {/* Pizza Bill Generator Project */}
           <div
-            className="bg-white bg-opacity-10 p-6 rounded-lg shadow-md cursor-pointer break-inside hover:scale-105 transition-all"
+            className="bg-white bg-opacity-10 p-6 rounded-lg shadow-md cursor-pointer break-inside hover:scale-105 transition-transform duration-700"
             onClick={() =>
               window.open(
                 "https://github.com/Sai4158/JavaPractice/tree/master/src/pizza_bill_genrator_project",
@@ -181,7 +181,7 @@ export default function Projects() {
 
           {/* Air-Pollution-App Project */}
           <div
-            className="bg-white bg-opacity-10 p-6 rounded-lg shadow-md cursor-pointer break-inside hover:scale-105 transition-all"
+            className="bg-white bg-opacity-10 p-6 rounded-lg shadow-md cursor-pointer break-inside hover:scale-105 transition-transform duration-700"
             onClick={() =>
               window.open(
                 "https://sai4158.github.io/Air-Pollution-App/",
@@ -217,7 +217,7 @@ export default function Projects() {
 
           {/* Banking App Project */}
           <div
-            className="bg-white bg-opacity-10 p-6 rounded-lg shadow-md cursor-pointer break-inside hover:scale-105 transition-all"
+            className="bg-white bg-opacity-10 p-6 rounded-lg shadow-md cursor-pointer break-inside hover:scale-105 transition-transform duration-700"
             onClick={() =>
               window.open(
                 "https://github.com/Sai4158/JavaPractice/tree/master/src/bankingApp",
@@ -244,7 +244,7 @@ export default function Projects() {
 
           {/* Telecommunication Project */}
           <div
-            className="bg-white bg-opacity-10 p-6 rounded-lg shadow-md cursor-pointer break-inside hover:scale-105 transition-all"
+            className="bg-white bg-opacity-10 p-6 rounded-lg shadow-md cursor-pointer break-inside hover:scale-105 transition-transform duration-700"
             onClick={() =>
               window.open(
                 "https://github.com/Sai4158/JavaPractice/tree/master/src/telecommunicationProject",
@@ -271,7 +271,7 @@ export default function Projects() {
 
           {/* Icecream-store Project */}
           <div
-            className="bg-white bg-opacity-10 p-6 rounded-lg shadow-md cursor-pointer break-inside hover:scale-105 transition-all"
+            className="bg-white bg-opacity-10 p-6 rounded-lg shadow-md cursor-pointer break-inside hover:scale-105 transition-transform duration-700"
             onClick={() =>
               window.open("https://github.com/Sai4158/Icecream-store", "_blank")
             }
@@ -294,7 +294,7 @@ export default function Projects() {
 
           {/* Random-Color-Generator Project */}
           <div
-            className="bg-white bg-opacity-10 p-6 rounded-lg shadow-md cursor-pointer break-inside hover:scale-105 transition-all"
+            className="bg-white bg-opacity-10 p-6 rounded-lg shadow-md cursor-pointer break-inside hover:scale-105 transition-transform duration-700"
             onClick={() =>
               window.open(
                 "https://sai4158.github.io/Random-Color-Generator/",
@@ -329,7 +329,7 @@ export default function Projects() {
 
           {/* Cookie-Clicker Project */}
           <div
-            className="bg-white bg-opacity-10 p-6 rounded-lg shadow-md cursor-pointer break-inside hover:scale-105 transition-all"
+            className="bg-white bg-opacity-10 p-6 rounded-lg shadow-md cursor-pointer break-inside hover:scale-105 transition-transform duration-700"
             onClick={() =>
               window.open("https://sai4158.github.io/Cookie-Clicker/", "_blank")
             }
@@ -362,7 +362,7 @@ export default function Projects() {
 
           {/* Other projects */}
           <div
-            className="bg-white bg-opacity-10 p-6 rounded-lg shadow-md cursor-pointer break-inside hover:scale-105 transition-all"
+            className="bg-white bg-opacity-10 p-6 rounded-lg shadow-md cursor-pointer break-inside hover:scale-105 transition-transform duration-700"
             onClick={() => window.open("https://github.com/Sai4158", "_blank")}
           >
             <h2 className="text-2xl mb-2">Other Projects</h2>
