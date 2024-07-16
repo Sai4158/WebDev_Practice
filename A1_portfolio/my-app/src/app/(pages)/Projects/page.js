@@ -91,6 +91,7 @@ export default function Projects() {
               <b>Node.js</b> for the backend, Auth0 for authentication, and
               MongoDB for database management.
             </p>
+            <br />
             <p className="mb-2">
               <strong>Team:</strong> 5 members
             </p>
