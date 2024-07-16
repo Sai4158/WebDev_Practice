@@ -5,17 +5,22 @@ export default function Page() {
     <div>
       <main className="pt-1 pb-20 px-4">
         <section id="experience" className="">
-          <h2 className="text-3xl font-semibold text-center">Experience</h2>
+          <h2 className="text-3xl  text-center">Experience</h2>
           <div className="max-w-4xl mx-auto mt-10">
             <div className="bg-white bg-opacity-10 p-6 rounded-lg shadow-md mb-8">
-              <h3 className="text-2xl font-semibold mb-2">Education</h3>
+              <h3 className="text-2xl  mb-2">Education</h3>
               <p>
                 <strong>High School:</strong> Garnet Valley High School
                 <br />
+                <br />
                 <strong>University:</strong> Third year student at The
                 Pennsylvania State University, majoring in Human-Centered Design
-                & Development in the College of Information Sciences &
-                Technology. Expected Graduation: May 2026
+                & Development with a focus on Data Science in the College of
+                Information Sciences & Technology.
+                <br />
+                <strong>Dean's List:</strong> Spring 2024
+                <br />
+                <strong>Expected Graduation:</strong> May 2026
               </p>
             </div>
 
