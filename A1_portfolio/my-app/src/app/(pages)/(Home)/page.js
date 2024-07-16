@@ -32,7 +32,7 @@ export default function Home() {
               <div className="w-full md:w-2/3 mt-6 md:mt-0 md:ml-6 text-center md:text-left px-4 md:px-0">
                 <br />
                 <br />
-                <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
+                <h1 className="text-4xl md:text-5xl  text-white mb-4">
                   Sai Rangineeni
                 </h1>
                 <p className="text-lg md:text-md text-gray-300 mb-4">
