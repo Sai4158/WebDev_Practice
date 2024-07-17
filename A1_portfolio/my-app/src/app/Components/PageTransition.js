@@ -12,31 +12,45 @@ const PageTransition = ({ children }) => {
     setDisplayChildren(children);
   }, [children]);
 
+  const variants = {
+    initial: {
+      opacity: 0,
+      y: 20,
+      scale: 0.98,
+      filter: "blur(5px)",
+    },
+    animate: {
+      opacity: 1,
+      y: 0,
+      scale: 1,
+      filter: "blur(0px)",
+      transition: {
+        duration: 0.5,
+        ease: "easeInOut",
+      },
+    },
+    exit: {
+      opacity: 0,
+      y: -20,
+      scale: 0.98,
+      filter: "blur(5px)",
+      transition: {
+        duration: 0.4,
+        ease: "easeInOut",
+      },
+    },
+  };
+
   return (
     <AnimatePresence mode="wait">
       <motion.div
         key={pathname}
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
-        transition={{ duration: 1 }} // 1000ms transition duration
-        style={{ position: "relative" }}
+        variants={variants}
+        initial="initial"
+        animate="animate"
+        exit="exit"
       >
         {displayChildren}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 0 }}
-          exit={{ opacity: 1 }}
-          transition={{ duration: 1 }} // Sync with the page transition
-          style={{
-            position: "absolute",
-            top: 0,
-            left: 0,
-            width: "100%",
-            height: "100%",
-            backgroundColor: "black",
-          }}
-        />
       </motion.div>
     </AnimatePresence>
   );
