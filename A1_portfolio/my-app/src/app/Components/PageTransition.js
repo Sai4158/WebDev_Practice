@@ -15,28 +15,27 @@ const PageTransition = ({ children }) => {
   const variants = {
     initial: {
       opacity: 0,
-      y: 20,
-      scale: 0.98,
-      filter: "blur(5px)",
+      filter: "blur(4px)",
+      skewY: "2deg", // Skew effect during initial loading
     },
     animate: {
       opacity: 1,
-      y: 0,
-      scale: 1,
       filter: "blur(0px)",
+      skewY: "0deg", // Remove skew when fully visible
       transition: {
-        duration: 0.5,
-        ease: "easeInOut",
+        duration: 1.2,
+        ease: "easeOut",
+        when: "beforeChildren", // Ensures children animate after container
       },
     },
     exit: {
       opacity: 0,
-      y: -20,
-      scale: 0.98,
-      filter: "blur(5px)",
+      filter: "blur(4px)",
+      skewY: "-2deg", // Skew in opposite direction on exit
       transition: {
-        duration: 0.4,
-        ease: "easeInOut",
+        duration: 1,
+        ease: "easeIn",
+        when: "afterChildren", // Ensures children animate before container
       },
     },
   };
@@ -49,6 +48,12 @@ const PageTransition = ({ children }) => {
         initial="initial"
         animate="animate"
         exit="exit"
+        style={{
+          width: "100%",
+          position: "relative",
+          overflow: "hidden",
+          backgroundColor: "transparent", // Ensure background transparency
+        }}
       >
         {displayChildren}
       </motion.div>
