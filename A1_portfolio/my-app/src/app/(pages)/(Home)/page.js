@@ -3,8 +3,8 @@ import { FaLinkedin, FaGithub, FaEnvelope } from "react-icons/fa";
 
 export default function Home() {
   return (
-    <div>
-      <main className="px-4">
+    <div className="pb-10">
+      <main className="px-4 ">
         <div className="flex justify-center min-h-screen">
           <div className="relative w-full lg:h-[525px] max-w-7xl bg-opacity-40 px-6 pb-10 rounded-lg shadow-lg overflow-hidden bg-black">
             {/* Background Image */}

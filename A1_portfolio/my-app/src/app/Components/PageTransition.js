@@ -15,22 +15,22 @@ const PageTransition = ({ children }) => {
   const variants = {
     initial: {
       opacity: 0,
-      filter: "blur(4px)",
-      skewY: "2deg", // Skew effect during initial loading
+      filter: "blur(6px)",
+      skewY: "1deg", // Skew effect during initial loading
     },
     animate: {
       opacity: 1,
       filter: "blur(0px)",
       skewY: "0deg", // Remove skew when fully visible
       transition: {
-        duration: 1.2,
+        duration: 1.3,
         ease: "easeOut",
         when: "beforeChildren", // Ensures children animate after container
       },
     },
     exit: {
       opacity: 0,
-      filter: "blur(4px)",
+      filter: "blur(6px)",
       skewY: "-2deg", // Skew in opposite direction on exit
       transition: {
         duration: 1,
