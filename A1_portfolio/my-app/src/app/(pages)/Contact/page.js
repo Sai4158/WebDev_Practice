@@ -30,6 +30,9 @@ const ContactPage = () => {
           toast.success("Message sent successfully!", {
             position: "top-center",
           });
+          toast.success("Message sent successfully!", {
+            position: "bottom-center",
+          });
           setLoading(false);
         },
         (error) => {
@@ -70,7 +73,7 @@ const ContactPage = () => {
                   id="from_name"
                   required
                   placeholder="Enter Name"
-                  className="placeholder-black  shadow appearance-none border border-transparent rounded w-full py-2 px-3 text-black font-normal leading-tight focus:outline-none focus:shadow-outline bg-white  bg-opacity-70 backdrop-blur-md transition duration-300"
+                  className="bg-black  bg-opacity-30 backdrop:blur-3xl shadow appearance-none border border-transparent rounded w-full py-2 px-3 text-white font-extralight leading-tight focus:outline-none focus:shadow-outline   bg-opacity-70 backdrop-blur-md transition duration-300"
                 />
               </div>
               <div className="mb-4">
@@ -86,7 +89,7 @@ const ContactPage = () => {
                   id="reply_to"
                   required
                   placeholder="Enter Email"
-                  className="placeholder-black  shadow appearance-none border border-transparent rounded w-full py-2 px-3 text-black font-normal leading-tight focus:outline-none focus:shadow-outline bg-white bg-opacity-70 backdrop-blur-md transition duration-300"
+                  className="bg-black  bg-opacity-30 backdrop:blur-3xl shadow appearance-none border border-transparent rounded w-full py-2 px-3 text-white font-extralight leading-tight focus:outline-none focus:shadow-outline   bg-opacity-70 backdrop-blur-md transition duration-300"
                 />
               </div>
               <div className="mb-4">
@@ -101,13 +104,13 @@ const ContactPage = () => {
                   id="message"
                   required
                   placeholder=". . ."
-                  className="placeholder-black  shadow appearance-none border border-transparent rounded w-full py-2 px-3 text-black font-normal leading-tight focus:outline-none focus:shadow-outline bg-white  bg-opacity-70 backdrop-blur-md transition duration-300"
+                  className="bg-black  bg-opacity-30 backdrop:blur-3xl shadow appearance-none border border-transparent rounded w-full py-2 px-3 text-white font-extralight leading-tight focus:outline-none focus:shadow-outline   bg-opacity-70 backdrop-blur-md transition duration-300"
                 ></textarea>
               </div>
               <div className="flex items-center justify-between">
                 <button
                   type="submit"
-                  className="bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded-lg focus:outline-none focus:shadow-outline transition duration-300 w-32"
+                  className="bg-blue-700 hover:bg-green-700 text-white py-2 px-4 rounded-lg focus:outline-none focus:shadow-outline transition duration-300 w-32"
                   disabled={loading}
                 >
                   {/* if the loading is true then spinner if false then it will show "Send" */}
