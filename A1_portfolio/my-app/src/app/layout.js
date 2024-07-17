@@ -2,6 +2,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import Navbar from "./Components/Navbar";
 import PageTransition from "./Components/PageTransition";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -56,6 +57,7 @@ export default function RootLayout({ children }) {
       </head>
 
       <body className={inter.className}>
+        <SpeedInsights />
         <PageTransition>
           <div className="z-50 pb-9">
             <Navbar />
