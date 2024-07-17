@@ -273,7 +273,10 @@ export default function Projects() {
           <div
             className="bg-white bg-opacity-10 p-6 rounded-lg shadow-md cursor-pointer break-inside hover:scale-105 transition-transform duration-700"
             onClick={() =>
-              window.open("https://github.com/Sai4158/Icecream-store", "_blank")
+              window.open(
+                "https://iceeeeeecreammmmstoreee.vercel.app/",
+                "_blank"
+              )
             }
           >
             <h2 className="text-2xl mb-2">Icecream-store</h2>
@@ -290,6 +293,16 @@ export default function Projects() {
             >
               GitHub Repo
             </a>
+            <div className="mt-4">
+              <a
+                href="https://iceeeeeecreammmmstoreee.vercel.app/"
+                target="_blank"
+                className="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600"
+                onClick={(e) => e.stopPropagation()}
+              >
+                Try it out
+              </a>
+            </div>
           </div>
 
           {/* Random-Color-Generator Project */}
