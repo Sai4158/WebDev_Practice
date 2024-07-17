@@ -16,7 +16,7 @@ const PageTransition = ({ children }) => {
     initial: {
       opacity: 0,
       filter: "blur(6px)",
-      skewY: "1deg", // Skew effect during initial loading
+      skewY: "2deg", // Skew effect during initial loading
     },
     animate: {
       opacity: 1,
