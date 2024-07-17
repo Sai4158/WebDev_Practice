@@ -1,7 +1,7 @@
 import { Inter } from "next/font/google";
 import "./globals.css";
 import Navbar from "./Components/Navbar";
-import { FaPortrait } from "react-icons/fa";
+import PageTransition from "./Components/PageTransition";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -29,7 +29,6 @@ export const metadata = {
     "Music Production",
   ],
   author: "Sai Rangineeni",
-  viewport: "width=device-width, initial-scale=1.0",
   robots: "index, follow",
   // this is for the social media links
   og: {
@@ -39,13 +38,17 @@ export const metadata = {
   },
 };
 
+export const viewport = {
+  width: "device-width",
+  initialScale: 1.0,
+};
+
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <head>
         {/* These meta tags improve SEO */}
         <link rel="icon" href="/icon.svg" sizes="64x64" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta name="robots" content={metadata.robots} />
         <meta name="author" content={metadata.author} />
         <meta property="og:title" content={metadata.og.title} />
@@ -56,7 +59,7 @@ export default function RootLayout({ children }) {
         <div className="z-50 pb-9">
           <Navbar />
         </div>
-        {children}
+        <PageTransition>{children}</PageTransition>
       </body>
     </html>
   );
