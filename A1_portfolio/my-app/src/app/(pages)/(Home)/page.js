@@ -21,7 +21,7 @@ export default function Home() {
               {/* Profile Picture Section */}
               <div className="relative w-full md:w-1/3 flex justify-center md:justify-end p-4 md:p-8 lg:p-16">
                 <div className="relative w-64 h-48 md:w-80 md:h-56 rounded-lg overflow-hidden shadow-lg transform transition-transform hover:scale-105">
-                  <a href="/Sai">
+                  <a href="/404LOL">
                     <img
                       src="https://i.ibb.co/dQGwy7w/Sai-Profile-pic.jpg"
                       alt="Sai Rangineeni"
