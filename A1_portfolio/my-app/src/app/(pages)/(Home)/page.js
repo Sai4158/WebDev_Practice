@@ -40,13 +40,13 @@ export default function Home() {
                 <p className="text-lg md:text-md text-gray-300 mb-4">
                   I'm a <b>PSU student</b> specializing in{" "}
                   <b>Human-Centered Design & Development</b> with a focus on{" "}
-                  <b>Data Science</b>. I am passionate about Full Stack Web
-                  Development, UI/UX Design, and Software Engineering.
+                  <b>Data Science</b>. Focused on Full Stack Web Development and
+                  Software Engineering.
                 </p>
                 <p className="text-lg md:text-md text-gray-300 mb-4">
-                  <b>I have hands-on experience with</b> <br />
-                  React.js, Next.js, Java, TailwindCSS, JavaScript, Node.js,
-                  SQL, MongoDB, and Git.
+                  <b>Skilled in</b> <br />
+                  React.js, Next.js, JavaScript, TailwindCSS, Node.js, Java, SQL
+                  & MongoDB.
                 </p>
                 <p className="text-lg md:text-md text-gray-300 mb-6">
                   Please explore my portfolio to see my projects and{" "}
