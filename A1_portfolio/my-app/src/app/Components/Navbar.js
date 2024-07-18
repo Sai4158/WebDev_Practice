@@ -32,7 +32,7 @@ const Navbar = () => {
         <div className="sm:hidden z-50">
           <button
             onClick={toggleMenu}
-            className="text-2xl bg-gray-900 p-2 rounded focus:outline-none"
+            className="text-2xl bg-gray-900 p-2 rounded focus:outline-none hover:scale-90 transition-transform duration-300"
           >
             {isMenuOpen ? <FaTimes /> : <FaBars />}
           </button>
@@ -79,7 +79,7 @@ const Navbar = () => {
         <br />
         <button
           onClick={toggleMenu}
-          className="text-2xl text-white absolute top-20 left-6 focus:outline-none hover:scale-110 hover:text-red-600"
+          className="text-2xl text-white absolute top-20 left-6 focus:outline-none hover:scale-95 transition-transform  hover:text-red-600"
         >
           <FaTimes size={40} />
         </button>
@@ -89,7 +89,7 @@ const Navbar = () => {
 
         <nav className="mt-10 space-y-4">
           <a
-            className="block text-white font-medium hover:text-gray-300"
+            className="block text-white font-medium hover:text-gray-300 hover:scale-90 transition-transform"
             href="/"
             onClick={toggleMenu}
           >
