@@ -89,7 +89,7 @@ export default function Page() {
                     <a
                       href="https://ctfguide.com/"
                       target="_blank"
-                      className="hover:underline hover:text-blue-400 transition-transform"
+                      className="underline hover:text-blue-400 transition-transform cursor-pointer"
                     >
                       <b>CTFGuide</b>
                     </a>{" "}
@@ -112,7 +112,7 @@ export default function Page() {
                     alt="CTFGuide Logo"
                     width={200}
                     height={200}
-                    className="hover:opacity-80 cursor-pointer"
+                    className="hover:opacity-90 hover:scale-110 z-20 transition-transform cursor-pointer"
                     onClick={() =>
                       window.open("https://ctfguide.com", "_blank")
                     }
