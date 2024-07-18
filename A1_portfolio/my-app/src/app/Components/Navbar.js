@@ -21,13 +21,13 @@ const Navbar = () => {
     <header className="mt-5 pl-3 pr-5 left-0 w-full text-white z-50">
       <nav className="max-w-[85rem] w-full mx-auto px-4 flex items-center justify-between py-4">
         <a
-          className="text-2xl font-medium relative group hover:scale-125 transition-transform duration-2000"
+          className="text-2xl font-medium relative group hover:scale-125 transition-transform duration-1000"
           href="/"
         >
-          <span className="absolute  opacity-0 group-hover:opacity-100 transition-opacity duration-600 text-blue-200 ">
+          <span className="absolute  opacity-0 group-hover:opacity-100 transition-opacity duration-500 text-blue-200 ">
             Home
           </span>
-          <span className=" group-hover:opacity-0 transition-opacity duration-700   ">
+          <span className=" group-hover:opacity-0 transition-opacity duration-1000   ">
             Welcome!
           </span>
         </a>
