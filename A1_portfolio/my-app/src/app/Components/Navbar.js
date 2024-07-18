@@ -79,7 +79,7 @@ const Navbar = () => {
         <br />
         <button
           onClick={toggleMenu}
-          className="text-2xl text-white absolute top-20 left-6 focus:outline-none hover:scale-95 transition-transform  hover:text-red-600"
+          className="text-2xl text-white absolute top-20 left-6 focus:outline-none hover:scale-95 transition-transform  hover:text-red-300"
         >
           <FaTimes size={40} />
         </button>
@@ -89,7 +89,7 @@ const Navbar = () => {
 
         <nav className="mt-10 space-y-4">
           <a
-            className="block text-white font-medium hover:text-gray-300 hover:scale-90 transition-transform"
+            className="block text-white font-medium hover:text-gray-300 hover:scale-95 transition-transform "
             href="/"
             onClick={toggleMenu}
           >
@@ -99,7 +99,7 @@ const Navbar = () => {
           <br />
           <br />
           <a
-            className="block text-white font-medium hover:text-gray-300"
+            className="block text-white font-medium hover:text-gray-300  hover:scale-95 transition-transform"
             href="/Experience"
             onClick={toggleMenu}
           >
@@ -109,7 +109,7 @@ const Navbar = () => {
           <br />
           <br />
           <a
-            className="block text-white font-medium hover:text-gray-300"
+            className="block text-white font-medium hover:text-gray-300  hover:scale-95 transition-transform"
             href="/Projects"
             onClick={toggleMenu}
           >
@@ -119,7 +119,7 @@ const Navbar = () => {
           <br />
           <br />
           <a
-            className="block text-white font-medium hover:text-gray-300"
+            className="block text-white font-medium hover:text-gray-300  hover:scale-95 transition-transform"
             href="/Contact"
             onClick={toggleMenu}
           >
