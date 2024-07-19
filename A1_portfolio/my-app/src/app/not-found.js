@@ -2,7 +2,7 @@ import React from "react";
 
 export default function Custom404() {
   return (
-    <div className="min-h-screen mt-12 mb-5 ">
+    <div className="min-h-screen mt-11 mb-10">
       <div className="flex flex-col md:flex-row justify-center  text-white px-6 font-thin">
         <a href="https://www.pranavramesh.dev/" target="_blank">
           <img
