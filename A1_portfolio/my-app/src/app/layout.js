@@ -3,6 +3,7 @@ import "./globals.css";
 import Navbar from "./Components/Navbar";
 import PageTransition from "./Components/PageTransition";
 import { SpeedInsights } from "@vercel/speed-insights/next";
+import { Analytics } from "@vercel/analytics/react";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -31,11 +32,11 @@ export const metadata = {
   ],
   author: "Sai Rangineeni",
   robots: "index, follow",
-  // this is for the social media links
   og: {
     title: "Sai Rangineeni | Portfolio",
     description:
       "Explore Sai Rangineeni's portfolio showcasing projects, experience, and skills in software development, web development, and design.",
+    image: "https://i.ibb.co/dQGwy7w/Sai-Profile-pic.jpg",
   },
 };
 
@@ -54,6 +55,9 @@ export default function RootLayout({ children }) {
         <meta name="author" content={metadata.author} />
         <meta property="og:title" content={metadata.og.title} />
         <meta property="og:description" content={metadata.og.description} />
+        <meta property="og:image" content={metadata.og.image} />
+        <meta property="og:type" content="website" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       </head>
 
       <body className={inter.className}>
@@ -64,6 +68,7 @@ export default function RootLayout({ children }) {
           </div>
           {children}
         </PageTransition>
+        <Analytics />
       </body>
     </html>
   );
