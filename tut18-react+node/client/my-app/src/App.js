@@ -17,7 +17,18 @@ const App = () => {
       });
   }, []);
 
-  return <div>App</div>;
+  return (
+    <div>
+      {/* display the useers  */}
+      {typeof backendData.users === "undefined" ? (
+        <p>Loading...</p>
+      ) : (
+        backendData.users.map((users, i) => {
+          <p key={i}>{users}</p>;
+        })
+      )}
+    </div>
+  );
 };
 
 export default App;
