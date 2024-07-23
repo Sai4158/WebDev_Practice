@@ -2,7 +2,7 @@ import React from "react";
 import { useEffect, useState } from "react";
 
 const App = () => {
-  const [backendData, setbackendData] = useState([{}]);
+  const [backendData, setBackendData] = useState([{}]);
 
   // so here we are getting the data form backend and showing it on the screen
   // first it is getting it form the fetch prot 5000
@@ -13,19 +13,17 @@ const App = () => {
     fetch("/api")
       .then((response) => response.json())
       .then((data) => {
-        setbackendData(data);
+        setBackendData(data);
       });
   }, []);
 
   return (
     <div>
-      {/* display the useers  */}
+      {/* Display the users */}
       {typeof backendData.users === "undefined" ? (
         <p>Loading...</p>
       ) : (
-        backendData.users.map((users, i) => {
-          <p key={i}>{users}</p>;
-        })
+        backendData.users.map((user, i) => <p key={i}>{user}</p>)
       )}
     </div>
   );
