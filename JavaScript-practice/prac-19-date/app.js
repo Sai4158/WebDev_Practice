@@ -15,3 +15,18 @@ document.write("<br>");
 
 // this will print the year
 document.write(today.getFullYear());
+
+// this is to set and get the date
+document.write("<br>");
+document.write("<br>");
+
+const setdate = new Date();
+// set a custom date
+document.write(setdate.setDate(1));
+document.write(setdate);
+
+document.write("<br>");
+document.write("<br>");
+// setting the year then getting the date
+setdate.setFullYear(2222);
+document.write(setdate.getFullYear());
