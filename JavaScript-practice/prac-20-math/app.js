@@ -30,3 +30,11 @@ const max = Math.max(443, 34, 453, 76, 8435, 234);
 document.write(" <h1> ", max);
 
 document.write("<br>");
+
+// ------------------------
+
+// math min
+const min = Math.min(443, 34, 453, 76, 8435, 234);
+document.write(" <h1> ", min);
+
+document.write("<br>");
