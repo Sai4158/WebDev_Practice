@@ -47,3 +47,8 @@ document.write("<br>");
 // this math random will print below 5
 const random1 = Math.random() * 5;
 document.write(" <h1> ", random1);
+
+// using floor and random together
+// this will print under 5 numbers and it will remove the decimal value
+const a = Math.floor(Math.random() * 5);
+document.write("<h1> answer: ", a);
