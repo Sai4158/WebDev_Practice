@@ -11,10 +11,17 @@ document.write(" <h1> ", ceil);
 document.write("<br>");
 // ------------------------
 
-// math.floor -  it will remove the decimal value 
+// math.floor -  it will remove the decimal value
 const floor = Math.floor(40.6);
 document.write(" <h1> ", floor);
 
+document.write("<br>");
+// ------------------------
+
+// math round - this will simply round the method
+const round = Math.round(443.6);
+document.write(" <h1> ", round);
 
 document.write("<br>");
 // ------------------------
+
