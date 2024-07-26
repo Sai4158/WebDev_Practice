@@ -25,3 +25,8 @@ document.write(" <h1> ", round);
 document.write("<br>");
 // ------------------------
 
+// math max
+const max = Math.max(443, 34, 453, 76, 8435, 234);
+document.write(" <h1> ", max);
+
+document.write("<br>");
