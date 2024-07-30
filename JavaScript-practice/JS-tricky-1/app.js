@@ -3,7 +3,7 @@
 const cars1 = ["Audi", "Benz", "BMW", "VW"];
 
 // add same "VW" from the array cars1
-const cars2 = ["tata", "maruti", "skoda", "VW"];
+const cars2 = ["tata", "maruti", "skoda", "VW", "BMW"];
 
 // this is a function that will remove the duplicates
 // this will take cars1 and cars2
@@ -37,3 +37,7 @@ console.log(removeDUP(cars1, cars2));
 // then return the function
 
 // then console log the function
+
+// printing random values
+const random1 = Math.random() * 5;
+console.log(random1);
