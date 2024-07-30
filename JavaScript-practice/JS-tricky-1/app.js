@@ -14,6 +14,10 @@ function removeDUP(cars1, cars2) {
 
   //   using ... new Set will remove the duplicate objects in the array
   const nodupe = [...new Set(merge)];
+
+  //   make sure to return for the output
+  return nodupe;
 }
 
-console.log(merge);
+// then put the 2 arrays in the function to test it
+console.log(removeDUP(cars1, cars2));
