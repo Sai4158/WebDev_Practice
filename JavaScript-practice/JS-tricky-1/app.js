@@ -1,9 +1,9 @@
 // this is how you can remvoe a duplicate obeckt in array
 
-const cars1 = ["Audi", "Benz", "BMW", "VW"];
+const cars1 = ["Audi", "Benz", "BMW", "VW", "m5", "m8"];
 
 // add same "VW" from the array cars1
-const cars2 = ["tata", "maruti", "skoda", "VW", "BMW"];
+const cars2 = ["tata", "maruti", "skoda", "VW", "BMW", "m5"];
 
 // this is a function that will remove the duplicates
 // this will take cars1 and cars2
@@ -20,7 +20,7 @@ function removeDUP(cars1, cars2) {
 }
 
 // then put the 2 arrays in the function to test it
-console.log(removeDUP(cars1, cars2));
+console.log("here is the merged array" + removeDUP(cars1, cars2));
 
 // output
 // [
