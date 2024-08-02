@@ -7,14 +7,13 @@ import Image from "next/image";
 
 // this will be home page for this project
 
-const page = () => {
+const Page = () => {
   const router = useRouter();
   return (
-    <div className=" justify-center place-items-center text-center bg-blue-300 h-[150vh]">
-      {/* when you add a imgae address make sure to add domain in next config file too */}
+    <div className="flex flex-col justify-center items-center text-center bg-blue-300 h-[150vh]">
+      {/* when you add a image address make sure to add domain in next config file too */}
 
-      <h1 className="pt-56 text-4xl">
-        {" "}
+      <h1 className="text-4xl">
         This is home page
         <br />
         <Image
@@ -23,12 +22,12 @@ const page = () => {
           }
           width={400}
           height={200}
-          className="text-center"
+          className="pt-7"
         />
       </h1>
 
       <button
-        className="mt-24  text-xl bg-slate-200 h-28 w-80 hover:scale-105 rounded-lg"
+        className="mt-24 text-xl bg-slate-200 h-28 w-80 hover:scale-105 rounded-lg"
         onClick={() => {
           router.back();
         }}
@@ -46,4 +45,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;
