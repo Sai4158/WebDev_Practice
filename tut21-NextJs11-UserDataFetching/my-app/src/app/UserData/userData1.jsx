@@ -15,9 +15,9 @@ const userData1 = async () => {
 
   return (
     <div>
-      {/* this is how we will display the data  */}
+      {/* this is how we will display the data */}
       {data.map((item) => {
-        return <>{item.id};</>;
+        return <>{item.id}</>;
       })}
     </div>
   );
