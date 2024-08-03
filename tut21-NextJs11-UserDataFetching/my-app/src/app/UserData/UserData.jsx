@@ -8,8 +8,17 @@ export const smapledata = async () => {
 };
 
 // to show above smaple data fetch u have to make this function
-const UserData = () => {
-  return <div>UserData</div>;
+const UserData = async () => {
+  const data1 = await smapledata();
+
+  console.log("Data: ", data1);
+  return (
+    <div>
+      {data1.map((item) => {
+        return <>{item.id}</>;
+      })}
+    </div>
+  );
 };
 
 export default UserData;
