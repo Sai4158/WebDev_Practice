@@ -2,20 +2,25 @@ import React from "react";
 
 const url = "https://jsonplaceholder.typicode.com/posts";
 
-export const smapledata = async () => {
-  const respone = await fetch(url);
-  return respone.json;
+export const sampleData = async () => {
+  const response = await fetch(url);
+  return response.json();
 };
 
-// to show above smaple data fetch u have to make this function
+// to show above sample data fetch you have to make this function
 const UserData = async () => {
-  const data1 = await smapledata();
+  const data1 = await sampleData();
 
   console.log("Data: ", data1);
   return (
     <div>
       {data1.map((item) => {
-        return <>{item.id}</>;
+        return (
+          <>
+            {item.id} <br />
+            {item.title}
+          </>
+        );
       })}
     </div>
   );
