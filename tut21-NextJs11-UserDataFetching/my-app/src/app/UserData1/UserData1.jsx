@@ -1,6 +1,6 @@
 import React from "react";
 
-const url = "https://jsonplaceholder.typicode.com/albums";
+const url = "https://jsonplaceholder.typicode.com/posts";
 
 // then make sure to use export
 export const FreeData = async () => {
@@ -17,7 +17,7 @@ const userData1 = async () => {
     <div>
       {/* this is how we will display the data */}
       {data.map((item) => {
-        return <>{item.id}</>;
+        return <>{item.title}</>;
       })}
     </div>
   );

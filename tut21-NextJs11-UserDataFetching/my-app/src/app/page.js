@@ -1,12 +1,13 @@
-import Image from "next/image";
 import UserData from "./UserData/UserData";
-import userData1 from "./UserData/userData1";
+
+import UserData1 from "./UserData1/UserData1";
+
 export default function Home() {
   return (
     <h1>
       {/* <UserData /> */}
       hello
-      <userData1 />
+      <UserData1 />
     </h1>
   );
 }
