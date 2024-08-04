@@ -22,7 +22,8 @@ const userData1 = async () => {
         return (
           <>
             {/* hr will give line after each title */}
-            {`${i}- ${item.title}`} <hr />
+            {/* +1 will start from and not zero */}
+            {`${i + 1}- ${item.title}`} <hr />
           </>
         );
       })}
