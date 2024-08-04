@@ -17,7 +17,12 @@ const userData1 = async () => {
     <div>
       {/* this is how we will display the data */}
       {data.map((item) => {
-        return <>{item.title}</>;
+        return (
+          <>
+            {/* hr will give line after each title */}
+            {item.title} <hr />
+          </>
+        );
       })}
     </div>
   );
