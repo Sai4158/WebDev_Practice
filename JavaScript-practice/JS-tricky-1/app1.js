@@ -14,4 +14,15 @@ function newyear() {
   }
 }
 
+let abhi = 5;
+function abhi1() {
+  if (abhi > 0) {
+    console.log(abhi);
+    abhi--;
+    setTimeout(abhi1, 100);
+  } else {
+    console.log("ABHI IS FAT");
+  }
+}
+abhi1();
 newyear();
