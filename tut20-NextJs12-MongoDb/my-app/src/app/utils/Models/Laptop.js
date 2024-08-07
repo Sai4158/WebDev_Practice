@@ -1,15 +1,13 @@
-const { default: mongoose } = require("mongoose");
+import mongoose from "mongoose";
 
-// create a scheam or req data to enter to store
+// Define the Laptop schema
 const LaptopSchema = new mongoose.Schema({
   name: { type: String, required: true, unique: true },
   laptopmodel: { type: String, required: true, unique: true },
   laptopprice: { type: String, required: true },
 });
 
-// return type
+// Create or retrieve the Laptop model
 const LaptopModel =
-  mongoose.models.laptopmodel || mongoose.model("laptop", LaptopSchema);
-
-//   now export it
-export default laptopmodel;
+  mongoose.models.laptop || mongoose.model("laptop", LaptopSchema);
+export default LaptopModel;
