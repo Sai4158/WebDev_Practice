@@ -23,4 +23,19 @@ export async function POST(request) {
   return NextResponse.json({ success: "Mobile added successfully!" });
 }
 
-// this function is t0 update the data
+// this function is to update the data
+// PUT - UPDATE 
+export async function PUT(request) {
+
+  const mobileId = await request.nextUrl.searchParams.get("id");
+
+  const {
+    newTitle: title,
+    newModel: model,
+    newPrice: price,
+  } = await request.json();
+
+  await MobileModel.findByIdAndUpdate(mobileId, { title, model, price });
+
+  return NextResponse.json({ msg: "Mobile product updated" });
+}
