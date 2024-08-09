@@ -34,8 +34,26 @@ export async function POST(request) {
 // this function is to update the data
 // PUT - UPDATE
 
+// export async function PUT(request) {
+//   const laptopId = await request.nextUrl.searchParams.get("id");
+
+//   const {
+//     newTitle: name,
+//     newModel: laptopmodel,
+//     newPrice: laptopprice,
+//   } = await request.json();
+
+//   await LaptopModel.findByIdAndUpdate(laptopId, {
+//     name,
+//     laptopmodel,
+//     laptopprice,
+//   });
+
+//   return NextResponse.json({ msg: "Laptop product updated" });
+// }
+
 export async function PUT(request) {
-  const laptopId = await request.nextUrl.searchParams.get("id");
+  const laptopid = await request.nextUrl.searchParams.get("id");
 
   const {
     newTitle: name,
@@ -43,11 +61,11 @@ export async function PUT(request) {
     newPrice: laptopprice,
   } = await request.json();
 
-  await LaptopModel.findByIdAndUpdate(laptopId, {
+  await LaptopModel.findByIdAndUpdate(laptopid, {
     name,
     laptopmodel,
     laptopprice,
   });
 
-  return NextResponse.json({ msg: "Laptop product updated" });
+  return NextResponse.json({ msg: "Done updating " });
 }
