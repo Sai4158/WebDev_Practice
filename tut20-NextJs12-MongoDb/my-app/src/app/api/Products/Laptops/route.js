@@ -30,3 +30,24 @@ export async function POST(request) {
   // it will send this msg once its done
   return NextResponse.json({ msg: "Added successfully" });
 }
+
+// this function is to update the data
+// PUT - UPDATE
+
+export async function PUT(request) {
+  const laptopId = await request.nextUrl.searchParams.get("id");
+
+  const {
+    newTitle: name,
+    newModel: laptopmodel,
+    newPrice: laptopprice,
+  } = await request.json();
+
+  await LaptopModel.findByIdAndUpdate(laptopId, {
+    name,
+    laptopmodel,
+    laptopprice,
+  });
+
+  return NextResponse.json({ msg: "Laptop product updated" });
+}
