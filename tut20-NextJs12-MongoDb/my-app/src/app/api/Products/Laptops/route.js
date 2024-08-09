@@ -1,5 +1,15 @@
+import { DBconnection } from "@/app/utils/config/db";
 import LaptopModel from "@/app/utils/Models/Laptop";
 import { NextResponse } from "next/server";
+
+// connect to db
+// call the function here
+
+const connectDB = async () => {
+  // call the connection function
+  await DBconnection();
+};
+connectDB();
 
 // This get will be fecteched and displayed
 export async function GET() {
