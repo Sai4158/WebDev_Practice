@@ -34,26 +34,8 @@ export async function POST(request) {
 // this function is to update the data
 // PUT - UPDATE
 
-// export async function PUT(request) {
-//   const laptopId = await request.nextUrl.searchParams.get("id");
-
-//   const {
-//     newTitle: name,
-//     newModel: laptopmodel,
-//     newPrice: laptopprice,
-//   } = await request.json();
-
-//   await LaptopModel.findByIdAndUpdate(laptopId, {
-//     name,
-//     laptopmodel,
-//     laptopprice,
-//   });
-
-//   return NextResponse.json({ msg: "Laptop product updated" });
-// }
-
 export async function PUT(request) {
-  const laptopid = await request.nextUrl.searchParams.get("id");
+  const laptopId = await request.nextUrl.searchParams.get("id");
 
   const {
     newTitle: name,
@@ -61,11 +43,23 @@ export async function PUT(request) {
     newPrice: laptopprice,
   } = await request.json();
 
-  await LaptopModel.findByIdAndUpdate(laptopid, {
+  await LaptopModel.findByIdAndUpdate(laptopId, {
     name,
     laptopmodel,
     laptopprice,
   });
 
-  return NextResponse.json({ msg: "Done updating " });
+  return NextResponse.json({ msg: "Laptop product updated" });
+}
+
+// Function to handle DELETE requests
+export async function DELETE(request) {
+  // Retrieve the laptop ID from the query parameters
+  const laptopId = request.nextUrl.searchParams.get("id");
+
+  // Delete the laptop record from the database using the ID
+  await LaptopModel.findByIdAndDelete(laptopId);
+
+  // Return a response confirming the deletion
+  return NextResponse.json({ msg: "Deleted" });
 }
