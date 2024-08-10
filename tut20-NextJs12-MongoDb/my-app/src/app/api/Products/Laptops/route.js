@@ -65,15 +65,15 @@ export async function DELETE(request) {
   return NextResponse.json({ msg: "Deleted" });
 }
 
-// post method
-export async function PSOT(request) {
-  const { name, model1, price1 } = await request.json();
+// // post method
+// export async function PSOT(request) {
+//   const { name, laptopmodel, laptopprice } = await request.json();
 
-  await Moiblemodel.create({
-    name,
-    model1,
-    price1,
-  });
+//   await LaptopModel.create({
+//     name,
+//     laptopmodel,
+//     laptopprice,
+// //   });
 
-  return NextResponse.json({ success: "done" });
-}
+//   return NextResponse.json({ success: "done" });
+// }
