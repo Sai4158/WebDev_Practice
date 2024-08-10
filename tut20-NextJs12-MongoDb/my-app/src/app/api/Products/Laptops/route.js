@@ -1,5 +1,6 @@
 import { DBconnection } from "@/app/utils/config/db";
 import LaptopModel from "@/app/utils/Models/Laptop";
+import { model } from "mongoose";
 import { NextResponse } from "next/server";
 
 // connect to db
@@ -62,4 +63,17 @@ export async function DELETE(request) {
 
   // Return a response confirming the deletion
   return NextResponse.json({ msg: "Deleted" });
+}
+
+// post method
+export async function PSOT(request) {
+  const { name, model1, price1 } = await request.json();
+
+  await Moiblemodel.create({
+    name,
+    model1,
+    price1,
+  });
+
+  return NextResponse.json({ success: "done" });
 }
