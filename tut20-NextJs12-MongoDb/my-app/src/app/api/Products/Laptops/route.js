@@ -65,6 +65,14 @@ export async function DELETE(request) {
   return NextResponse.json({ msg: "Deleted" });
 }
 
+// // delete method practice
+// export async function DELETE(request) {
+//   const laptopID = request.nextUrl.searchParams.get("id");
+//   await LaptopModel.findByIdAndDelete(laptopID);
+
+//   return NextResponse.json({ msg: "delete done" });
+// }
+
 // // post method
 // export async function PSOT(request) {
 //   const { name, laptopmodel, laptopprice } = await request.json();
