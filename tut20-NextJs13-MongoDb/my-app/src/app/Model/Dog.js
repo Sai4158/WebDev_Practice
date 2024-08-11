@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
 const dogSchema = new mongoose.Schema({
-  DogName: { type: String, require: true, unique: true },
+  DogName: { type: String, require: true },
   DogBreed: { type: String, require: true },
   DogAge: { type: String, require: true },
 });
