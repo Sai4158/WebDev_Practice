@@ -2,27 +2,24 @@ import DogModel from "@/app/Model/Dog";
 import { DBconnection } from "@/utils/config/DB";
 import { NextResponse } from "next/server";
 
-// This function connects to the database
-const connectDb = async () => {
-  await DBconnection();
-};
-connectDb();
-
-// Connecting to the database when the API route is hit
+// GET method to retrieve all dogs
 export async function GET() {
+  await DBconnection();
   const showData = await DogModel.find({});
   return NextResponse.json(showData);
 }
 
-// post method to create data
+// POST method to create a new dog entry
 export async function POST(request) {
+  await DBconnection();
+
   const { DogName, DogBreed, DogAge } = await request.json();
 
-  await DogModel.create({
+  const newDog = await DogModel.create({
     DogName,
     DogBreed,
     DogAge,
   });
 
-  return NextResponse.json({ MSG: "This dog have been added!" });
+  return NextResponse.json({ MSG: "This dog has been added!", data: newDog });
 }
