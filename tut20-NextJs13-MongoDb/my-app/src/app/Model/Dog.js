@@ -1,11 +1,12 @@
-const { default: mongoose } = require("mongoose");
+import mongoose from "mongoose";
 
-const dogSchmea = new mongoose.Schema({
+const dogSchema = new mongoose.Schema({
   DogName: { type: String, require: true, unique: true },
   DogBreed: { type: String, require: true },
-  DogAge: { type: Number, require: true },
+  DogAge: { type: String, require: true },
 });
 
-const DogModel = mongoose.model.dogSchmea || mongoose.model("dog", dogSchmea);
+// this is models
+const DogModel = mongoose.models.Dog || mongoose.model("Dog", dogSchema);
 
 export default DogModel;

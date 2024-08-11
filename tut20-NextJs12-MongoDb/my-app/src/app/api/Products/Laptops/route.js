@@ -1,6 +1,5 @@
 import { DBconnection } from "@/app/utils/config/db";
 import LaptopModel from "@/app/utils/Models/Laptop";
-import { model } from "mongoose";
 import { NextResponse } from "next/server";
 
 // connect to db

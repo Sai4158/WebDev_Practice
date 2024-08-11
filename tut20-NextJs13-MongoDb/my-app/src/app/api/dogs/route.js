@@ -10,7 +10,8 @@ connectDb();
 
 // Connecting to the database when the API route is hit
 export async function GET() {
-  return NextResponse.json({ golden: "retriever" });
+  const showData = await DogModel.find({});
+  return NextResponse.json(showData);
 }
 
 // post method to create data
