@@ -13,6 +13,7 @@
     "dotenv": "^16.4.5",
     "greet-by-time": "^1.0.1",
     "langchain": "^0.2.5",
+    "mongodb": "^6.8.0",
     "openai": "^4.50.0"
   }
 }
