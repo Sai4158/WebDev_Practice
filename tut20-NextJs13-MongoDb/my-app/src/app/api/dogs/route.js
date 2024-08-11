@@ -1,12 +1,13 @@
 import { Dbconnection } from "@/app/Model/DB";
 import { NextResponse } from "next/server";
 
-// call the connection Db
+// This function connects to the database
 const connectDb = async () => {
   await Dbconnection();
 };
-connectDb();
 
+// Connecting to the database when the API route is hit
 export async function GET() {
-  return NextResponse.json({ golden: "retriver" });
+  await connectDb();
+  return NextResponse.json({ golden: "retriever" });
 }
