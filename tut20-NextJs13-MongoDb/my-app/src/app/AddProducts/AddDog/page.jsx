@@ -3,19 +3,22 @@
 import React, { useState } from "react";
 
 const page = () => {
-  const [name, Setname] = useState();
-  const [model, Setmodel] = useState();
-  const [price, Setprice] = useState();
+  const [name, SetName] = useState();
+  const [breed, SetBreed] = useState();
+  const [age, SetAge] = useState();
 
   const laptopDataHandler = async () => {
-    const response = await fetch(
-      "http://localhost:3000/AddProducts/AddLaptop",
-      {
-        method: "POST",
-        "Content-type": "application/json",
-        body: JSON.stringify({ name, model, price }),
-      }
-    );
+    const response = await fetch("http://localhost:3000/api/dogs", {
+      method: "POST",
+      "Content-type": "application/json",
+      body: JSON.stringify({ DogName: name, DogBreed: breed, DogAge: age }),
+    });
+    if (response.ok) {
+      alert("Laptop added succesfully");
+    }
+    if (error) {
+      alert("Try again later");
+    }
   };
 
   return (
@@ -30,7 +33,7 @@ const page = () => {
             <input
               type="text"
               value={name}
-              onChange={(e) => Setname(e.target.value)}
+              onChange={(e) => SetName(e.target.value)}
               className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
@@ -38,8 +41,8 @@ const page = () => {
             <h3 className="text-lg font-semibold mb-2">Dog breed</h3>
             <input
               type="text"
-              value={model}
-              onChange={(e) => Setmodel(e.target.value)}
+              value={breed}
+              onChange={(e) => SetBreed(e.target.value)}
               className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
@@ -47,8 +50,8 @@ const page = () => {
             <h3 className="text-lg font-semibold mb-2">Dog age</h3>
             <input
               type="text"
-              value={price}
-              onChange={(e) => Setprice(e.target.value)}
+              value={age}
+              onChange={(e) => SetAge(e.target.value)}
               className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
