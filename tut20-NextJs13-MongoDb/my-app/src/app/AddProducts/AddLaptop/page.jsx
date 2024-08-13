@@ -16,6 +16,7 @@ const page = () => {
             <input
               type="text"
               value={name}
+              onChange={(e) => Setname(e.target.value)}
               className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
@@ -24,6 +25,7 @@ const page = () => {
             <input
               type="text"
               value={model}
+              onChange={(e) => Setmodel(e.target.value)}
               className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
@@ -32,6 +34,7 @@ const page = () => {
             <input
               type="text"
               value={price}
+              onChange={(e) => Setprice(e.target.value)}
               className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
