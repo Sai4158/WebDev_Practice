@@ -7,12 +7,26 @@ const page = () => {
   const [model, Setmodel] = useState();
   const [price, Setprice] = useState();
 
+  const laptopDataHandler = async () => {
+    const response = await fetch(
+      "http://localhost:3000/AddProducts/AddLaptop",
+      {
+        method: "POST",
+        "Content-type": "application/json",
+        body: JSON.stringify({ name, model, price }),
+      }
+    );
+  };
+
   return (
     <div className="flex justify-center items-center min-h-screen bg-gray-100">
-      <form className="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
+      <form
+        className="bg-white p-8 rounded-lg shadow-md w-full max-w-md"
+        onSubmit={laptopDataHandler}
+      >
         <div className="space-y-4">
           <div>
-            <h3 className="text-lg font-semibold mb-2">Laptop name</h3>
+            <h3 className="text-lg font-semibold mb-2">Dog name</h3>
             <input
               type="text"
               value={name}
@@ -21,7 +35,7 @@ const page = () => {
             />
           </div>
           <div>
-            <h3 className="text-lg font-semibold mb-2">Laptop model</h3>
+            <h3 className="text-lg font-semibold mb-2">Dog breed</h3>
             <input
               type="text"
               value={model}
@@ -30,7 +44,7 @@ const page = () => {
             />
           </div>
           <div>
-            <h3 className="text-lg font-semibold mb-2">Laptop price</h3>
+            <h3 className="text-lg font-semibold mb-2">Dog age</h3>
             <input
               type="text"
               value={price}
