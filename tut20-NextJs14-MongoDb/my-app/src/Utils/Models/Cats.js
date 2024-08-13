@@ -2,7 +2,7 @@ const { default: mongoose } = require("mongoose");
 
 const CatsSchema = new mongoose.Schema({
   catName: { type: String },
-  catModel: { type: String },
+  catColor: { type: String },
 });
 
 const CatModel = mongoose.models.cat || mongoose.model("cat", CatsSchema);

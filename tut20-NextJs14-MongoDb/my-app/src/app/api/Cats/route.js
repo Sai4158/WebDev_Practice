@@ -8,17 +8,18 @@ const connectToDb = async () => {
 
 export async function GET() {
   await connectToDb();
-  return NextResponse.json({ Cat: "meow" });
+  const diplay = await CatModel.find({});
+  return NextResponse.json(diplay);
 }
 
 export async function POST(request) {
   await connectToDb();
 
-  const { catName, catModel } = await request.json();
+  const { catName, catColor } = await request.json();
 
   await CatModel.create({
     catName,
-    catModel,
+    catColor,
   });
 
   return NextResponse.json({ MSG: "SENT" });
