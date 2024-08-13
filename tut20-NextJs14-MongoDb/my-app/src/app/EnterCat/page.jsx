@@ -23,28 +23,37 @@ const Page = () => {
   };
 
   return (
-    <div className="place-items-center">
-      <form onSubmit={catHandler}>
-        <div>
-          <h1>Enter name</h1>
+    <div className="flex justify-center items-center h-screen">
+      <form
+        onSubmit={catHandler}
+        className="bg-slate-500 px-44 py-20 rounded-lg shadow-lg"
+      >
+        <div className="mb-4">
+          <h1 className="text-lg  mb-2">Enter cat name</h1>
           <input
-            className="text-black"
+            className="w-full p-2 border border-gray-300 rounded"
             type="text"
             value={name}
             onChange={(e) => setName(e.target.value)}
           />
         </div>
-        <br />
-        <div>
-          <h1>Enter color</h1>
+
+        <div className="mb-4">
+          <h1 className="text-lg  mb-2">Enter cat color</h1>
           <input
-            className="text-black"
+            className="w-full p-2 border border-gray-300 rounded"
             type="text"
             value={color}
             onChange={(e) => setColor(e.target.value)}
           />
         </div>
-        <button type="submit">Add cat</button>
+
+        <button
+          type="submit"
+          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+        >
+          Add cat
+        </button>
       </form>
     </div>
   );
