@@ -5,6 +5,7 @@ import { NextResponse } from "next/server";
 // GET method to retrieve all dogs
 export async function GET() {
   await DBconnection();
+  
   const showData = await DogModel.find({});
   return NextResponse.json(showData);
 }
