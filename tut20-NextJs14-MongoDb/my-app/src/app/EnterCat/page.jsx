@@ -18,7 +18,12 @@ const Page = () => {
     });
 
     if (response.ok) {
-      alert("Cat added successfully");
+      try {
+        alert("Cat added successfully");
+        // once done empty the boxes
+      } catch (error) {
+        alert(error);
+      }
     }
   };
 
