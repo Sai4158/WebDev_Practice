@@ -20,11 +20,14 @@ const Page = () => {
     if (response.ok) {
       try {
         alert("Cat added successfully");
-        // once done empty the boxes
       } catch (error) {
         alert(error);
       }
     }
+
+    // once done empty the boxes
+    setName("");
+    setColor("");
   };
 
   return (
