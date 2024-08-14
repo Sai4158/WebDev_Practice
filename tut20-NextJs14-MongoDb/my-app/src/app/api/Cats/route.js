@@ -24,3 +24,11 @@ export async function POST(request) {
 
   return NextResponse.json({ MSG: "SENT" });
 }
+
+export async function DELETE(request) {
+  const catId = request.nextUrl.searchParams.get("id");
+
+  await CatModel.findByIdAndDelete(catId);
+
+  return NextResponse.json({ msg: "DELETED" });
+}
