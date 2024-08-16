@@ -9,4 +9,7 @@ function GenOpt() {
   return otp;
 }
 
-console.log(GenOpt());
+// this is will print it 5 times
+for (let i = 0; i < 5; i++) {
+  console.log(GenOpt());
+}
