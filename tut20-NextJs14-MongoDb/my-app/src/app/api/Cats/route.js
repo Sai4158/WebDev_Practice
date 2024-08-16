@@ -30,5 +30,9 @@ export async function DELETE(request) {
 
   await CatModel.findByIdAndDelete(catId);
 
-  return NextResponse.json({ msg: "DELETED" });
+  try {
+    return NextResponse.json({ msg: "DELETED" });
+  } catch (error) {
+    return NextResponse.json(error);
+  }
 }
