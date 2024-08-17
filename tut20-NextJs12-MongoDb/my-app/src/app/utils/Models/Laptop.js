@@ -14,4 +14,4 @@ const LaptopModel =
   // but if "laptop" isnt there then it will create name using LaptopSchema
   mongoose.models.laptop || mongoose.model("laptop", LaptopSchema);
 export default LaptopModel;
-``
+``;
