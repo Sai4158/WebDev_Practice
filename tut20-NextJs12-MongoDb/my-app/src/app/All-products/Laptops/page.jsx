@@ -3,18 +3,18 @@
 import React, { useEffect, useState } from "react";
 
 const Page = () => {
-  const [laptops, setLaptops] = useState([]);
+  const [laptops, setLaptops] = useState([]); // Initialize as an array
 
-  const productHandle = async () => {
-    const response = await fetch("http://localhost:3000/api/Products/Laptops");
-    const resdata = await response.json();
+  const productHandler = async () => {
+    const response = await fetch("http://localhost:3000/api/products/laptops");
+    const resData = await response.json();
 
-    console.log("checking for products", resdata);
-    setLaptops(resdata.laptopsData);
+    console.log("checking for products", resData);
+    setLaptops(resData.laptopData); // Assuming laptopData is an array
   };
 
   useEffect(() => {
-    productHandle();
+    productHandler();
   }, []);
 
   return (
