@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 const page = (params) => {
   const id = params.Prodcutid;
@@ -11,6 +11,10 @@ const page = (params) => {
     const respone = await fetch(`http://localhost:3000/api/Cats/update${id}`);
     const data = await respone.json();
     console.log("Checking for single record ", data);
+
+    useEffect(() => {
+      catHandler();
+    }, []);
   };
   return (
     <div>

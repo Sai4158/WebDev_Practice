@@ -26,7 +26,8 @@ const Page = () => {
               <th className="border border-black p-2">Cat ID.</th>
               <th className="border border-black p-2">Cat Name.</th>
               <th className="border border-black p-2">Cat Color.</th>
-              <th className="border border-black p-2">Actions.</th>
+              <th className="border border-black p-2">Update.</th>
+              <th className="border border-black p-2">Delete.</th>
             </tr>
           </thead>
           <tbody>
