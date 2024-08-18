@@ -16,32 +16,28 @@ const Page = () => {
 
   return (
     <div>
-      <h1>All cats data here</h1>
-      <br />
-      <br />
-      <table
-        style={{
-          border: "1px solid black",
-          width: "50%",
-        }}
-      >
-        <thead>
-          <tr>
-            <th style={{ border: "1px solid black" }}>Cat ID.</th>
-            <th style={{ border: "1px solid black" }}>Cat Name.</th>
-            <th style={{ border: "1px solid black" }}>Cat Color.</th>
-          </tr>
-        </thead>
-        <tbody>
-          {cats.map((item) => (
-            <tr key={item._id}>
-              <td style={{ border: "1px solid black" }}>{item._id}</td>
-              <td style={{ border: "1px solid black" }}>{item.catName}</td>
-              <td style={{ border: "1px solid black" }}>{item.catColor}</td>
+      <h1 className="text-center m-8">All cats data here</h1>
+
+      <div className="flex justify-center items-center">
+        <table className=" border border-black w-[50%]">
+          <thead>
+            <tr>
+              <th className="border border-black p-2">Cat ID.</th>
+              <th className="border border-black p-2">Cat Name.</th>
+              <th className="border border-black p-2">Cat Color.</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {cats.map((item) => (
+              <tr key={item._id}>
+                <td className="border border-black p-2">{item._id}</td>
+                <td className="border border-black p-2">{item.catName}</td>
+                <td className="border border-black p-2">{item.catColor}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 };
