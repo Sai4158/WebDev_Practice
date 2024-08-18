@@ -16,21 +16,28 @@ const Page = () => {
 
   return (
     <div>
-      <h1>Cat Products</h1>
-      <table border="5">
+      <h1>All cats data here</h1>
+      <br />
+      <br />
+      <table
+        style={{
+          border: "1px solid black",
+          width: "50%",
+        }}
+      >
         <thead>
           <tr>
-            <th>Cat ID.</th>
-            <th>Cat Name.</th>
-            <th>Cat Color.</th>
+            <th style={{ border: "1px solid black" }}>Cat ID.</th>
+            <th style={{ border: "1px solid black" }}>Cat Name.</th>
+            <th style={{ border: "1px solid black" }}>Cat Color.</th>
           </tr>
         </thead>
         <tbody>
           {cats.map((item) => (
-            <tr>
-              <td>{item._id}</td>
-              <td>{item.catName}</td>
-              <td>{item.catColor}</td>
+            <tr key={item._id}>
+              <td style={{ border: "1px solid black" }}>{item._id}</td>
+              <td style={{ border: "1px solid black" }}>{item.catName}</td>
+              <td style={{ border: "1px solid black" }}>{item.catColor}</td>
             </tr>
           ))}
         </tbody>
