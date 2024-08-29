@@ -28,12 +28,13 @@ const page = (params) => {
         className="bg-slate-500 px-44 py-20 rounded-lg shadow-lg"
       >
         <div className="mb-4">
-          <h1 className="text-lg  mb-2">Enter car name</h1>
+          <h1 className="text-lg mb-2">Enter car name</h1>
           <input
-            className="w-full p-2 border border-gray-300 rounded"
+            className="w-full p-2 border border-gray-300 rounded placeholder-black"
             type="text"
             value={name}
             onChange={(e) => setName(e.target.value)}
+            placeholder="Enter car name"
           />
         </div>
 
