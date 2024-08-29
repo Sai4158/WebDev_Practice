@@ -13,9 +13,8 @@ export async function GET() {
   return NextResponse.json(diplay);
 }
 
-export async function POST() {
+export async function POST(request) {
   await connectToDb();
-
   const { bmw } = await request.json();
 
   await BmwModel.create({
