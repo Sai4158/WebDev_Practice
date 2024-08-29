@@ -1,6 +1,5 @@
 import { DbConnection } from "@/utils/config/bmw";
 import BmwModel from "@/utils/model/DB";
-import { request } from "express";
 import { NextResponse } from "next/server";
 
 const connectToDb = async () => {
