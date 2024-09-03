@@ -8,6 +8,12 @@ console.log(aaa[1]);
 const captial = {
   India: "Contry",
   Hyderbad: "State",
+  //   for the location this will run the
+  Location: function () {
+    return "I live in " + this.Hyderbad;
+  },
 };
 
 console.log(captial.India);
+// make sure to use () to call the function here
+console.log(captial.Location());
