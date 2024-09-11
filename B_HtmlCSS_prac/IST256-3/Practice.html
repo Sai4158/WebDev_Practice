@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Practice 1: DOM Manipulation</title>
+  </head>
+  <body>
+    <p id="intro">This is a paragraph.</p>
+    <ul id="tasks">
+      <li>Task 1</li>
+      <li>Task 2</li>
+    </ul>
+    <button onclick="modifyDOM()">Modify DOM</button>
+
+    <script>
+      function modifyDOM() {
+        // Change paragraph text
+        document.getElementById("intro").textContent =
+          "Welcome to DOM Manipulation.";
+
+        // Add new list item
+        var newItem = document.createElement("li");
+
+        newItem.textContent = "DOM Practice";
+
+        // adding the new bullet to the html li
+        document.getElementById("tasks").appendChild(newItem);
+      }
+    </script>
+  </body>
+</html>
