@@ -1,10 +1,10 @@
 const { default: mongoose } = require("mongoose");
 
-const monitorSchmea = new mongoose.Schema({
-  Monitor: { type: String },
+const monitorSchema = new mongoose.Schema({
+  monitor: { type: String },
 });
 
 const monitorModel =
-  mongoose.models.montior || mongoose.model("monitor", monitorSchmea);
+  mongoose.models.monitor || mongoose.model("monitors", monitorSchema);
 
 export default monitorModel;
