@@ -13,7 +13,20 @@ export async function GET() {
 
   // Await the result of find()
   const mobileData = await monitorModel.find({});
-  return NextResponse.json(mobileData);
+  return (
+    <>
+      {mobileData.map((item) => {
+        return (
+          <div>
+            <div>
+              <h1>monitor: {item.id}</h1>
+              <hr />
+            </div>
+          </div>
+        );
+      })}
+    </>
+  );
 }
 
 // post method
