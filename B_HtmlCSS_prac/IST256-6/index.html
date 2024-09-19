@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Custom Image Reveal</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="main-container">
+        <h1>Reveal the Hidden Image</h1>
+        <button id="revealButton" onclick="toggleImageVisibility()">Show/Hide Image</button>
+        <button id="backgroundButton" onclick="switchBackgroundColor()">Toggle Background</button>
+        
+        <div class="picture-container" id="pictureContainer">
+            <img src="https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg" alt="Hidden Image" class="invisible-image" id="image">
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
