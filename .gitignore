@@ -1,2 +1,7 @@
 
 tut20-NextJs13-MongoDb/my-app/.env
+tut22-NextJs13-AUTH/my-app/src/app/.env
+*.ts
+*.map
+*.js
+/node_modules
