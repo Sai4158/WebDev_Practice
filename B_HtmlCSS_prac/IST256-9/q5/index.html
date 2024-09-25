@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ClassList Example</title>
+    <style>
+      /* Styling for the original class */
+      .originalClass {
+        color: blue;
+        font-size: 18px;
+      }
+
+      /* Styling for the new class */
+      .newClass {
+        font-style: italic;
+        color: red;
+      }
+    </style>
+  </head>
+  <body>
+    <p class="originalClass">This is a paragraph.</p>
+
+    <script>
+      // Select the <p> element
+      let pElement = document.querySelector("p");
+
+      pElement.classList.add("newClass");
+    </script>
+  </body>
+</html>
