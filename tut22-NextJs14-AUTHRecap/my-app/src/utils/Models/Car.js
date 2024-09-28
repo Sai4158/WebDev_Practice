@@ -1,10 +1,8 @@
-// This is for the schema
+const mongoose = require("mongoose");
 
-const { default: mongoose } = require("mongoose");
-
-const CarSchmea = new mongoose.Schema({
-  CarModel: { Type: String, required: true },
-  CarColour: { Type: String, required: true },
+const CarSchema = new mongoose.Schema({
+  CarModel: { type: String, required: true },
+  CarColour: { type: String, required: true },
 });
 
-export default mongoose.models.car || mongoose.model("car", CarSchmea);
+export const carModel = mongoose.models.car || mongoose.model("car", CarSchema);
