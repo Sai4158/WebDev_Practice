@@ -1,4 +1,5 @@
 "use client";
+import Link from "next/link";
 import { useState, useEffect } from "react";
 
 export default function Home() {
@@ -82,6 +83,18 @@ export default function Home() {
               </li>
             ))}
           </ul>
+        </div>
+
+        <div className="w-full text-center pt-5">
+          <h2 className="pb-5">Click the button to view the api route</h2>
+
+          <Link
+            className="px-10 py-3 bg-blue-300"
+            href="/api/Cars"
+            target="_blank"
+          >
+            Go to api page
+          </Link>
         </div>
       </div>
     </div>
