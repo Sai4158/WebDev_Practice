@@ -12,8 +12,8 @@ const DB = async () => {
 // This is the get method
 export async function GET() {
   DB();
-  const a = await carModel.find({});
-  return NextResponse.json({ a });
+  const Data = await carModel.find({});
+  return NextResponse.json(Data);
 }
 
 // This the post method
