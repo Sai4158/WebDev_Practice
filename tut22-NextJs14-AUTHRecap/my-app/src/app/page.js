@@ -34,22 +34,22 @@ export default function Home() {
     setCars(updatedCars);
   };
 
-  // If user is not logged in, show login button
-  if (!session) {
-    return (
-      <div className="flex flex-col items-center justify-center h-screen">
-        <h1 className="text-3xl font-bold mb-6">
-          Please Login to Submit Car Info
-        </h1>
-        <button 
-          onClick={() => signIn("google")}
-          className="px-6 py-3 bg-blue-600 text-white rounded hover:bg-blue-700"
-        >
-          Sign in with Google
-        </button>
-      </div>
-    );
-  }
+  // // If user is not logged in, show login button
+  // if (!session) {
+  //   return (
+  //     <div className="flex flex-col items-center justify-center h-screen">
+  //       <h1 className="text-3xl font-bold mb-6">
+  //         Please Login to Submit Car Info
+  //       </h1>
+  //       <button
+  //         onClick={() => signIn("google")}
+  //         className="px-6 py-3 bg-blue-600 text-white rounded hover:bg-blue-700"
+  //       >
+  //         Sign in with Google
+  //       </button>
+  //     </div>
+  //   );
+  // }
 
   return (
     <div className="flex flex-col items-center p-10 min-h-screen bg-gray-100">
@@ -109,12 +109,12 @@ export default function Home() {
         </Link>
       </div>
 
-      <button
+      {/* <button
         onClick={() => signOut()}
         className="mt-4 px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"
       >
         Logout
-      </button>
+      </button> */}
     </div>
   );
 }
