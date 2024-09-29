@@ -11,14 +11,14 @@ const DB = async () => {
 
 // This is the get method
 export async function GET() {
-  DB();
+  await DB();
   const Data = await carModel.find({});
   return NextResponse.json(Data);
 }
 
 // This the post method
 export async function POST(request) {
-  DB();
+  await DB();
   const { CarModel, CarColour } = await request.json();
 
   await carModel.create({ CarModel, CarColour });
