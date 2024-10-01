@@ -10,10 +10,17 @@ const page = () => {
   const [Email, setEmail] = useState("");
   const [Password, setPassword] = useState("");
 
+  // onchange function - onSubmit - form
+  const registerHandler = async (e) => {
+    e.preventDefault();
+    const registerDetails = { username, email, Password };
+    console.log("This is register text" + registerDetails);
+  };
+
   return (
     // Make a form
     <div className="form-container">
-      <form action="" className="formSection">
+      <form action="" className="formSection" onSubmit={registerHandler}>
         <h3>Username:</h3>
         <input
           type="text"
@@ -44,7 +51,6 @@ const page = () => {
         <button type="submit" className="button">
           Register
         </button>
-        d
       </form>
     </div>
   );
