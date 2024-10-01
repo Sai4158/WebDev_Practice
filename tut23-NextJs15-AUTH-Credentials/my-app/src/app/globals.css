@@ -1,3 +1,50 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* This is for the register folder */
+
+.form-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.formSection {
+  border: 1px solid red;
+  width: 40%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: black;
+  font-size: large;
+  color: white;
+}
+
+in .formSection h3,
+input {
+  width: 80%;
+}
+
+.input1 {
+  border: solid black 2px;
+  margin-bottom: 50px;
+  margin-top: 50px;
+  color: black;
+}
+
+html {
+  background-color: darkslategrey;
+}
+
+.button {
+  height: 50px;
+  width: 100px;
+
+  background: black;
+  font-size: large;
+  color: white;
+}
