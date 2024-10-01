@@ -44,7 +44,12 @@ html {
   height: 50px;
   width: 100px;
 
-  background: black;
+  background: gray;
   font-size: large;
   color: white;
+}
+
+.button:hover {
+  scale: 0.95;
+  transition: all;
 }

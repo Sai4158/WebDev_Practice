@@ -1,26 +1,50 @@
 "use client";
 // This if for the login form
 
-import React from "react";
+import React, { useState } from "react";
 
 const page = () => {
+  // UseState for the fields
+
+  const [Username, setUsername] = useState("");
+  const [Email, setEmail] = useState("");
+  const [Password, setPassword] = useState("");
+
   return (
+    // Make a form
     <div className="form-container">
       <form action="" className="formSection">
         <h3>Username:</h3>
-        <input type="text" name="" id="" className="input1" />
-
+        <input
+          type="text"
+          name="username"
+          id=""
+          className="input1"
+          onChange={(e) => setUsername(e.target.value)}
+        />
         <h3>Email:</h3>
-        <input type="email" name="" id="" className="input1" />
-
+        <input
+          type="email"
+          name="email"
+          id=""
+          className="input1"
+          onChange={(e) => setEmail(e.target.value)}
+        />
         <h3>Password:</h3>
-        <input type="password" name="" id="" className="input1" />
-
+        <input
+          type="password"
+          name="password"
+          id=""
+          className="input1"
+          // Takes this value here updates the use state
+          onChange={(e) => setPassword(e.target.value)}
+        />
         <br />
         <br />
         <button type="submit" className="button">
           Register
         </button>
+        d
       </form>
     </div>
   );
