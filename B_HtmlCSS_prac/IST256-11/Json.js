@@ -13,3 +13,7 @@ console.log(person.Name);
 let a = JSON.parse(person.score);
 console.log(a);
 // 100
+
+let b = JSON.stringify(person.Name);
+console.log(b);
+// "Sai"
