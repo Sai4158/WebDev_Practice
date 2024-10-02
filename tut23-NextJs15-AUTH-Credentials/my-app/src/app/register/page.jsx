@@ -13,8 +13,8 @@ const page = () => {
   // onchange function - onSubmit - form
   const registerHandler = async (e) => {
     e.preventDefault();
-    const registerDetails = { username, email, Password };
-    console.log("This is register text" + registerDetails);
+    const registerDetails = { Username, Email, Password };
+    console.log("This is register text", registerDetails);
   };
 
   return (
@@ -39,7 +39,7 @@ const page = () => {
         />
         <h3>Password:</h3>
         <input
-          type="password"
+          type="text"
           name="password"
           id=""
           className="input1"
