@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>JSON Object to Form Fields</title>
+  </head>
+  <body>
+    <h2>User Information Form</h2>
+
+    <form id="userForm">
+      <label for="username">Username:</label>
+      <input type="text" id="username" name="username" required /><br /><br />
+
+      <label for="age">Age:</label>
+      <input type="number" id="age" name="age" required /><br /><br />
+
+      <label for="country">Country:</label>
+      <input type="text" id="country" name="country" required /><br /><br />
+
+      <button type="submit">Submit</button>
+      <button type="button" id="resetButton">Reset</button>
+    </form>
+
+    <h3>Form Data in JSON:</h3>
+    <pre id="outputUser"></pre>
+
+    <script>
+      document
+        .getElementById("userForm")
+        .addEventListener("submit", function (event) {
+          event.preventDefault();
+
+          const username = document.getElementById("username").value;
+          const age = document.getElementById("age").value;
+          const country = document.getElementById("country").value;
+
+          // Create the JSON object
+          const formData = {
+            username: username,
+            age: parseInt(age),
+            country: country,
+          };
+
+          // Convert to JSON string
+          const jsonString = JSON.stringify(formData);
+
+          // Display JSON data
+          document.getElementById("outputUser").textContent = jsonString;
+
+          setTimeout(() => {
+            const predefinedData = {
+              username: "Alice",
+              age: 25,
+              country: "USA",
+            };
+
+            document.getElementById("username").value = predefinedData.username;
+            document.getElementById("age").value = predefinedData.age;
+            document.getElementById("country").value = predefinedData.country;
+          }, 5000);
+        });
+
+      // Reset form button functionality
+      document
+        .getElementById("resetButton")
+        .addEventListener("click", function () {
+          document.getElementById("userForm").reset();
+          document.getElementById("outputUser").textContent = "";
+        });
+    </script>
+  </body>
+</html>
