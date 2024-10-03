@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Contact Form to JSON</title>
+  </head>
+  <body>
+    <h2>Simple Contact Form</h2>
+
+    <form id="contactForm">
+      <label for="firstName">First Name:</label>
+      <input type="text" id="firstName" name="firstName" required /><br /><br />
+
+      <label for="lastName">Last Name:</label>
+      <input type="text" id="lastName" name="lastName" required /><br /><br />
+
+      <label for="email">Email:</label>
+      <input type="email" id="email" name="email" required /><br /><br />
+
+      <label for="message">Message:</label><br />
+      <textarea id="message" name="message" required></textarea><br /><br />
+
+      <button type="submit">Submit</button>
+    </form>
+
+    <h3>Form Data in JSON:</h3>
+    <pre id="output"></pre>
+
+    <script>
+      document
+        .getElementById("contactForm")
+        .addEventListener("submit", function (event) {
+          event.preventDefault();
+
+          const firstName = document.getElementById("firstName").value;
+          const lastName = document.getElementById("lastName").value;
+          const email = document.getElementById("email").value;
+          const message = document.getElementById("message").value;
+
+          // Create the JSON object
+          const formData = {
+            firstName: firstName,
+            lastName: lastName,
+            email: email,
+            message: message,
+          };
+
+          // Convert to JSON string
+          const jsonString = JSON.stringify(formData);
+
+          // Display JSON data
+          document.getElementById("output").textContent = jsonString;
+        });
+    </script>
+  </body>
+</html>
