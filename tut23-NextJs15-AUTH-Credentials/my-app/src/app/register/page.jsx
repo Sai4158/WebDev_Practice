@@ -2,6 +2,7 @@
 // This if for the login form
 
 import React, { useState } from "react";
+import { registerAction } from "../ServerActions/registeraction";
 
 const page = () => {
   // UseState for the fields
@@ -15,6 +16,7 @@ const page = () => {
     e.preventDefault();
     const registerDetails = { Username, Email, Password };
     console.log("This is register text", registerDetails);
+    await registerAction(registerDetails);
   };
 
   return (
