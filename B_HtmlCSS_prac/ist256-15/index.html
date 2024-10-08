@@ -7,11 +7,65 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   </head>
   <body>
-    <h1 id="Example">Example</h1>
+    <!-- Example 1: Document Ready -->
+    <p>Click this paragraph to hide it. (Example 2)</p>
+
+    <!-- Example 3: Change Text Example -->
+    <button id="changeTextBtn">Change Text</button>
+    <p id="textElement">This text will change when you click the button.</p>
+
+    <!-- Example 4: Add CSS Styles Example -->
+    <button id="styleBtn">Change Styles</button>
+    <p id="styledText">
+      This text will have new styles when you click the button.
+    </p>
+
+    <!-- Example 5: Fade In/Out Example -->
+    <button id="fadeBtn">Fade In/Out</button>
+    <div
+      id="fadeElement"
+      style="
+        width: 100px;
+        height: 100px;
+        background-color: red;
+        margin-top: 10px;
+      "
+    >
+      Fade Me!
+    </div>
 
     <script>
+      // This is example1 -  This is will alert when page is opened.
       $(document).ready(function () {
         alert("The document is ready!");
+      });
+
+      // Example 2: Hide Element on Click
+      $(document).ready(function () {
+        $("p").click(function () {
+          $(this).hide();
+        });
+      });
+
+      // Example 3: Change Text of an Element
+      $(document).ready(function () {
+        $("#changeTextBtn").click(function () {
+          $("#textElement").text("Text has been changed!");
+        });
+      });
+
+      // Example 4: Add CSS Styles to an Element
+      $(document).ready(function () {
+        $("#styleBtn").click(function () {
+          $("#styledText").css("color", "blue").css("font-size", "20px");
+        });
+      });
+
+      // Example 5: Fade In/Out an Element
+      $(document).ready(function () {
+        $("#fadeBtn").click(function () {
+          $("#fadeElement").fadeToggle();
+        });
       });
     </script>
   </body>
