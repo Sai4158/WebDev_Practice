@@ -14,11 +14,15 @@ const page = () => {
   // onchange function - onSubmit - form
   const registerHandler = async (e) => {
     e.preventDefault();
-    const registerDetails = { Username, Email, Password };
+    const registerDetails = {
+      Username,
+      Email,
+      Password,
+      role: "user",
+    };
     console.log("This is register text", registerDetails);
     await registerAction(registerDetails);
   };
-
   return (
     // Make a form
     <div className="form-container">
