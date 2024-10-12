@@ -4,7 +4,7 @@
 import React, { useState } from "react";
 import { registerAction } from "../ServerActions/registeraction";
 
-const page = () => {
+const Page = () => {
   // UseState for the fields
 
   const [Username, setUsername] = useState("");
@@ -15,14 +15,15 @@ const page = () => {
   const registerHandler = async (e) => {
     e.preventDefault();
     const registerDetails = {
-      Username,
-      Email,
-      Password,
+      username: Username, // Change to lowercase
+      email: Email, // Change to lowercase
+      password: Password, // Change to lowercase
       role: "user",
     };
     console.log("This is register text", registerDetails);
     await registerAction(registerDetails);
   };
+
   return (
     // Make a form
     <div className="form-container">
@@ -62,4 +63,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;

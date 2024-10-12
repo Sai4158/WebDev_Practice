@@ -199,22 +199,42 @@
 
     <!-- js script -->
     <script>
-      document
-        .querySelector("form")
-        .addEventListener("submit", function (event) {
-          const email = document.getElementById("email").value;
-          const password = document.getElementById("password").value;
-
-          if (!email.includes("@")) {
-            alert("Please enter a valid email.");
-            event.preventDefault();
-          }
-
-          if (password.length < 6) {
-            alert("Password must be at least 6 characters long.");
-            event.preventDefault();
-          }
-        });
+      // Step 1: Store the form and input fields in constants
+      const form = document.querySelector("form");
+      const emailField = document.getElementById("email");
+      const passwordField = document.getElementById("password");
+    
+      // Step 2: Add an event listener to the form for when it gets submitted
+      form.addEventListener("submit", function (event) {
+        // Step 3: Prevent the form from submitting normally (no page reload)
+        event.preventDefault();
+    
+        // Step 4: Get the values from the input fields
+        const email = emailField.value;
+        const password = passwordField.value;
+    
+        // Step 5: Basic validation for the email and password fields
+        if (!email.includes("@")) {
+          alert("Please enter a valid email.");
+          return; // Stop the form from continuing
+        }
+    
+        if (password.length < 6) {
+          alert("Password must be at least 6 characters long.");
+          return; // Stop the form from continuing
+        }
+    
+        // Step 6: Create a JSON object with the form data
+        const userData = {
+      email: email,
+      password: password,
+    };
+    
+        // Step 7: Show the JSON data in the console and in an alert
+        console.log(JSON.stringify(userData));
+        alert("Sign-up successful! JSON Data: " + JSON.stringify(userData));
+      });
+    </script>
     </script>
   </body>
 </html>

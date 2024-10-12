@@ -7,6 +7,5 @@ const usernameSchema = new mongoose.Schema({
   role: { type: String, enum: ["user", "admin"], required: true },
 });
 
-// Check if the model already exists in `mongoose.models` to avoid overwriting it
 export const usermodel =
   mongoose.models.user || mongoose.model("user", usernameSchema);
