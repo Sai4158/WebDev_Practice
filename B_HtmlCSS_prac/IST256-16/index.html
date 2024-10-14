@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Enhanced AJAX Request Example</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+      #loading {
+        display: none;
+        font-size: 18px;
+        color: blue;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Enhanced AJAX GET Request Example</h1>
+
+    <!-- Input for different user request addresses -->
+    <label for="userId">Enter User ID: </label>
+    <input type="number" id="userId" value="1" min="1" />
+    <button onclick="fetchData()">Fetch User Data</button>
+
+    <!-- Loading indicator -->
+    <p id="loading">Loading...</p>
+
+    <!-- Div to display the data returned from the server -->
+    <div id="result" style="margin-top: 20px"></div>
+
+    <script>
+      function fetchData() {
+        var userId = document.getElementById("userId").value; // Get user input
+
+        // Create a new XMLHttpRequest object
+        var xhr = new XMLHttpRequest();
+
+        // Show loading indicator
+        document.getElementById("loading").style.display = "block";
+        document.getElementById("result").innerHTML = ""; // Clear previous results
+
+        // Specify the type of request (GET) and the URL (API endpoint)
+        xhr.open(
+          "GET",
+          `https://jsonplaceholder.typicode.com/users/${userId}`,
+          true
+        );
+
+        // Define the callback function to handle the server response
+        xhr.onload = function () {
+          // Hide loading indicator
+          document.getElementById("loading").style.display = "none";
+
+          if (xhr.status === 200) {
+            // Check if the status is OK (200)
+            // Parse the JSON response
+            var user = JSON.parse(xhr.responseText);
+
+            // Display the returned data inside the "result" div
+            document.getElementById("result").innerHTML =
+              "<h3>User Info</h3>" +
+              "<p><strong>Name:</strong> " +
+              user.name +
+              "</p>" +
+              "<p><strong>Email:</strong> " +
+              user.email +
+              "</p>" +
+              "<p><strong>Phone:</strong> " +
+              user.phone +
+              "</p>";
+          } else {
+            // Display an error message if the request failed
+            document.getElementById("result").innerHTML =
+              "Failed to load data. Error code: " + xhr.status;
+          }
+        };
+
+        // Error handling for network issues
+        xhr.onerror = function () {
+          // Hide loading indicator
+          document.getElementById("loading").style.display = "none";
+          document.getElementById("result").innerHTML =
+            "Network Error. Please try again later.";
+        };
+
+        // Send the request
+        xhr.send();
+      }
+    </script>
+  </body>
+</html>
