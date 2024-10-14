@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Simple AJAX Time & Countdown</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  </head>
+  <body>
+    <h1>AJAX Time Fetching & Countdown</h1>
+
+    <!-- Button to start/stop time updates -->
+    <button id="startStop">Start Time Update</button>
+    <button id="toggleTimeFormat">Toggle UTC/Local Time</button>
+
+    <!-- Countdown input and button -->
+    <h3>Countdown Timer</h3>
+    <input
+      type="number"
+      id="countdownInput"
+      value="10"
+      placeholder="Enter time in seconds"
+    />
+    <button id="startCountdown">Start Countdown</button>
+    <p id="countdownDisplay"></p>
+
+    <!-- Div to display the current time -->
+    <p id="timeDisplay"></p>
+
+    <script>
+      var timer,
+        countdown,
+        showUTC = false,
+        updatingTime = false;
+
+      // Function to fetch time
+      function fetchTime() {
+        $.ajax({
+          url: "https://worldtimeapi.org/api/timezone/Etc/UTC",
+          success: function (data) {
+            var currentTime = new Date(data.datetime);
+            var formattedTime = showUTC
+              ? currentTime.toUTCString()
+              : currentTime.toLocaleString("en-US", {
+                  weekday: "long",
+                  year: "numeric",
+                  month: "long",
+                  day: "numeric",
+                  hour: "2-digit",
+                  minute: "2-digit",
+                });
+            $("#timeDisplay").text(formattedTime);
+          },
+          error: function () {
+            $("#timeDisplay").text("Failed to load time.");
+          },
+        });
+      }
+
+      // Start or stop time updates
+      $("#startStop").click(function () {
+        if (updatingTime) {
+          clearInterval(timer);
+          $(this).text("Start Time Update");
+        } else {
+          timer = setInterval(fetchTime, 5000);
+          fetchTime();
+          $(this).text("Stop Time Update");
+        }
+        updatingTime = !updatingTime;
+      });
+
+      // Toggle between UTC and Local time
+      $("#toggleTimeFormat").click(function () {
+        showUTC = !showUTC;
+        fetchTime();
+      });
+
+      // Countdown Timer
+      $("#startCountdown").click(function () {
+        clearInterval(countdown);
+        var time = parseInt($("#countdownInput").val());
+        countdown = setInterval(function () {
+          if (time > 0) {
+            $("#countdownDisplay").text(time + " seconds remaining");
+            time--;
+          } else {
+            clearInterval(countdown);
+            $("#countdownDisplay").text("Time's up!");
+          }
+        }, 1000);
+      });
+
+      // Initial time fetch on page load
+      fetchTime();
+    </script>
+  </body>
+</html>
