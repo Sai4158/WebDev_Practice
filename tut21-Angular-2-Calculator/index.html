@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="calcApp">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Simple Calculator</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+  </head>
+  <body ng-controller="calcController">
+    <h2>Simple Addition Calculator</h2>
+
+    <!-- Input -->
+    <input type="number" ng-model="number1" placeholder="Enter first number" />
+    <input type="number" ng-model="number2" placeholder="Enter second number" />
+
+    <button ng-click="calculateSum()">Calculate</button>
+
+    <!-- Display result  -->
+    <h3>Result: {{ result }}</h3>
+
+    <!-- Script -->
+    <script>
+      var app = angular.module("calcApp", []);
+      app.controller("calcController", function ($scope) {
+        $scope.calculateSum = function () {
+          $scope.result = $scope.number1 + $scope.number2;
+        };
+      });
+    </script>
+  </body>
+</html>
