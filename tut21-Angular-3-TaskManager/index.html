@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="taskApp">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Task Manager</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+  </head>
+  <body ng-controller="taskController">
+    <h2>Task Manager</h2>
+
+    <!-- Input -->
+    <input type="text" ng-model="newTask" placeholder="Enter task" />
+    <button ng-click="addTask()">Add Task</button>
+
+    <!--  delete or mark as completed -->
+    <ul>
+      <li ng-repeat="task in tasks">
+        <span ng-class="{'completed': task.completed}"> {{task.name}} </span>
+        <button ng-click="completeTask(task)">Mark as Completed</button>
+        <button ng-click="deleteTask(task)">Delete</button>
+      </li>
+    </ul>
+
+    <style>
+      .completed {
+        text-decoration: line-through;
+      }
+    </style>
+
+    <script>
+      var app = angular.module("taskApp", []);
+      app.controller("taskController", function ($scope) {
+        $scope.tasks = [];
+
+        // Add a task
+        $scope.addTask = function () {
+          if ($scope.newTask) {
+            $scope.tasks.push({ name: $scope.newTask, completed: false });
+            $scope.newTask = "";
+          }
+        };
+
+        // Mark task as completed
+        $scope.completeTask = function (task) {
+          task.completed = true;
+        };
+
+        // Delete task
+        $scope.deleteTask = function (task) {
+          var index = $scope.tasks.indexOf(task);
+          $scope.tasks.splice(index, 1);
+        };
+      });
+    </script>
+  </body>
+</html>
