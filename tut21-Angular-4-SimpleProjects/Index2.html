@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="emailApp">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Email Validation Example</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+    <style>
+      input.ng-invalid {
+        border-color: red;
+      }
+    </style>
+  </head>
+  <body ng-controller="emailController">
+    <h2>Email Validation Form</h2>
+
+    <!-- Email form with validation -->
+    <form name="emailForm">
+      <label for="email">Email:</label>
+      <input type="email" name="email" ng-model="userEmail" required />
+      <span ng-show="emailForm.email.$invalid && !emailForm.email.$pristine">
+        Invalid email format
+      </span>
+    </form>
+
+    <script>
+      var app = angular.module("emailApp", []);
+      app.controller("emailController", function ($scope) {
+        $scope.userEmail = "";
+      });
+    </script>
+  </body>
+</html>
