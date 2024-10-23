@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="filterApp">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Filter and OrderBy Example</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+  </head>
+  <body ng-controller="filterController">
+    <h2>Item List with Filter and OrderBy</h2>
+
+    <input type="text" ng-model="searchTerm" placeholder="Search items" />
+
+    <!-- Display list of items filtered and ordered alphabetically -->
+    <ul>
+      <li ng-repeat="item in items | filter:searchTerm | orderBy:'name'">
+        {{item.name}}
+      </li>
+    </ul>
+
+    <script>
+      var app = angular.module("filterApp", []);
+      app.controller("filterController", function ($scope) {
+        $scope.items = [
+          { name: "Apple" },
+          { name: "Banana" },
+          { name: "Orange" },
+          { name: "Grapes" },
+          { name: "Mango" },
+        ];
+      });
+    </script>
+  </body>
+</html>
