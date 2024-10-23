@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="upperCaseApp">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Uppercase Filter Example</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+  </head>
+  <body ng-controller="upperCaseController">
+    <h2>Custom Uppercase Filter</h2>
+
+    <!-- Display name in uppercase using custom filter -->
+    <h3>Original: {{name}}</h3>
+    <h3>Uppercase: {{name | myUpperCase}}</h3>
+
+    <script>
+      var app = angular.module("upperCaseApp", []);
+
+      // Define custom filter
+      app.filter("myUpperCase", function () {
+        return function (input) {
+          return input.toUpperCase();
+        };
+      });
+
+      app.controller("upperCaseController", function ($scope) {
+        $scope.name = "Sai Rangineeni";
+      });
+    </script>
+  </body>
+</html>
