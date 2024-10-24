@@ -30,7 +30,7 @@ const page = (params) => {
         <div className="mb-4">
           <h1 className="text-lg mb-2">Enter car name</h1>
           <input
-            className="w-full p-2 border border-gray-300 rounded placeholder-black"
+            className="w-full p-2 border border-gray-300 rounded placeholder-black text-black"
             type="text"
             value={name}
             onChange={(e) => setName(e.target.value)}
