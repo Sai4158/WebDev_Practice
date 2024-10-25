@@ -7,5 +7,11 @@ export const {
   signOut,
   handlers: { GET, POST },
 } = NextAuth({
-  providers: [],
+  providers: [
+    CredentialProviders({
+      name: "Credentials",
+
+      async authorize(credentials) {},
+    }),
+  ],
 });
