@@ -1,0 +1,62 @@
+const { MongoClient } = require("mongodb");
+
+// MongoDB connection URI
+const uri =
+  "mongodb+srv://nodejs:nodejs@schooldb.ol99d.mongodb.net/?retryWrites=true&w=majority&appName=SchoolDB";
+const dbName = "SchoolDB";
+
+// Create a new MongoClient
+const client = new MongoClient(uri);
+
+async function main() {
+  try {
+    // Connect to MongoDB
+    await client.connect();
+    console.log("Connected to MongoDB");
+
+    // Select database and collection
+    const db = client.db(dbName);
+    const studentsCollection = db.collection("Students");
+
+    // Insert sample student records
+    const students = [
+      { name: "Alice", age: 18, grade: "B", subjects: ["Math", "Science"] },
+      { name: "Bob", age: 17, grade: "C", subjects: ["English", "History"] },
+      { name: "Charlie", age: 19, grade: "A", subjects: ["Math", "Art"] },
+    ];
+
+    const insertResult = await studentsCollection.insertMany(students);
+    console.log("Inserted students:", insertResult.insertedCount, "records");
+
+    // Retrieve all students aged 18 or above
+    const adultStudents = await studentsCollection
+      .find({ age: { $gte: 18 } })
+      .toArray();
+    console.log("Students aged 18 or above:", adultStudents);
+
+    // Update the grade of the student where name is "Alice" to "A+"
+    const updateResult = await studentsCollection.updateOne(
+      { name: "Alice" },
+      { $set: { grade: "A+" } }
+    );
+    console.log(
+      "Updated Alice's grade:",
+      updateResult.modifiedCount > 0 ? "Success" : "No match found"
+    );
+
+    // Delete students with grade "D"
+    const deleteResult = await studentsCollection.deleteOne({ grade: "D" });
+    console.log(
+      "Deleted document with grade D:",
+      deleteResult.deletedCount > 0 ? "Success" : "No match found"
+    );
+  } catch (error) {
+    console.error("An error occurred:", error);
+  } finally {
+    // Close the connection
+    await client.close();
+  }
+}
+
+// Run the main function
+main().catch(console.error);
