@@ -31,12 +31,13 @@ export async function PUT(request, { params }) {
   }
 }
 
-export async function GET(request, { params }) {
+// This is get method
+export async function GET({ params }) {
   const { id } = params;
 
   await connectMongoDB();
 
-  await topic.findById({ _id: id });
+  const Topic = await topic.findById({ _id: id });
 
-  NextResponse.json({ topic });
+  NextResponse.json({ Topic });
 }
