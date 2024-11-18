@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Task Management Application</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.14/angular.min.js"></script>
+    <script>
+      const app = angular.module("taskApp", []);
+
+      app.controller("TaskCtrl", function ($scope) {
+        $scope.tasks = [];
+        $scope.statuses = ["pending", "completed"];
+
+        // Create Task
+        $scope.createTask = function () {
+          const data = { title: $scope.title, description: $scope.description };
+          $.ajax({
+            url: "http://localhost:3000/CreateTask",
+            type: "POST",
+            data: JSON.stringify(data),
+            contentType: "application/json",
+            success: function (response) {
+              $scope.response = response.result;
+              $scope.getAllTasks(); 
+              $scope.title = "";
+              $scope.description = "";
+              $scope.$apply();
+            },
+            error: function (error) {
+              alert("Error creating task: " + error.statusText);
+            },
+          });
+        };
+
+        // Read All Tasks
+        $scope.getAllTasks = function () {
+          $.ajax({
+            url: "http://localhost:3000/ReadAllTasks",
+            type: "GET",
+            success: function (response) {
+              $scope.tasks = response.result;
+              $scope.$apply();
+            },
+            error: function (error) {
+              alert("Error fetching tasks: " + error.statusText);
+            },
+          });
+        };
+
+        // Update Task Status
+        $scope.updateTaskStatus = function (task) {
+          const data = { id: task._id, status: task.newStatus };
+          $.ajax({
+            url: "http://localhost:3000/UpdateTask",
+            type: "PUT",
+            data: JSON.stringify(data),
+            contentType: "application/json",
+            success: function (response) {
+              $scope.response = response.result;
+              $scope.getAllTasks(); 
+              $scope.$apply();
+            },
+            error: function (error) {
+              alert("Error updating task: " + error.statusText);
+            },
+          });
+        };
+
+        // Delete Completed Tasks
+        $scope.deleteCompletedTasks = function () {
+          $.ajax({
+            url: "http://localhost:3000/DeleteCompletedTasks",
+            type: "DELETE",
+            success: function (response) {
+              $scope.response = response.result;
+              $scope.getAllTasks(); 
+              $scope.$apply();
+            },
+            error: function (error) {
+              alert("Error deleting tasks: " + error.statusText);
+            },
+          });
+        };
+
+        $scope.getAllTasks();
+      });
+    </script>
+  </head>
+  <body data-ng-app="taskApp" data-ng-controller="TaskCtrl">
+    <h1>Task Management Application</h1>
+
+    <!-- Create Task -->
+    <h2>Create Task</h2>
+    <p>Title: <input data-ng-model="title" /></p>
+    <p>Description: <input data-ng-model="description" /></p>
+    <button data-ng-click="createTask()">Create Task</button>
+
+    <!-- Read All Tasks -->
+    <h2>All Tasks</h2>
+    <button data-ng-click="getAllTasks()">Get All Tasks</button>
+    <ul>
+      <li data-ng-repeat="task in tasks">
+        <strong>{{ task.title }}</strong>: {{ task.description }} - Status: {{
+        task.status }}
+        <br />
+        <select
+          data-ng-model="task.newStatus"
+          data-ng-options="status for status in statuses"
+        ></select>
+        <button data-ng-click="updateTaskStatus(task)">Update Status</button>
+      </li>
+    </ul>
+
+    <!-- Delete Completed Tasks -->
+    <h2>Delete Completed Tasks</h2>
+    <button data-ng-click="deleteCompletedTasks()">
+      Delete All Completed Tasks
+    </button>
+
+    <!-- Response -->
+    <h2>Response</h2>
+    <p>{{ response }}</p>
+  </body>
+</html>
