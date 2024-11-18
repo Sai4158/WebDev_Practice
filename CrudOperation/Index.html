@@ -12,16 +12,17 @@
         $scope.createUser = function () {
           const data = { studentID: $scope.studentID, name: $scope.name };
           $.ajax({
-            url: "/Create",
+            url: "http://localhost:3000/Create",
             type: "POST",
             data: JSON.stringify(data),
             contentType: "application/json",
             success: function (response) {
               $scope.response = response.result;
               $scope.$apply();
+              $scope.getAllUsers(); // Refresh user list
             },
-            error: function () {
-              alert("Error in creating user");
+            error: function (error) {
+              alert("Error in creating user: " + error.responseJSON.error);
             },
           });
         };
@@ -29,14 +30,14 @@
         // Read All Users
         $scope.getAllUsers = function () {
           $.ajax({
-            url: "/ReadAll",
+            url: "http://localhost:3000/ReadAll",
             type: "GET",
             success: function (response) {
               $scope.users = response.result;
               $scope.$apply();
             },
-            error: function () {
-              alert("Error in fetching users");
+            error: function (error) {
+              alert("Error in fetching users: " + error.responseJSON.error);
             },
           });
         };
@@ -45,16 +46,17 @@
         $scope.updateUser = function () {
           const data = { studentID: $scope.studentID, name: $scope.newName };
           $.ajax({
-            url: "/Update",
+            url: "http://localhost:3000/Update",
             type: "PUT",
             data: JSON.stringify(data),
             contentType: "application/json",
             success: function (response) {
               $scope.response = response.result;
               $scope.$apply();
+              $scope.getAllUsers(); // Refresh user list
             },
-            error: function () {
-              alert("Error in updating user");
+            error: function (error) {
+              alert("Error in updating user: " + error.responseJSON.error);
             },
           });
         };
@@ -62,17 +64,21 @@
         // Delete User
         $scope.deleteUser = function () {
           $.ajax({
-            url: "/Delete?studentID=" + $scope.studentID,
+            url: "http://localhost:3000/Delete?studentID=" + $scope.studentID,
             type: "DELETE",
             success: function (response) {
               $scope.response = response.result;
               $scope.$apply();
+              $scope.getAllUsers(); // Refresh user list
             },
-            error: function () {
-              alert("Error in deleting user");
+            error: function (error) {
+              alert("Error in deleting user: " + error.responseJSON.error);
             },
           });
         };
+
+        // Initialize by fetching all users
+        $scope.getAllUsers();
       });
     </script>
   </head>
@@ -80,8 +86,8 @@
     <h1>User Management System</h1>
 
     <h2>Create User</h2>
-    <p>Student ID: <input data-ng-model="studentID" /></p>
-    <p>Name: <input data-ng-model="name" /></p>
+    <p>Student ID: <input data-ng-model="studentID" required /></p>
+    <p>Name: <input data-ng-model="name" required /></p>
     <button data-ng-click="createUser()">Create User</button>
 
     <h2>Read All Users</h2>
@@ -93,16 +99,15 @@
     </ul>
 
     <h2>Update User</h2>
-    <p>Student ID: <input data-ng-model="studentID" /></p>
-    <p>New Name: <input data-ng-model="newName" /></p>
+    <p>Student ID: <input data-ng-model="studentID" required /></p>
+    <p>New Name: <input data-ng-model="newName" required /></p>
     <button data-ng-click="updateUser()">Update User</button>
 
     <h2>Delete User</h2>
-    <p>Student ID: <input data-ng-model="studentID" /></p>
+    <p>Student ID: <input data-ng-model="studentID" required /></p>
     <button data-ng-click="deleteUser()">Delete User</button>
 
     <h2>Response</h2>
-    <p>{{ response }}</p>
+    <p style="color: green" data-ng-if="response">{{ response }}</p>
   </body>
-  <script src="app.js"></script>
 </html>
