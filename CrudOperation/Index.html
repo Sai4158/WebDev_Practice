@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>User Management System</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.14/angular.min.js"></script>
+    <script>
+      const app = angular.module("userApp", []);
+
+      app.controller("Ctrl", function ($scope) {
+        // Create User
+        $scope.createUser = function () {
+          const data = { studentID: $scope.studentID, name: $scope.name };
+          $.ajax({
+            url: "/Create",
+            type: "POST",
+            data: JSON.stringify(data),
+            contentType: "application/json",
+            success: function (response) {
+              $scope.response = response.result;
+              $scope.$apply();
+            },
+            error: function () {
+              alert("Error in creating user");
+            },
+          });
+        };
+
+        // Read All Users
+        $scope.getAllUsers = function () {
+          $.ajax({
+            url: "/ReadAll",
+            type: "GET",
+            success: function (response) {
+              $scope.users = response.result;
+              $scope.$apply();
+            },
+            error: function () {
+              alert("Error in fetching users");
+            },
+          });
+        };
+
+        // Update User
+        $scope.updateUser = function () {
+          const data = { studentID: $scope.studentID, name: $scope.newName };
+          $.ajax({
+            url: "/Update",
+            type: "PUT",
+            data: JSON.stringify(data),
+            contentType: "application/json",
+            success: function (response) {
+              $scope.response = response.result;
+              $scope.$apply();
+            },
+            error: function () {
+              alert("Error in updating user");
+            },
+          });
+        };
+
+        // Delete User
+        $scope.deleteUser = function () {
+          $.ajax({
+            url: "/Delete?studentID=" + $scope.studentID,
+            type: "DELETE",
+            success: function (response) {
+              $scope.response = response.result;
+              $scope.$apply();
+            },
+            error: function () {
+              alert("Error in deleting user");
+            },
+          });
+        };
+      });
+    </script>
+  </head>
+  <body data-ng-app="userApp" data-ng-controller="Ctrl">
+    <h1>User Management System</h1>
+
+    <h2>Create User</h2>
+    <p>Student ID: <input data-ng-model="studentID" /></p>
+    <p>Name: <input data-ng-model="name" /></p>
+    <button data-ng-click="createUser()">Create User</button>
+
+    <h2>Read All Users</h2>
+    <button data-ng-click="getAllUsers()">Get All Users</button>
+    <ul>
+      <li data-ng-repeat="user in users">
+        {{ user.studentID }} - {{ user.name }}
+      </li>
+    </ul>
+
+    <h2>Update User</h2>
+    <p>Student ID: <input data-ng-model="studentID" /></p>
+    <p>New Name: <input data-ng-model="newName" /></p>
+    <button data-ng-click="updateUser()">Update User</button>
+
+    <h2>Delete User</h2>
+    <p>Student ID: <input data-ng-model="studentID" /></p>
+    <button data-ng-click="deleteUser()">Delete User</button>
+
+    <h2>Response</h2>
+    <p>{{ response }}</p>
+  </body>
+  <script src="app.js"></script>
+</html>

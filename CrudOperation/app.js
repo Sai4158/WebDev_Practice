@@ -1,50 +1,53 @@
 const express = require("express");
 const app = express();
-const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
+app.use(express.json());
 
-mongoose.connect("mongodb://localhost:27017/TaskApp", {
-  useNewUrlParser: true,
+mongoose.connect(
+  "mongodb+srv://nodejs:nodejs@schooldb.ol99d.mongodb.net/?retryWrites=true&w=majority&appName=SchoolDB",
+  {
+    useNewUrlParser: true,
+  }
+);
+
+const UserSchema = new mongoose.Schema({
+  studentID: String,
+  name: String,
 });
 
-const TaskSchema = new mongoose.Schema({
-  title: String,
-  description: String,
-  status: String,
-});
+const User = mongoose.model("User", UserSchema);
 
-const Task = mongoose.model("Task", TaskSchema);
-
-app.use(bodyParser.json());
-
-// Create Task
-app.post("/CreateTask", (req, res) => {
-  const newTask = new Task(req.body);
-  newTask
+// Create
+app.post("/Create", (req, res) => {
+  const newUser = new User(req.body);
+  newUser
     .save()
-    .then(() => res.send("Task Created"))
-    .catch((err) => res.status(500).send(err));
+    .then(() => res.json({ result: "User created successfully!" }))
+    .catch((err) => res.status(500).json({ result: "Error creating user" }));
 });
 
-// Read All Tasks
-app.get("/ReadAllTasks", (req, res) => {
-  Task.find()
-    .then((tasks) => res.json(tasks))
-    .catch((err) => res.status(500).send(err));
+// Read All
+app.get("/ReadAll", (req, res) => {
+  User.find()
+    .then((users) => res.json({ result: users }))
+    .catch((err) => res.status(500).json({ result: "Error fetching users" }));
 });
 
-// Update Task
-app.put("/UpdateTask", (req, res) => {
-  Task.findByIdAndUpdate(req.body.id, { status: req.body.status })
-    .then(() => res.send("Task Updated"))
-    .catch((err) => res.status(500).send(err));
+// Update
+app.put("/Update", (req, res) => {
+  User.findOneAndUpdate(
+    { studentID: req.body.studentID },
+    { name: req.body.name }
+  )
+    .then(() => res.json({ result: "User updated successfully!" }))
+    .catch((err) => res.status(500).json({ result: "Error updating user" }));
 });
 
-// Delete Completed Tasks
-app.delete("/DeleteCompleted", (req, res) => {
-  Task.deleteMany({ status: "completed" })
-    .then(() => res.send("Completed Tasks Deleted"))
-    .catch((err) => res.status(500).send(err));
+// Delete
+app.delete("/Delete", (req, res) => {
+  User.deleteOne({ studentID: req.query.studentID })
+    .then(() => res.json({ result: "User deleted successfully!" }))
+    .catch((err) => res.status(500).json({ result: "Error deleting user" }));
 });
 
 app.listen(3000, () => console.log("Server running on port 3000"));
