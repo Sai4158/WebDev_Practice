@@ -21,7 +21,7 @@
             contentType: "application/json",
             success: function (response) {
               $scope.response = response.result;
-              $scope.getAllTasks(); 
+              $scope.getAllTasks();
               $scope.title = "";
               $scope.description = "";
               $scope.$apply();
@@ -57,7 +57,7 @@
             contentType: "application/json",
             success: function (response) {
               $scope.response = response.result;
-              $scope.getAllTasks(); 
+              $scope.getAllTasks();
               $scope.$apply();
             },
             error: function (error) {
@@ -73,7 +73,7 @@
             type: "DELETE",
             success: function (response) {
               $scope.response = response.result;
-              $scope.getAllTasks(); 
+              $scope.getAllTasks();
               $scope.$apply();
             },
             error: function (error) {
