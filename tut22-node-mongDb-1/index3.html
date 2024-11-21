@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Library Management System</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.14/angular.min.js"></script>
+    <script>
+      const app = angular.module("libraryApp", []);
+
+      app.controller("LibraryCtrl", function ($scope) {
+        $scope.books = [];
+
+        // Add Book
+        $scope.addBook = function () {
+          const data = {
+            title: $scope.title,
+            author: $scope.author,
+            genre: $scope.genre,
+          };
+          $.ajax({
+            url: "http://localhost:3000/AddBook",
+            type: "POST",
+            data: JSON.stringify(data),
+            contentType: "application/json",
+            success: function (response) {
+              $scope.response = response.result;
+              $scope.getBooks();
+              $scope.title = "";
+              $scope.author = "";
+              $scope.genre = "";
+              $scope.$apply();
+            },
+            error: function (error) {
+              alert("Error adding book: " + error.statusText);
+            },
+          });
+        };
+
+        // View Books
+        $scope.getBooks = function () {
+          $.ajax({
+            url: "http://localhost:3000/ViewBooks",
+            type: "GET",
+            success: function (response) {
+              $scope.books = response.result;
+              $scope.$apply();
+            },
+            error: function (error) {
+              alert("Error fetching books: " + error.statusText);
+            },
+          });
+        };
+
+        // Borrow Book
+        $scope.borrowBook = function (book) {
+          const data = { id: book._id, user: $scope.userName };
+          $.ajax({
+            url: "http://localhost:3000/BorrowBook",
+            type: "PUT",
+            data: JSON.stringify(data),
+            contentType: "application/json",
+            success: function (response) {
+              $scope.response = response.result;
+              $scope.getBooks();
+              $scope.$apply();
+            },
+            error: function (error) {
+              alert("Error borrowing book: " + error.responseJSON.result);
+            },
+          });
+        };
+
+        // Return Book
+        $scope.returnBook = function (book) {
+          const data = { id: book._id };
+          $.ajax({
+            url: "http://localhost:3000/ReturnBook",
+            type: "PUT",
+            data: JSON.stringify(data),
+            contentType: "application/json",
+            success: function (response) {
+              $scope.response = response.result;
+              $scope.getBooks();
+              $scope.$apply();
+            },
+            error: function (error) {
+              alert("Error returning book: " + error.responseJSON.result);
+            },
+          });
+        };
+
+        // Remove Book
+        $scope.removeBook = function (book) {
+          $.ajax({
+            url: "http://localhost:3000/RemoveBook?id=" + book._id,
+            type: "DELETE",
+            success: function (response) {
+              $scope.response = response.result;
+              $scope.getBooks();
+              $scope.$apply();
+            },
+            error: function (error) {
+              alert("Error removing book: " + error.responseJSON.result);
+            },
+          });
+        };
+
+        // Initialize by fetching all books
+        $scope.getBooks();
+      });
+    </script>
+  </head>
+  <body data-ng-app="libraryApp" data-ng-controller="LibraryCtrl">
+    <h1>Library Management System</h1>
+
+    <!-- Add Book -->
+    <h2>Add Book</h2>
+    <p>Title: <input data-ng-model="title" /></p>
+    <p>Author: <input data-ng-model="author" /></p>
+    <p>Genre: <input data-ng-model="genre" /></p>
+    <button data-ng-click="addBook()">Add Book</button>
+
+    <!-- View Books -->
+    <h2>Available Books</h2>
+    <ul>
+      <li data-ng-repeat="book in books">
+        <strong>{{ book.title }}</strong> by {{ book.author }} ({{ book.genre
+        }}) -
+        <span data-ng-if="!book.isBorrowed">Available</span>
+        <span data-ng-if="book.isBorrowed"
+          >Borrowed by {{ book.borrowedBy }}</span
+        >
+        <br />
+        <button
+          data-ng-click="borrowBook(book)"
+          data-ng-disabled="book.isBorrowed"
+        >
+          Borrow
+        </button>
+        <button
+          data-ng-click="returnBook(book)"
+          data-ng-disabled="!book.isBorrowed"
+        >
+          Return
+        </button>
+        <button data-ng-click="removeBook(book)">Remove</button>
+      </li>
+    </ul>
+
+    <!-- User Name -->
+    <h3>Enter Your Name: <input data-ng-model="userName" /></h3>
+
+    <!-- Response -->
+    <h2>Response</h2>
+    <p>{{ response }}</p>
+  </body>
+</html>
