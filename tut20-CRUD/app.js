@@ -35,6 +35,13 @@ app.post("/users", async (req, res) => {
   }
 });
 
+//get method
+
+app.get("/users", async (req, res) => {
+  const users = await db.collection("users").find().toArray();
+  res.send(users);
+});
+
 // Start the Server
 app.listen(port, async () => {
   await ConnectedtoDB();
