@@ -13,8 +13,9 @@ const Topics = () => {
 
       <div className="flex gap-2">
         <RemoveBtn />
-        <HiPencilAlt size={24} />
-        <Link href={"/EditTopic/123"}></Link>
+        <Link href={"/EditTopic/123"}>
+          <HiPencilAlt size={24} />
+        </Link>
       </div>
     </div>
   );
