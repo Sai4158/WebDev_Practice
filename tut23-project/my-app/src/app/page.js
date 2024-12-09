@@ -5,9 +5,6 @@ export default function Home() {
   return (
     <div>
       <Topics />
-      <Topics />
-      <Topics />
-      <Topics />
     </div>
   );
 }
