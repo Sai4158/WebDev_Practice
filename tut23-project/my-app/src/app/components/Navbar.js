@@ -2,11 +2,11 @@ import Link from "next/link";
 
 export default function NavBar() {
   return (
-    <nav className="flex justify-between items-center bg-slate-800 px-8 py-3 ">
+    <nav className="flex justify-between items-center bg-slate-800 px-11 py-3 rounded-xl ">
       <Link className="text-white font-bold " href={"/"}>
-        Sai1
+        Home
       </Link>
-      <Link className="bg-white p-2" href={"/AddTopic"}>
+      <Link className="bg-white p-2 rounded-lg " href={"/AddTopic"}>
         Add Topic
       </Link>
     </nav>
