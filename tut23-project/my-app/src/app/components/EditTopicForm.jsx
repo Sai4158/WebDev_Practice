@@ -1,6 +1,6 @@
 import React from "react";
 
-const page = () => {
+const EditTopicForm = () => {
   return (
     <div>
       <form action="" className="flex flex-col gap-3 mx-80">
@@ -22,11 +22,11 @@ const page = () => {
           type="submit"
           className="bg-green-600 font-bold  text-white py-3 px-4"
         >
-          Add Topic
+          Update Topic
         </button>
       </form>
     </div>
   );
 };
 
-export default page;
+export default EditTopicForm;
