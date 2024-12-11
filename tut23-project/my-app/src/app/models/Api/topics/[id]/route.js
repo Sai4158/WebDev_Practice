@@ -1,4 +1,5 @@
 import connectMongoDB from "@/app/LIBS/DB";
+import topic from "@/app/models/Topic";
 import Topic from "@/app/models/Topic";
 import { NextResponse } from "next/server";
 
@@ -9,11 +10,10 @@ export async function PUT(request, { params }) {
 
     await connectMongoDB();
 
-    const updatedTopic = await Topic.findByIdAndUpdate(
-      id,
-      { title, description },
-      { new: true }
-    );
+    const updatedTopic = await Topic.findByIdAndUpdate(id, {
+      title,
+      description,
+    });
 
     if (!updatedTopic) {
       return NextResponse.json({ message: "Topic not found" }, { status: 404 });
@@ -29,4 +29,14 @@ export async function PUT(request, { params }) {
       { status: 500 }
     );
   }
+}
+
+export async function GET(request, { params }) {
+  const { id } = params;
+
+  await connectMongoDB();
+
+  await topic.findById({ _id: id });
+
+  NextResponse.json({ topic });
 }
