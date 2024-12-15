@@ -2,6 +2,7 @@ import connectMongoDB from "@/app/LIBS/DB";
 import Topic from "../../Topic";
 import { NextResponse } from "next/server";
 
+// Post method
 export async function POST(request) {
   const { title, description } = await request.json();
   await connectMongoDB();
@@ -11,6 +12,7 @@ export async function POST(request) {
   return NextResponse.json({ Message: "Topic Created" }, { status: 201 });
 }
 
+// Get method
 export async function GET() {
   await connectMongoDB();
 
@@ -19,6 +21,7 @@ export async function GET() {
   return NextResponse.json(topics);
 }
 
+// Delete method
 export async function DELETE(request) {
   const id = request.nextUrl.searchParams.get("id");
   await connectMongoDB();
