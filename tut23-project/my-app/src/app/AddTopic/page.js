@@ -2,12 +2,12 @@
 
 import React, { useState } from "react";
 
-const page = () => {
+const Page = () => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
 
   const handleSubmit = async (e) => {
-    e.preventdefault();
+    e.preventDefault();
 
     if (!title || !description) {
       alert("Please enter data");
@@ -15,21 +15,28 @@ const page = () => {
     }
 
     try {
-      await fetch("http://localhost:3000/models/Api/topics", {
+      const res = await fetch("http://localhost:3000/models/Api/topics", {
         method: "POST",
         headers: { "Content-type": "application/json" },
         body: JSON.stringify({ title, description }),
       });
-    } catch (error) {}
+
+      if (res.ok) {
+        alert("Topic added successfully");
+        setTitle("");
+        setDescription("");
+      } else {
+        throw new Error("Failed to add topic");
+      }
+    } catch (error) {
+      console.error("Error:", error.message);
+      alert("Something went wrong!");
+    }
   };
 
   return (
     <div>
-      <form
-        action=""
-        onSubmit={handleSubmit}
-        className="flex flex-col gap-3 mx-80"
-      >
+      <form onSubmit={handleSubmit} className="flex flex-col gap-3 mx-80">
         <input
           onChange={(e) => setTitle(e.target.value)}
           value={title}
@@ -38,7 +45,6 @@ const page = () => {
           className="border border-slate-500 px-8 py-2"
         />
 
-        {/* Topic desc */}
         <input
           onChange={(e) => setDescription(e.target.value)}
           value={description}
@@ -47,10 +53,9 @@ const page = () => {
           className="border border-slate-500 px-8 py-2"
         />
 
-        {/* Submit button */}
         <button
           type="submit"
-          className="bg-green-600 font-bold  text-white py-3 px-4"
+          className="bg-green-600 font-bold text-white py-3 px-4"
         >
           Add Topic
         </button>
@@ -59,4 +64,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;
