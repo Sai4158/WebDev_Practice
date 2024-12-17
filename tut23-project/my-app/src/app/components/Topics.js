@@ -23,21 +23,25 @@ const getTopic = async () => {
 const Topics = async () => {
   await getTopic();
 
-  const topic = await getTopic();
+  const { topic } = await getTopic();
   return (
-    <div className="p-4 border border-slate-300 my-3 flex justify-between gap-5 items-start mx-28">
-      <div>
-        <h2 className="font-bold-text text-2xl">Topic name</h2>
-        <div>Topic description</div>
-      </div>
+    <>
+      {topic.map((t) => {
+        <div className="p-4 border border-slate-300 my-3 flex justify-between gap-5 items-start mx-28">
+          <div>
+            <h2 className="font-bold-text text-2xl">{t.title}</h2>
+            <div>{t.description}</div>
+          </div>
 
-      <div className="flex gap-2">
-        <RemoveBtn />
-        <Link href={"/EditTopic/123"}>
-          <HiPencilAlt size={24} />
-        </Link>
-      </div>
-    </div>
+          <div className="flex gap-2">
+            <RemoveBtn />
+            <Link href={`/EditTopic/${t._id}`}>
+              <HiPencilAlt size={24} />
+            </Link>
+          </div>
+        </div>;
+      })}
+    </>
   );
 };
 
