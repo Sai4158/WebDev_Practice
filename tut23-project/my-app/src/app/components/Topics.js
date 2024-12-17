@@ -3,8 +3,7 @@ import RemoveBtn from "./RemoveBtn";
 import Link from "next/link";
 import { HiPencilAlt } from "react-icons/hi";
 
-// Gets topic information form the DB
-
+// Gets topic information from the DB
 const getTopic = async () => {
   try {
     const res = await fetch("http://localhost:3000/models/Api/topics", {
@@ -16,20 +15,23 @@ const getTopic = async () => {
 
     return res.json();
   } catch (error) {
-    console.log(error);
+    console.log("Error fetching topics:", error);
+    return [];
   }
 };
 
 const Topics = async () => {
-  await getTopic();
+  const topics = await getTopic();
 
-  const { topic } = await getTopic();
   return (
-    <>
-      {topic.map((t) => {
-        <div className="p-4 border border-slate-300 my-3 flex justify-between gap-5 items-start mx-28">
+    <div>
+      {topics.map((t) => (
+        <div
+          key={t._id}
+          className="p-4 border border-slate-300 my-3 flex justify-between gap-5 items-start mx-28"
+        >
           <div>
-            <h2 className="font-bold-text text-2xl">{t.title}</h2>
+            <h2 className="font-bold text-2xl">{t.title}</h2>
             <div>{t.description}</div>
           </div>
 
@@ -39,9 +41,9 @@ const Topics = async () => {
               <HiPencilAlt size={24} />
             </Link>
           </div>
-        </div>;
-      })}
-    </>
+        </div>
+      ))}
+    </div>
   );
 };
 
