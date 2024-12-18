@@ -3,7 +3,7 @@ import RemoveBtn from "./RemoveBtn";
 import Link from "next/link";
 import { HiPencilAlt } from "react-icons/hi";
 
-// Gets topic information from the DB
+// Fetches topic information from the API
 const getTopic = async () => {
   try {
     const res = await fetch("http://localhost:3000/models/Api/topics", {
@@ -12,7 +12,6 @@ const getTopic = async () => {
     if (!res.ok) {
       throw new Error("Failed to fetch");
     }
-
     return res.json();
   } catch (error) {
     console.log("Error fetching topics:", error);
@@ -34,7 +33,6 @@ const Topics = async () => {
             <h2 className="font-bold text-2xl">{t.title}</h2>
             <div>{t.description}</div>
           </div>
-
           <div className="flex gap-2">
             <RemoveBtn id={t._id} />
             <Link href={`/EditTopic/${t._id}`}>

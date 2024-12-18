@@ -1,24 +1,38 @@
-import React from "react";
+"use client";
 
+import React from "react";
 import { HiOutlineTrash } from "react-icons/hi";
 
 const RemoveBtn = ({ id }) => {
-  const confirmed = confirm("Are you sure you want to delete this");
-
   const removeTopic = async () => {
-    if (confirmed) {
-      await fetch(`http://localhost:3000/models/Api/topics/${id}`, {
-        method: "DELETE",
-      });
+    const isConfirmed = window.confirm("Are you sure you want to delete this?");
+
+    if (isConfirmed) {
+      try {
+        const res = await fetch(
+          `http://localhost:3000/models/Api/topics?id=${id}`,
+          {
+            method: "DELETE",
+          }
+        );
+
+        if (res.ok) {
+          alert("Topic deleted successfully");
+          window.location.reload(); // Reload to reflect changes
+        } else {
+          throw new Error("Failed to delete the topic");
+        }
+      } catch (error) {
+        console.error("Error:", error.message);
+        alert("Something went wrong: " + error.message);
+      }
     }
   };
 
   return (
-    <div>
-      <button onClick={removeTopic}>
-        <HiOutlineTrash size={24} color="red" />
-      </button>
-    </div>
+    <button onClick={removeTopic} className="text-red-400 hover:text-red-600">
+      <HiOutlineTrash size={24} />
+    </button>
   );
 };
 
