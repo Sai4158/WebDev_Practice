@@ -6,9 +6,10 @@ const page = async ({ params }) => {
 
   const getTopicById = async () => {
     try {
-      const res = await fetch(`http://localhost:3000/models/Api/topics/${id}`, {
-        cache: "no-store",
-      });
+      const res = await fetch(
+        `http://localhost:3000/models/Api/topics?id=${id}`,
+        { cache: "no-store" }
+      );
       if (!res.ok) {
         throw new Error("Failed to fetch the topic");
       }
@@ -22,13 +23,14 @@ const page = async ({ params }) => {
   const topic = await getTopicById();
 
   if (!topic) {
-    return <div>Error: Topic not found</div>;
+    return <div className="text-red-500 font-bold">Error: Topic not found</div>;
   }
 
-  const { title, description } = topic;
+  const { title = "", description = "" } = topic;
 
   return (
-    <div>
+    <div className="p-10">
+      <h1 className="text-3xl font-bold mb-6">Edit Topic</h1>
       <EditTopicForm id={id} title={title} description={description} />
     </div>
   );
