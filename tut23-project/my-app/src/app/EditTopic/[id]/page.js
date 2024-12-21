@@ -30,7 +30,7 @@ const page = async ({ params }) => {
 
   return (
     <div className="p-10">
-      <h1 className="text-3xl font-bold mb-6">Edit Topic</h1>
+      <h1 className="text-3xl font-bold mb-6 font-extralight">Edit Topic</h1>
       <EditTopicForm id={id} title={title} description={description} />
     </div>
   );
