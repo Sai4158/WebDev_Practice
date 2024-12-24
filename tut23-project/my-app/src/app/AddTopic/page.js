@@ -10,7 +10,7 @@ const Page = () => {
     e.preventDefault();
 
     if (!title || !description) {
-      alert("Please enter data");
+      alert("Please enter title and description");
       return;
     }
 
