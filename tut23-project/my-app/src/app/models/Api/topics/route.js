@@ -21,6 +21,24 @@ export async function GET() {
   return NextResponse.json(topics);
 }
 
+// Update method
+export async function PUT(request) {
+  const { id, title, description } = await request.json();
+  await connectMongoDB();
+
+  const updatedTopic = await Topic.findByIdAndUpdate(
+    id,
+    { title, description },
+    { new: true } // Return the updated document
+  );
+
+  if (!updatedTopic) {
+    return NextResponse.json({ Error: "Topic not found" }, { status: 404 });
+  }
+
+  return NextResponse.json({ Message: "Topic Updated", updatedTopic });
+}
+
 // Delete method
 export async function DELETE(request) {
   const id = request.nextUrl.searchParams.get("id");
@@ -28,3 +46,5 @@ export async function DELETE(request) {
   await Topic.findByIdAndDelete(id);
   return NextResponse.json({ MSG: "Done" });
 }
+
+
