@@ -30,8 +30,9 @@ const RemoveBtn = ({ id }) => {
   };
 
   return (
+    // increased the size of the button
     <button onClick={removeTopic} className="text-red-400 hover:text-red-600">
-      <HiOutlineTrash size={24} />
+      <HiOutlineTrash size={26} />
     </button>
   );
 };
