@@ -16,7 +16,7 @@ export async function PUT(request, { params }) {
     });
 
     if (!updatedTopic) {
-      return NextResponse.json({ message: "Topic not found" }, { status: 404 });
+      return NextResponse.json({ message: "Topic not found please add it" }, { status: 404 });
     }
 
     return NextResponse.json({
