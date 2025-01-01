@@ -25,7 +25,7 @@ export async function PUT(request, { params }) {
     });
   } catch (error) {
     return NextResponse.json(
-      { message: "Error updating topic", error: error.message },
+      { message: "Error updating topic, please try again", error: error.message },
       { status: 500 }
     );
   }
