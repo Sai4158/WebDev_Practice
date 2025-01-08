@@ -3,6 +3,8 @@
 import mongoose, { mongo, Schema } from "mongoose";
 
 const topicSchema = new Schema(
+    
+    // all schemas here
   {
     title: String,
     description: String,
