@@ -2,24 +2,23 @@
 
 import { useState } from "react";
 import axios from "axios";
+import { useRouter } from "next/navigation";
 
 export default function Registration() {
   const [name, setname] = useState("");
   const [email, setemail] = useState("");
   const [password, setpassword] = useState("");
+  const router = useRouter();
 
   const onHandle = async (e) => {
     e.preventDefault();
-    try {
-      const response = await axios.post("/api/register", {
-        name,
-        email,
-        password,
-      });
-      console.log(response.data);
-    } catch (error) {
-      console.error("Registration failed:", error);
-    }
+    const response = await axios.post("/api/register", {
+      name,
+      email,
+      password,
+    });
+
+    router.push("/login");
   };
 
   return (
