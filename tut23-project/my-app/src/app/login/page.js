@@ -16,7 +16,9 @@ export default function LoginPage() {
       password,
     });
 
-    console.log(response);
+    if (response.data.message === "Login is successful") {
+      router.push("/home");
+    }
   };
 
   return (

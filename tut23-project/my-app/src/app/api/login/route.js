@@ -22,7 +22,7 @@ export async function POST(request) {
       });
     }
 
-    return NextResponse.json({ message: "Login is successfully", status: 201 });
+    return NextResponse.json({ message: "Login is successful", status: 201 });
   } catch (error) {
     return NextResponse.json({ error: "Error has oocured", status: 500 });
   }
