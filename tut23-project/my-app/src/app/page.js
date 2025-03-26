@@ -1,10 +1,12 @@
-import Image from "next/image";
-import Topics from "./components/Topics";
+import React from "react";
+import Registration from "./register/page";
 
-export default function Home() {
+const page = () => {
   return (
     <div>
-      <Topics />
+      <Registration />
     </div>
   );
-}
+};
+
+export default page;

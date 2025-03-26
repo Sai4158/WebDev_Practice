@@ -10,13 +10,15 @@
   "license": "ISC",
   "dependencies": {
     "@datastax/astra-db-ts": "^1.2.1",
+    "axios": "^1.8.4",
+    "bcrypt": "^5.1.1",
     "bootstrap": "^5.3.3",
     "dotenv": "^16.4.5",
     "envdot": "^0.0.3",
     "greet-by-time": "^1.0.1",
     "langchain": "^0.2.5",
-    "mongodb": "^6.11.0",
-    "mongoose": "^8.8.4",
+    "mongodb": "^6.15.0",
+    "mongoose": "^8.13.0",
     "openai": "^4.50.0",
     "react-icons": "^5.4.0"
   }
