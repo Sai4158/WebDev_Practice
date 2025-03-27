@@ -43,8 +43,9 @@ const HomePage = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-100 to-gray-200 p-6">
-      <nav className="flex justify-between items-center py-4 px-6 bg-white rounded-xl shadow-sm mb-6">
+    <div className="min-h-screen bg-blue-100 p-4 sm:p-6">
+      {/* Navigation */}
+      <nav className="flex flex-col sm:flex-row justify-between items-center py-4 px-4 sm:px-6 bg-white rounded-xl shadow mb-6 gap-4">
         <div className="flex items-center space-x-3">
           <Image
             src="/Dealscape.png"
@@ -53,27 +54,34 @@ const HomePage = () => {
             height={40}
             className="rounded-md"
           />
-          <h1 className="text-2xl font-semibold text-gray-800">DealScape</h1>
+          <h1 className="text-xl sm:text-2xl font-semibold text-gray-800">
+            DealScape
+          </h1>
         </div>
-        <button className="text-sm bg-gray-900 text-white px-4 py-2 rounded hover:bg-gray-700 transition">
-          <a href="/register">Logout</a>
-        </button>
+        <Link
+          href="/register"
+          className="text-sm bg-gray-900 text-white px-4 py-2 rounded hover:bg-gray-700 transition"
+        >
+          Logout
+        </Link>
       </nav>
 
-      <h2 className="text-3xl font-medium text-center text-gray-800 mb-8">
+      {/* Header */}
+      <h2 className="text-xl sm:text-3xl font-medium text-center text-gray-800 mb-8">
         Trending Products & Discounts
       </h2>
 
+      {/* Deals */}
       {loading ? (
         <p className="text-center text-gray-700">Loading deals...</p>
       ) : deals.length === 0 ? (
         <p className="text-center text-gray-500">No deals found.</p>
       ) : (
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+        <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {deals.map((deal, index) => (
             <div
               key={index}
-              className="bg-white border border-gray-200 p-4 rounded-lg shadow-sm hover:shadow-md transition"
+              className="bg-white border border-gray-200 p-4 rounded-lg shadow hover:shadow-md transition flex flex-col"
             >
               {deal.image && (
                 <img
@@ -82,16 +90,18 @@ const HomePage = () => {
                   className="h-40 w-full object-contain rounded-md mb-4 bg-gray-50"
                 />
               )}
-              <h3 className="text-md font-medium text-gray-900 mb-2 line-clamp-2">
+              <h3 className="text-base font-medium text-gray-900 mb-1 line-clamp-2">
                 {deal.title}
               </h3>
-              <p className="text-sm text-gray-600 mb-4">{deal.price}</p>
+              <p className="text-lg font-bold text-green-600 mb-3">
+                {deal.price}
+              </p>
               {deal.url && (
                 <a
                   href={deal.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-block text-sm bg-gray-900 text-white px-4 py-2 rounded hover:bg-gray-700 transition"
+                  className="mt-auto inline-block text-sm bg-gray-900 text-white px-4 py-2 rounded hover:bg-gray-700 transition"
                 >
                   View on Amazon
                 </a>
