@@ -3,6 +3,8 @@
 import { useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function Registration() {
   const [name, setname] = useState("");
@@ -12,13 +14,24 @@ export default function Registration() {
 
   const onHandle = async (e) => {
     e.preventDefault();
-    const response = await axios.post("/api/register", {
-      name,
-      email,
-      password,
-    });
+    try {
+      const response = await axios.post("/api/register", {
+        name,
+        email,
+        password,
+      });
 
-    router.push("/login");
+      if (response.data.message === "User created") {
+        toast.success("✅ Account created successfully!");
+        setTimeout(() => router.push("/login"), 1500);
+      } else if (response.data.error === "User already exist") {
+        toast.error("⚠️ User already exists!");
+      } else {
+        toast.warn("⚠️ Something went wrong. Try again.");
+      }
+    } catch (error) {
+      toast.error("❌ Registration failed. Server error.");
+    }
   };
 
   return (
@@ -31,7 +44,7 @@ export default function Registration() {
             alt="DealScape Logo"
             className="sm:w-32 md:w-52 lg:w-100 mb-6 object-contain"
           />
-          <h3 className="text-2xl  text-gray-800 mb-2">
+          <h3 className="text-2xl text-gray-800 mb-2">
             Find Best Deals Online 🛍️
           </h3>
           <p className="text-sm text-gray-500">
@@ -44,9 +57,7 @@ export default function Registration() {
           onSubmit={onHandle}
           className="w-full md:w-1/2 p-8 md:p-5 bg-gray-100 flex flex-col justify-center space-y-5"
         >
-          <h2 className="text-3xl  text-blue-400 text-center">
-            Create Account
-          </h2>
+          <h2 className="text-3xl text-blue-400 text-center">Create Account</h2>
 
           <div className="flex flex-col">
             <label className="mb-1 font-medium">Name</label>
@@ -83,7 +94,7 @@ export default function Registration() {
 
           <button
             type="submit"
-            className="w-full bg-blue-400 text-white py-2 rounded-md  hover:bg-blue-600 transition"
+            className="w-full bg-blue-400 text-white py-2 rounded-md hover:bg-blue-600 transition"
           >
             Register
           </button>
@@ -99,6 +110,9 @@ export default function Registration() {
           </p>
         </form>
       </div>
+
+      {/* Toastify container */}
+      <ToastContainer position="top-center" />
     </div>
   );
 }
