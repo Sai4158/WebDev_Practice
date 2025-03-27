@@ -3,6 +3,8 @@
 import { useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function LoginPage() {
   const [email, setemail] = useState("");
@@ -11,15 +13,24 @@ export default function LoginPage() {
 
   const onHandle = async (e) => {
     e.preventDefault();
-    const response = await axios.post("/api/login", {
-      email,
-      password,
-    });
 
-    if (response.data.message === "Login is successful") {
-      localStorage.setItem("name", response.data.name);
-      localStorage.setItem("isLoggedIn", "true");
-      router.push("/home");
+    try {
+      const response = await axios.post("/api/login", { email, password });
+
+      if (response.data.message === "Login is successful") {
+        localStorage.setItem("name", response.data.name);
+        localStorage.setItem("isLoggedIn", "true");
+        toast.success("✅ Login successful!");
+        setTimeout(() => router.push("/home"), 1500);
+      } else if (response.data.error === "Password does not match") {
+        toast.error("❌ Incorrect password.");
+      } else if (response.data.error === "User does not exist") {
+        toast.error("❌ Account not found.");
+      } else {
+        toast.warn("⚠️ Something went wrong.");
+      }
+    } catch (error) {
+      toast.error("🚫 Network error. Try again.");
     }
   };
 
@@ -74,7 +85,7 @@ export default function LoginPage() {
         </form>
 
         {/* Right: Info message */}
-        <div className="w-full md:w-1/2 bg-gradient-to-br from-purple-100 to-red-100  text-black p-8 md:p-10 flex flex-col justify-center space-y-4">
+        <div className="w-full md:w-1/2 bg-gradient-to-br from-purple-100 to-red-100 text-black p-8 md:p-10 flex flex-col justify-center space-y-4">
           <h2 className="text-4xl font-bold text-center md:text-left">
             Unlock the Best Online Deals 💸
           </h2>
@@ -86,6 +97,9 @@ export default function LoginPage() {
           </p>
         </div>
       </div>
+
+      {/* Toast messages */}
+      <ToastContainer position="top-center" />
     </div>
   );
 }
