@@ -2,8 +2,8 @@
 
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { toast, ToastContainer } from "react-toastify";
 
 const HomePage = () => {
   const [deals, setDeals] = useState([]);
@@ -41,18 +41,20 @@ const HomePage = () => {
   };
 
   useEffect(() => {
-    fetchDeals();
-  }, []);
-
-  useEffect(() => {
     const isLoggedIn = localStorage.getItem("isLoggedIn");
     if (!isLoggedIn) {
-      router.push("/login");
+      toast.error("⚠️ Please register or log in to access deals.");
+      setTimeout(() => {
+        router.push("/register");
+      }, 1500);
+    } else {
+      fetchDeals();
     }
   }, []);
 
   return (
     <div className="min-h-screen bg-blue-100 p-4 sm:p-6">
+      <ToastContainer />
       {/* Navigation */}
       <nav className="flex flex-col sm:flex-row justify-between items-center py-4 px-4 sm:px-6 bg-white rounded-xl shadow mb-6 gap-4">
         <div className="flex items-center space-x-3">
@@ -71,7 +73,8 @@ const HomePage = () => {
           onClick={() => {
             localStorage.removeItem("isLoggedIn");
             localStorage.removeItem("name");
-            router.push("/login");
+            toast.success("Logged out successfully!");
+            setTimeout(() => router.push("/login"), 1200);
           }}
           className="text-sm bg-gray-900 text-white px-4 py-2 rounded hover:bg-gray-700 transition"
         >
