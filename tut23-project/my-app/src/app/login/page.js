@@ -18,6 +18,7 @@ export default function LoginPage() {
 
     if (response.data.message === "Login is successful") {
       localStorage.setItem("name", response.data.name);
+      localStorage.setItem("isLoggedIn", "true");
       router.push("/home");
     }
   };

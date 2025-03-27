@@ -3,10 +3,12 @@
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 const HomePage = () => {
   const [deals, setDeals] = useState([]);
   const [loading, setLoading] = useState(true);
+  const router = useRouter();
 
   const extractTitleFromLink = (link) => {
     if (!link) return "No Title";
@@ -42,6 +44,13 @@ const HomePage = () => {
     fetchDeals();
   }, []);
 
+  useEffect(() => {
+    const isLoggedIn = localStorage.getItem("isLoggedIn");
+    if (!isLoggedIn) {
+      router.push("/login");
+    }
+  }, []);
+
   return (
     <div className="min-h-screen bg-blue-100 p-4 sm:p-6">
       {/* Navigation */}
@@ -58,12 +67,16 @@ const HomePage = () => {
             DealScape
           </h1>
         </div>
-        <Link
-          href="/register"
+        <button
+          onClick={() => {
+            localStorage.removeItem("isLoggedIn");
+            localStorage.removeItem("name");
+            router.push("/login");
+          }}
           className="text-sm bg-gray-900 text-white px-4 py-2 rounded hover:bg-gray-700 transition"
         >
           Logout
-        </Link>
+        </button>
       </nav>
 
       {/* Header */}
