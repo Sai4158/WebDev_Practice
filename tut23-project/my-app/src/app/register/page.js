@@ -22,50 +22,77 @@ export default function Registration() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-300">
-      <form
-        onSubmit={onHandle}
-        className="bg-white p-8 rounded-xl shadow-md w-96 space-y-4"
-      >
-        <h2 className="text-2xl font-bold text-center">Register</h2>
-
-        <div className="flex flex-col">
-          <label className="mb-1">Name</label>
-          <input
-            type="text"
-            placeholder="Enter name"
-            onChange={(e) => setname(e.target.value)}
-            className="px-3 py-2 border rounded-md focus:outline-none focus:ring focus:ring-blue-200"
-          />
+    <div className="min-h-screen bg-gradient-to-br from-green-200 to-pink-200 flex items-center justify-center px-6">
+      <div className="bg-blue-100 rounded-2xl shadow-2xl flex w-full max-w-5xl overflow-hidden">
+        {/* Left side message */}
+        <div className="w-1/2 bg-blue-600 text-white p-10 flex flex-col justify-center space-y-4">
+          <h2 className="text-4xl font-bold">Get Free Shopping Coupons 🎁</h2>
+          <p className="text-lg">
+            Sign up today and unlock exclusive offers and discounts at your
+            favorite stores.
+          </p>
+          <p className="text-sm opacity-80">
+            No credit card required. Make a account today! 😎
+          </p>
         </div>
 
-        <div className="flex flex-col">
-          <label className="mb-1">Email</label>
-          <input
-            type="email"
-            onChange={(e) => setemail(e.target.value)}
-            placeholder="Enter Email"
-            className="px-3 py-2 border rounded-md focus:outline-none focus:ring focus:ring-blue-200"
-          />
-        </div>
-
-        <div className="flex flex-col">
-          <label className="mb-1">Password</label>
-          <input
-            type="password"
-            onChange={(e) => setpassword(e.target.value)}
-            placeholder="*********"
-            className="px-3 py-2 border rounded-md focus:outline-none focus:ring focus:ring-blue-200"
-          />
-        </div>
-
-        <button
-          type="submit"
-          className="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition"
+        {/* Right side form */}
+        <form
+          onSubmit={onHandle}
+          className="w-1/2 p-10 space-y-5 flex flex-col justify-center"
         >
-          Register
-        </button>
-      </form>
+          <h2 className="text-3xl font-extrabold text-blue-700 text-center">
+            Create Account
+          </h2>
+
+          <div className="flex flex-col">
+            <label className="mb-1 font-medium">Name</label>
+            <input
+              type="text"
+              placeholder="Enter name"
+              onChange={(e) => setname(e.target.value)}
+              className="px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-300"
+            />
+          </div>
+
+          <div className="flex flex-col">
+            <label className="mb-1 font-medium">Email</label>
+            <input
+              type="email"
+              placeholder="Enter Email"
+              onChange={(e) => setemail(e.target.value)}
+              className="px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-300"
+            />
+          </div>
+
+          <div className="flex flex-col">
+            <label className="mb-1 font-medium">Password</label>
+            <input
+              type="password"
+              placeholder="*********"
+              onChange={(e) => setpassword(e.target.value)}
+              className="px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-300"
+            />
+          </div>
+
+          <button
+            type="submit"
+            className="w-full bg-blue-600 text-white py-2 rounded-md font-semibold hover:bg-blue-700 transition"
+          >
+            Register
+          </button>
+
+          <p className="text-sm text-center text-gray-600">
+            Already have an account?{" "}
+            <span
+              onClick={() => router.push("/login")}
+              className="text-blue-600 font-medium hover:underline cursor-pointer"
+            >
+              Sign in
+            </span>
+          </p>
+        </form>
+      </div>
     </div>
   );
 }
