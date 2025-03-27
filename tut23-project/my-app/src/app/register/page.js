@@ -24,22 +24,27 @@ export default function Registration() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-green-200 to-pink-200 flex items-center justify-center px-6">
       <div className="bg-blue-100 rounded-2xl shadow-2xl flex w-full max-w-5xl overflow-hidden">
-        {/* Left side message */}
-        <div className="w-1/2 bg-blue-600 text-white p-10 flex flex-col justify-center space-y-4">
-          <h2 className="text-4xl font-bold">Get Free Shopping Coupons 🎁</h2>
-          <p className="text-lg">
-            Sign up today and unlock exclusive offers and discounts at your
-            favorite stores.
-          </p>
-          <p className="text-sm opacity-80">
-            No credit card required. Make a account today! 😎
-          </p>
+        {/* Left side with logo and text */}
+        <div className="w-1/2 bg-white text-center p-10 flex flex-col justify-center items-center space-y-4">
+          <img
+            src="/Dealscape.png"
+            alt="DealScape Logo"
+            className="w-100 h-100 object-contain"
+          />
+          <div className="mt-6 space-y-3">
+            <h3 className="text-2xl font-semibold text-gray-800">
+              Get Free Shopping Coupons 🎁
+            </h3>
+            <p className="text-sm text-gray-500">
+              No credit card required. Make a account today! 😎
+            </p>
+          </div>
         </div>
 
         {/* Right side form */}
         <form
           onSubmit={onHandle}
-          className="w-1/2 p-10 space-y-5 flex flex-col justify-center"
+          className="w-1/2 p-10 space-y-5 flex flex-col justify-center bg-blue-50"
         >
           <h2 className="text-3xl font-extrabold text-blue-700 text-center">
             Create Account
