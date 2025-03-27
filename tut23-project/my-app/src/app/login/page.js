@@ -83,7 +83,7 @@ export default function LoginPage() {
           </p>
           <p className="text-sm opacity-80 italic">
             <a target="_blank" href="https://github.com/Sai4158">
-              Powered by sai Inc. 🛍️
+              Powered by DealScape 🛍️
             </a>
           </p>
         </div>
