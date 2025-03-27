@@ -68,7 +68,7 @@ const HomePage = () => {
 
       {/* Header */}
       <h2 className="text-xl sm:text-3xl font-medium text-center text-gray-800 mb-8">
-        Trending Products & Discounts
+        🔥🔥 Trending Products 🔥🔥
       </h2>
 
       {/* Deals */}

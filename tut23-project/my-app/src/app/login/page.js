@@ -75,10 +75,10 @@ export default function LoginPage() {
         {/* Right: Info message */}
         <div className="w-full md:w-1/2 bg-gradient-to-br from-purple-100 to-red-100  text-black p-8 md:p-10 flex flex-col justify-center space-y-4">
           <h2 className="text-4xl font-bold text-center md:text-left">
-            Get Access to Exclusive Deals 💸
+            Unlock the Best Online Deals 💸
           </h2>
           <p className="text-lg text-center md:text-left">
-            Sign in and start saving on your favorite brands.
+            Sign in and start saving on your favorite products.
           </p>
           <p className="text-sm opacity-80 italic text-center md:text-left">
             Powered by DealScape 🛍️

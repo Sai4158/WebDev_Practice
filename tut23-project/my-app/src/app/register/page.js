@@ -32,7 +32,7 @@ export default function Registration() {
             className="sm:w-32 md:w-52 lg:w-100 mb-6 object-contain"
           />
           <h3 className="text-2xl  text-gray-800 mb-2">
-            Get Free Shopping Coupons 🎁
+            Find Best Deals Online 🛍️
           </h3>
           <p className="text-sm text-gray-500">
             No credit card required. Create your DealScape account today!
