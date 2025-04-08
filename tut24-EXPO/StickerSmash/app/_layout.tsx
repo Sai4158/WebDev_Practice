@@ -1,12 +1,20 @@
 import { Stack } from "expo-router";
+import { StatusBar } from "expo-status-bar";
+import { LogBox } from "react-native";
+
+LogBox.ignoreAllLogs(true);
 
 export default function RootLayout() {
   return (
-    <Stack>
-      {/* This is where we add all the screens */}
-      <Stack.Screen name="index" options={{ headerTitle: "Index" }} />
-      <Stack.Screen name="about" options={{ headerTitle: "About" }} />
-      <Stack.Screen name="(not-found)" options={{ headerTitle: "Not Found" }} />
-    </Stack>
+    <>
+      <StatusBar style="light" />
+      <Stack>
+        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+        <Stack.Screen
+          name="(not-found)"
+          options={{ headerTitle: "Not Found" }}
+        />
+      </Stack>
+    </>
   );
 }
