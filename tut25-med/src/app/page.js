@@ -88,6 +88,7 @@ export default function Home() {
   const [error, setError] = useState(null);
   const [showAll, setShowAll] = useState(false);
   const [viewAll, setViewAll] = useState(false);
+  const [isSpeaking, setIsSpeaking] = useState(false);
 
   const fetchTime = async () => {
     setLoading(true);
@@ -116,8 +117,8 @@ export default function Home() {
 
   useEffect(() => {
     fetchTime();
-    // Update time every minute
-    const timer = setInterval(fetchTime, 60000);
+    // Update time every 30 seconds
+    const timer = setInterval(fetchTime, 30000);
     return () => clearInterval(timer);
   }, []);
 
@@ -144,26 +145,42 @@ export default function Home() {
   // Function to toggle screen view
   const toggleViewAll = () => setViewAll(!viewAll);
 
+  // Use a ref to manage speech synthesis state
+  const isSpeakingRef = React.useRef(false);
+
   return (
-    <main className="min-h-screen flex flex-col items-center justify-center bg-neutral-50 dark:bg-neutral-900 transition-colors duration-500 px-2 py-6">
+    <main className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-b from-gray-900 to-black text-white px-4 py-8 w-full">
       {!viewAll ? (
         <div className="w-full max-w-2xl mx-auto flex flex-col items-center justify-center">
-          <header className="flex flex-col items-center gap-4 mb-10">
+          <header className="flex flex-col items-center gap-3 mb-8 text-center">
             <h1
-              className="text-4xl sm:text-5xl font-extrabold tracking-tight text-neutral-900 dark:text-white text-center"
-              style={{ letterSpacing: "-0.02em" }}
+              className="text-4xl sm:text-5xl font-extrabold tracking-tight text-white"
+              style={{
+                letterSpacing: "-0.02em",
+                fontFamily: "'Roboto', sans-serif",
+                textShadow: "2px 2px 4px #000000",
+              }}
             >
-              <span role="img" aria-label="pill" className="align-middle mr-2">
-                💊
-              </span>
               Sarada Devi's Tablet Reminder
+              <span role="img" aria-label="clock" className="ml-2">
+                ⏰
+              </span>
+              <span role="img" aria-label="calendar" className="ml-2">
+                📅
+              </span>
             </h1>
-            <div className="flex flex-col items-center gap-1">
-              <div className="flex items-center gap-3 bg-neutral-100 dark:bg-neutral-800 px-6 py-3 rounded-2xl shadow-lg text-2xl font-mono font-bold">
-                <span className="font-medium text-neutral-700 dark:text-neutral-200 text-lg">
-                  IST Time
+            <div className="flex flex-col items-center">
+              <div className="flex items-center gap-2 bg-gray-800 bg-opacity-50 px-5 py-3 rounded-xl shadow-md text-xl font-mono font-bold">
+                <span
+                  className="font-medium text-white text-lg"
+                  style={{ textShadow: "1px 1px 2px #000000" }}
+                >
+                  Time
                 </span>
-                <span className="text-blue-700 dark:text-blue-300">
+                <span
+                  className="text-yellow-300"
+                  style={{ textShadow: "1px 1px 2px #000000" }}
+                >
                   {ist
                     ? new Date(ist.rawUtc + ist.offset).toLocaleTimeString(
                         "en-IN",
@@ -175,159 +192,177 @@ export default function Home() {
                       )
                     : "--:--"}
                 </span>
-                <button
-                  onClick={fetchTime}
-                  className="ml-2 px-2 py-1 rounded bg-neutral-200 dark:bg-neutral-700 text-neutral-700 dark:text-neutral-200 text-xs hover:bg-neutral-300 dark:hover:bg-neutral-600 transition"
-                  aria-label="Refresh Time"
-                >
-                  ↻
-                </button>
               </div>
-              <span className="text-base text-neutral-500 dark:text-neutral-400 mt-2">
-                All times are shown in Indian Standard Time (IST)
+              <span
+                className="text-sm text-white mt-1"
+                style={{ textShadow: "1px 1px 2px #000000" }}
+              >
+                Indian Standard Time
               </span>
             </div>
           </header>
 
-          {/* Debug info on UI */}
-          {/* {ist && (
-            <div className="w-full max-w-xl mb-6 p-4 rounded bg-neutral-900 text-neutral-100 text-xs overflow-x-auto">
-              <div>
-                <b>DEBUG:</b> IST from API: {ist.toString()}
+          {/* Main content - Current or Next Medicine */}
+          <div className="w-full flex flex-col items-center">
+            {loading ? (
+              <div className="flex justify-center items-center h-24 text-gray-400">
+                <svg
+                  className="animate-spin h-8 w-8 text-blue-500"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                >
+                  <circle
+                    className="opacity-25"
+                    cx="12"
+                    cy="12"
+                    r="10"
+                    stroke="currentColor"
+                    strokeWidth="4"
+                  ></circle>
+                  <path
+                    className="opacity-75"
+                    fill="currentColor"
+                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                  ></path>
+                </svg>
               </div>
-              <div>
-                <b>Current slot:</b> {currentSlot ? currentSlot.label : "None"}
+            ) : error ? (
+              <div className="flex flex-col items-center gap-4 text-center">
+                <div className="text-red-500 text-xl font-semibold">
+                  {error}
+                </div>
+                <button
+                  className="px-5 py-2 rounded-lg bg-blue-600 text-white font-semibold hover:bg-blue-700 hover:blur-md transition-all duration-300 ease-in-out"
+                  onClick={fetchTime}
+                >
+                  Retry
+                </button>
               </div>
-              <div>
-                <b>Next slot:</b> {nextSlot ? nextSlot.label : "None"}
-              </div>
-            </div>
-          )} */}
-
-          {loading ? (
-            <div className="flex justify-center items-center h-32 animate-pulse text-2xl font-semibold text-neutral-400">
-              Loading IST…
-            </div>
-          ) : error ? (
-            <div className="flex flex-col items-center gap-4">
-              <div className="text-red-500 text-center text-2xl font-semibold">
-                {error}
-              </div>
-              <button
-                onClick={fetchTime}
-                className="px-6 py-3 rounded-xl bg-blue-600 text-white font-semibold shadow hover:bg-blue-700 transition-all text-lg"
-              >
-                Retry
-              </button>
-            </div>
-          ) : (
-            <>
-              <div className="flex flex-col items-center w-full">
+            ) : (
+              <>
                 {currentSlot ? (
-                  <section className="rounded-3xl shadow-2xl bg-white/80 dark:bg-neutral-800/80 p-10 mb-8 flex flex-col gap-6 items-center w-full max-w-xl backdrop-blur-md border border-neutral-200 dark:border-neutral-700">
-                    <div className="flex flex-col items-center gap-3 mb-2">
-                      <span className="text-2xl font-bold text-neutral-900 dark:text-white">
-                        {currentSlot.label}
+                  <section className="rounded-2xl shadow-lg bg-green-800 bg-opacity-50 p-8 mb-6 flex flex-col gap-5 items-center w-full max-w-xl border border-green-700">
+                    <div className="flex flex-col items-center gap-2">
+                      <span
+                        className="text-2xl font-bold text-white"
+                        style={{ textShadow: "1px 1px 2px #000000" }}
+                      >
+                        Current: {currentSlot.label}
                       </span>
-                      <span className="text-lg px-4 py-2 rounded bg-neutral-100 dark:bg-neutral-700 text-neutral-700 dark:text-neutral-200 font-semibold">
+                      <span className="text-base px-3 py-1 rounded bg-green-700 text-white font-medium">
                         {currentSlot.timeRange}
                       </span>
-                      <span className="text-base text-neutral-500 dark:text-neutral-300">
-                        {formatIST(ist)}
-                      </span>
-                      <button
-                        aria-label="Play Telugu Voice"
-                        className="mt-2 text-3xl hover:scale-110 transition text-neutral-500 dark:text-neutral-300"
-                        onClick={() =>
-                          speakTelugu(getTeluguText(currentSlot.tablets))
-                        }
-                      >
-                        🔊
-                      </button>
                     </div>
-                    <div className="flex flex-wrap gap-5 justify-center">
+                    <div className="flex flex-wrap gap-4 justify-center mt-4">
                       {currentSlot.tablets.map((tab) => (
                         <div
                           key={tab.name}
-                          className="px-6 py-4 rounded-full bg-neutral-100 dark:bg-neutral-700 shadow-lg text-xl font-bold flex flex-col items-center min-w-[150px] border border-neutral-200 dark:border-neutral-700 mb-2"
+                          className="px-5 py-3 rounded-xl bg-blue-50 shadow-sm text-lg font-medium flex flex-col items-center min-w-[140px] border border-blue-100"
                         >
-                          <span className="mb-1 text-center text-neutral-900 dark:text-white">
+                          <span className="mb-1 text-center text-gray-800">
                             {tab.name}
                           </span>
-                          <span className="text-base text-neutral-500 dark:text-neutral-300 text-center font-normal">
+                          <span className="text-sm text-gray-500 text-center">
                             {tab.desc}
                           </span>
                         </div>
                       ))}
                     </div>
+                    <div className="flex justify-center mt-4">
+                      <button
+                        aria-label="Speak Reminder"
+                        className="px-4 py-2 rounded-lg bg-blue-600 text-white font-bold shadow hover:bg-blue-700 transition-all duration-300 ease-in-out flex items-center gap-2"
+                        onClick={() => speakReminder(currentSlot, true)}
+                      >
+                        {isSpeaking ? "⏸️" : "▶️"}
+                        <span>Speak</span>
+                      </button>
+                    </div>
                   </section>
                 ) : (
-                  <section className="rounded-3xl shadow-2xl bg-white/80 dark:bg-neutral-800/80 p-10 mb-8 flex flex-col gap-6 items-center w-full max-w-xl backdrop-blur-md border border-neutral-200 dark:border-neutral-700">
-                    <div className="text-2xl font-bold text-neutral-700 dark:text-neutral-200 mb-2 text-center">
+                  <section className="rounded-2xl shadow-lg bg-orange-800 bg-opacity-50 p-10 mb-8 flex flex-col gap-6 items-center w-full max-w-3xl border border-orange-700">
+                    <div className="text-2xl font-bold text-white mb-2 text-center">
                       No medicines at this time
                     </div>
                     {nextSlot && (
-                      <div className="flex flex-col items-center text-xl text-neutral-500 dark:text-neutral-400">
-                        <span className="mb-1">Next Reminder:</span>
-                        <span className="font-bold text-blue-700 dark:text-blue-300 text-xl">
+                      <div className="flex flex-col items-center text-lg text-white">
+                        <span className="mb-1 bg-black px-2 py-1 rounded">
+                          Upcoming:
+                        </span>
+                        <span
+                          className="font-bold text-orange-400 text-xl"
+                          style={{ textShadow: "1px 1px 2px #000000" }}
+                        >
                           {nextSlot.label}
                         </span>
-                        <span className="text-lg">{nextSlot.timeRange}</span>
+                        <span className="text-base text-white">
+                          {nextSlot.timeRange}
+                        </span>
                       </div>
                     )}
+                    <div className="flex justify-center mt-4">
+                      <button
+                        aria-label="Speak Reminder"
+                        className="px-4 py-2 rounded-lg bg-blue-600 text-white font-bold shadow hover:bg-blue-700 transition-all duration-300 ease-in-out flex items-center gap-2"
+                        onClick={() => speakReminder(currentSlot, true)}
+                      >
+                        {isSpeaking ? "⏸️" : "▶️"}
+                        <span>Speak</span>
+                      </button>
+                    </div>
                   </section>
                 )}
-
-                {/* Button to show all tablets */}
+                {/* Button to view all medicines */}
                 <div className="flex justify-center mb-4">
                   <button
-                    className="px-8 py-4 rounded-2xl bg-blue-600 text-white font-bold shadow-lg hover:bg-blue-700 transition-all text-2xl"
+                    className="px-6 py-3 rounded-xl bg-blue-600 text-white font-bold shadow hover:bg-blue-700 hover:blur-md transition-all duration-300 ease-in-out text-xl"
                     onClick={toggleViewAll}
                     aria-expanded={viewAll}
                   >
                     View All Medicines
                   </button>
                 </div>
-              </div>
-            </>
-          )}
+              </>
+            )}
+          </div>
         </div>
       ) : (
-        // All medicines screen layout
-        <div className="w-full h-full flex flex-col items-center justify-center bg-neutral-50 dark:bg-neutral-900 transition-colors duration-500 px-2 py-6">
+        // All medicines screen layout - modernized
+        <div className="w-full h-full flex flex-col items-center justify-center bg-white px-2 py-6">
           <button
-            className="absolute top-4 left-4 px-4 py-2 rounded bg-blue-600 text-white font-bold shadow-lg hover:bg-blue-700 transition-all"
+            className="absolute top-4 left-4 px-4 py-2 rounded-lg bg-blue-600 text-white font-bold shadow hover:bg-blue-700 hover:blur-md transition-all duration-300 ease-in-out flex items-center gap-2"
             onClick={toggleViewAll}
           >
-            Back
+            <span>←</span> Back
           </button>
-          <h2 className="text-3xl font-bold mb-6 text-center text-neutral-900 dark:text-white">
+          <h2 className="text-3xl font-bold mb-8 text-center text-gray-800">
             All Medicines
           </h2>
-          <div className="flex flex-col gap-8 w-full max-w-2xl">
+          <div className="flex flex-col gap-6 w-full max-w-2xl pb-8">
             {medicineSlots.map((slot) => (
               <div
                 key={slot.label}
-                className="rounded-2xl bg-neutral-100 dark:bg-neutral-800 shadow p-6 flex flex-col items-center border border-neutral-200 dark:border-neutral-700 mb-4 w-full animate-fade-in"
+                className="rounded-xl bg-white shadow-md p-6 flex flex-col items-center border border-gray-100 mb-2 w-full animate-fade-in"
               >
-                <div className="flex items-center gap-3 mb-3">
-                  <span className="font-bold text-neutral-900 dark:text-white text-xl">
+                <div className="flex items-center gap-3 mb-4">
+                  <span className="font-bold text-gray-800 text-xl">
                     {slot.label}
                   </span>
-                  <span className="text-sm px-3 py-1 rounded bg-neutral-200 dark:bg-neutral-700 text-neutral-700 dark:text-neutral-200 font-semibold">
+                  <span className="text-sm px-3 py-1 rounded bg-gray-100 text-gray-600 font-medium">
                     {slot.timeRange}
                   </span>
                 </div>
-                <div className="flex flex-wrap gap-4 justify-center">
+                <div className="flex flex-wrap gap-3 justify-center">
                   {slot.tablets.map((tab) => (
                     <div
                       key={tab.name}
-                      className="px-5 py-3 rounded-full bg-white dark:bg-neutral-900 shadow text-lg font-semibold flex flex-col items-center min-w-[130px] border border-neutral-200 dark:border-neutral-700 mb-2"
+                      className="px-4 py-3 rounded-xl bg-blue-50 shadow-sm text-base font-medium flex flex-col items-center min-w-[130px] border border-blue-100 mb-2"
                     >
-                      <span className="mb-1 text-center text-neutral-900 dark:text-white">
+                      <span className="mb-1 text-center text-gray-800">
                         {tab.name}
                       </span>
-                      <span className="text-sm text-neutral-500 dark:text-neutral-300 text-center font-normal">
+                      <span className="text-xs text-gray-500 text-center">
                         {tab.desc}
                       </span>
                     </div>
@@ -337,27 +372,28 @@ export default function Home() {
             ))}
           </div>
           <button
-            className="mt-6 px-8 py-4 rounded-2xl bg-blue-600 text-white font-bold shadow-lg hover:bg-blue-700 transition-all"
+            className="mt-4 px-6 py-3 rounded-xl bg-blue-600 text-white font-bold shadow hover:bg-blue-700 hover:blur-md transition-all duration-300 ease-in-out flex items-center gap-2"
             onClick={toggleViewAll}
           >
-            Back
+            <span>←</span> Back to Current
           </button>
         </div>
       )}
       <style jsx global>{`
         .animate-fade-in {
-          animation: fadeIn 0.7s;
+          animation: fadeIn 0.5s;
         }
         @keyframes fadeIn {
           from {
             opacity: 0;
-            transform: translateY(20px);
+            transform: translateY(10px);
           }
           to {
             opacity: 1;
             transform: none;
           }
         }
+        @import url("https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap");
       `}</style>
     </main>
   );
@@ -373,4 +409,32 @@ const speakTelugu = (text) => {
       (voice) => voice.name.includes("Female") && voice.lang === "te-IN"
     ) || voices[0];
   speechSynthesis.speak(msg);
+};
+
+// Update the speakReminder function to handle individual tablet sets
+const speakReminder = (slot, isCurrent) => {
+  if (isSpeakingRef.current) {
+    speechSynthesis.cancel();
+    isSpeakingRef.current = false;
+    setIsSpeaking(false);
+  } else {
+    const timeLabel = isCurrent ? "Current" : "Upcoming";
+    const text = `${timeLabel} reminder: ${slot.label}. Time: ${
+      slot.timeRange
+    }. Tablets to take: ${slot.tablets.map((tab) => tab.name).join(", ")}.`;
+    const msg = new SpeechSynthesisUtterance(text);
+    msg.lang = "en-IN";
+    msg.onend = () => {
+      isSpeakingRef.current = false;
+      setIsSpeaking(false);
+    };
+    speechSynthesis.speak(msg);
+    isSpeakingRef.current = true;
+    setIsSpeaking(true);
+  }
+};
+
+// Define the getTeluguText function
+const getTeluguText = (tablets) => {
+  return tablets.map((tab) => `${tab.name} for ${tab.desc}`).join(", ");
 };
