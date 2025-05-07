@@ -310,51 +310,57 @@ export default function Home() {
           </div>
         </div>
       ) : (
-        // All medicines screen layout - modernized
-        <div className="w-full h-full flex flex-col items-center justify-center bg-white px-2 py-6">
+        <div className="w-full h-full flex flex-col items-center justify-center bg-gradient-to-br from-white via-blue-50 to-white px-4 py-8">
           <button
             className="absolute top-4 left-4 px-4 py-2 rounded-lg bg-blue-600 text-white font-bold shadow hover:bg-blue-700 hover:blur-md transition-all duration-300 ease-in-out flex items-center gap-2"
             onClick={toggleViewAll}
           >
             <span>←</span> Back
           </button>
-          <h2 className="text-3xl font-bold mb-8 text-center text-gray-800">
+          <h2 className="text-4xl font-bold mb-10 text-center text-gray-800">
             All Medicines
           </h2>
-          <div className="flex flex-col gap-6 w-full max-w-2xl pb-8">
+          <div className="flex flex-col gap-8 w-full max-w-3xl">
             {medicineSlots.map((slot) => (
               <div
                 key={slot.label}
-                className="rounded-xl bg-white shadow-md p-6 flex flex-col items-center border border-gray-100 mb-2 w-full animate-fade-in"
+                className="rounded-3xl bg-white bg-opacity-80 backdrop-blur-lg shadow-xl p-8 flex flex-col items-center border border-gray-200 mb-4 w-full animate-fade-in"
               >
-                <div className="flex items-center gap-3 mb-4">
-                  <span className="font-bold text-gray-800 text-xl">
+                <div className="flex items-center justify-between w-full mb-4">
+                  <span className="text-2xl font-semibold text-gray-800">
                     {slot.label}
                   </span>
-                  <span className="text-sm px-3 py-1 rounded bg-gray-100 text-gray-600 font-medium">
+                  <span className="text-sm px-4 py-1 rounded bg-blue-100 text-blue-700 font-medium shadow">
                     {slot.timeRange}
                   </span>
                 </div>
-                <div className="flex flex-wrap gap-3 justify-center">
+                <div className="flex flex-wrap gap-4 justify-center">
                   {slot.tablets.map((tab) => (
                     <div
                       key={tab.name}
-                      className="px-4 py-3 rounded-xl bg-blue-50 shadow-sm text-base font-medium flex flex-col items-center min-w-[130px] border border-blue-100 mb-2"
+                      className="px-6 py-4 rounded-xl bg-gradient-to-br from-blue-100 to-white shadow-md text-base font-medium flex flex-col items-center min-w-[140px] border border-blue-200"
                     >
-                      <span className="mb-1 text-center text-gray-800">
+                      <span className="mb-1 text-center text-gray-900 font-semibold">
                         {tab.name}
                       </span>
-                      <span className="text-xs text-gray-500 text-center">
+                      <span className="text-sm text-gray-600 text-center">
                         {tab.desc}
                       </span>
                     </div>
                   ))}
                 </div>
+                <button
+                  aria-label="Speak Reminder"
+                  className="mt-6 px-5 py-2 rounded-full bg-blue-600 text-white font-bold shadow hover:bg-blue-700 hover:scale-105 transition-transform duration-300 ease-in-out flex items-center gap-2"
+                  onClick={() => speakReminder(slot, false)}
+                >
+                  ▶️<span>Speak</span>
+                </button>
               </div>
             ))}
           </div>
           <button
-            className="mt-4 px-6 py-3 rounded-xl bg-blue-600 text-white font-bold shadow hover:bg-blue-700 hover:blur-md transition-all duration-300 ease-in-out flex items-center gap-2"
+            className="mt-6 px-6 py-3 rounded-xl bg-blue-600 text-white font-bold shadow hover:bg-blue-700 hover:blur-md transition-all duration-300 ease-in-out flex items-center gap-2"
             onClick={toggleViewAll}
           >
             <span>←</span> Back to Current
