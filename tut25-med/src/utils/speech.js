@@ -1,12 +1,11 @@
-// Returns Telugu-style medicine message for TTS
 export function getTeluguText(tablets) {
-  const names = tablets.map((t) => t.name).join(", ");
-  return `ఇప్పుడు తీసుకోవాల్సిన మందులు: ${names}`;
+  return `ఇప్పుడు తీసుకోవాల్సిన మందులు: ${tablets
+    .map((t) => t.name)
+    .join(", ")}`;
 }
 
-// Speaks the Telugu message using speechSynthesis
 export function speakTelugu(text) {
-  if (typeof window === "undefined" || !window.speechSynthesis) return;
+  if (typeof window === "undefined") return;
   const utter = new window.SpeechSynthesisUtterance(text);
   utter.lang = "te-IN";
   utter.rate = 0.95;

@@ -399,39 +399,45 @@ export default function Home() {
   );
 }
 
-// Ensure only one definition of speakTelugu exists
+const speakReminder = (slot, isCurrent) => {
+  if (!slot) return;
+  if (speechSynthesis.speaking) {
+    speechSynthesis.cancel();
+    setIsSpeaking(false);
+    return;
+  }
+  const label = isCurrent ? "ప్రస్తుతం" : "తర్వాతి";
+  const teluguText = `${label} ${slot.timeRange}. ${getTeluguText(
+    slot.tablets
+  )}`;
+  const utterance = new SpeechSynthesisUtterance(teluguText);
+  utterance.lang = "te-IN";
+  utterance.rate = 0.85;
+  const voices = speechSynthesis.getVoices();
+  utterance.voice =
+    voices.find(
+      (v) => v.lang === "te-IN" && v.name.toLowerCase().includes("female")
+    ) ||
+    voices.find((v) => v.lang === "te-IN") ||
+    voices[0];
+  utterance.onend = () => setIsSpeaking(false);
+  speechSynthesis.speak(utterance);
+  setIsSpeaking(true);
+};
+
+// Update speakTelugu for slow, female Telugu accent
 const speakTelugu = (text) => {
   const msg = new SpeechSynthesisUtterance(text);
   msg.lang = "te-IN";
   const voices = speechSynthesis.getVoices();
   msg.voice =
     voices.find(
-      (voice) => voice.name.includes("Female") && voice.lang === "te-IN"
-    ) || voices[0];
+      (voice) =>
+        voice.lang === "te-IN" && voice.name.toLowerCase().includes("female")
+    ) ||
+    voices.find((voice) => voice.lang === "te-IN") ||
+    voices[0];
   speechSynthesis.speak(msg);
-};
-
-// Update the speakReminder function to handle individual tablet sets
-const speakReminder = (slot, isCurrent) => {
-  if (isSpeakingRef.current) {
-    speechSynthesis.cancel();
-    isSpeakingRef.current = false;
-    setIsSpeaking(false);
-  } else {
-    const timeLabel = isCurrent ? "Current" : "Upcoming";
-    const text = `${timeLabel} reminder: ${slot.label}. Time: ${
-      slot.timeRange
-    }. Tablets to take: ${slot.tablets.map((tab) => tab.name).join(", ")}.`;
-    const msg = new SpeechSynthesisUtterance(text);
-    msg.lang = "en-IN";
-    msg.onend = () => {
-      isSpeakingRef.current = false;
-      setIsSpeaking(false);
-    };
-    speechSynthesis.speak(msg);
-    isSpeakingRef.current = true;
-    setIsSpeaking(true);
-  }
 };
 
 // Define the getTeluguText function
