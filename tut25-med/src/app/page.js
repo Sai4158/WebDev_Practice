@@ -140,7 +140,7 @@ export default function Home() {
     }
   };
   return (
-    <main className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-purple-900 via-purple-700 to-indigo-900 text-white px-4 sm:px-6 py-10 sm:py-12 w-full text-base sm:text-lg">
+    <main className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-purple-800 via-purple-750 to-indigo-900 text-white px-4 sm:px-6 py-10 sm:py-12 w-full text-base sm:text-lg">
       {!viewAll ? (
         <div className="w-full max-w-xl mx-auto flex flex-col items-center justify-center scale-100 sm:scale-105">
           <header className="flex flex-col items-center gap-4 mb-10 text-center">
@@ -150,8 +150,8 @@ export default function Home() {
             </h1>
             <div className="flex flex-col items-center mt-4">
               <div className="flex items-center gap-2 bg-white/10 px-5 py-2 sm:px-6 sm:py-3 rounded-xl shadow-md text-xl sm:text-2xl font-bold backdrop-blur-md text-purple-100">
-                <span className="text-gray-300">Time</span>
-                <span className="text-purple-200">
+                <span className="text-pruple-200">Time</span>
+                <span className="text-purple-100">
                   {ist
                     ? new Date(ist.rawUtc + ist.offset).toLocaleTimeString(
                         "en-IN",
@@ -213,14 +213,14 @@ export default function Home() {
           ) : (
             <section className="w-full max-w-3xl  p-6 sm:p-10 rounded-3xl shadow-2xl backdrop-blur-lg bg-white/10 text-center text-white animate-fade-in">
               <div className="text-2xl  mb-2">
-                All Medicines Taken ✅ <br />
+                ✅✅✅All Medicines Taken✅✅✅ <br />
                 <br />
                 <br />
-                <a className=" text-gray-200 ">
+                <a className=" text-blue-100 font-sans underline">
                   {" "}
                   {nextSlot ? (
                     <>
-                      Please check again at {nextSlot.label}
+                      Please check again at "{nextSlot.label}"
                       <br /> ({nextSlot.timeRange}).
                     </>
                   ) : (
