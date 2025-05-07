@@ -10,7 +10,7 @@ const medicineSlots = [
   },
   {
     label: "Before Breakfast",
-    timeRange: "9:15 AM – 10:30 AM",
+    timeRange: "9:15 AM – 10:33 AM",
     tablets: [
       { name: "Gemer DS 4", desc: "controls blood sugar" },
       { name: "Xarelto 2.5 mg", desc: "prevents clots/strokes" },

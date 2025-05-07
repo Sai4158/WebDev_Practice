@@ -1,26 +1,41 @@
 export function getTeluguText(tablets) {
-  return `ఇప్పుడు తీసుకోవాల్సిన మందులు: ${tablets
-    .map((t) => t.name)
-    .join(", ")}`;
+  return `Medicines to take now: ${tablets.map((t) => t.name).join(", ")}`;
 }
 
 export function speakTelugu(text, onStart = () => {}, onEnd = () => {}) {
   if (typeof window === "undefined") return;
-  const utter = new SpeechSynthesisUtterance(text);
-  utter.lang = "te-IN";
-  utter.rate = 0.85;
-  utter.pitch = 1.1;
 
-  const voices = window.speechSynthesis.getVoices();
-  utter.voice =
-    voices.find(
-      (v) => v.lang === "te-IN" && v.name.toLowerCase().includes("female")
-    ) ||
-    voices.find((v) => v.lang === "te-IN") ||
-    voices[0];
+  const synth = window.speechSynthesis;
 
-  utter.onstart = onStart;
-  utter.onend = onEnd;
+  const loadVoices = () =>
+    new Promise((resolve) => {
+      const voices = synth.getVoices();
+      if (voices.length) resolve(voices);
+      else synth.onvoiceschanged = () => resolve(synth.getVoices());
+    });
 
-  window.speechSynthesis.speak(utter);
+  loadVoices().then((voices) => {
+    const utter = new SpeechSynthesisUtterance(text);
+    utter.lang = "en-US";
+    utter.rate = 0.95;
+    utter.pitch = 1.15;
+
+    utter.voice =
+      voices.find(
+        (v) =>
+          v.lang.startsWith("en") && v.name.toLowerCase().includes("female")
+      ) ||
+      voices.find(
+        (v) =>
+          v.lang.startsWith("en") && v.name.toLowerCase().includes("google")
+      ) ||
+      voices.find((v) => v.lang.startsWith("en")) ||
+      voices[0];
+
+    utter.onstart = onStart;
+    utter.onend = onEnd;
+
+    synth.cancel();
+    synth.speak(utter);
+  });
 }

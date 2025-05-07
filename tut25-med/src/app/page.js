@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import medicineSlots from "../data/medicines";
 import { fetchIST } from "../utils/time";
 import { getTeluguText, speakTelugu } from "../utils/speech";
@@ -9,18 +9,8 @@ function parseTimeRangeIST(range, istDate) {
   const toISTDate = (t) => {
     const [time, meridian] = t.split(" ");
     let [h, m] = time.split(":").map(Number);
-    if (
-      typeof meridian === "string" &&
-      meridian.toUpperCase() === "PM" &&
-      h !== 12
-    )
-      h += 12;
-    if (
-      typeof meridian === "string" &&
-      meridian.toUpperCase() === "AM" &&
-      h === 12
-    )
-      h = 0;
+    if (meridian.toUpperCase() === "PM" && h !== 12) h += 12;
+    if (meridian.toUpperCase() === "AM" && h === 12) h = 0;
     return new Date(
       istDate.getFullYear(),
       istDate.getMonth(),
@@ -48,32 +38,25 @@ const getCurrentAndNextSlotIST = (istDate, slots) => {
   let minTimeDiff = Infinity;
   for (let i = 0; i < slots.length; i++) {
     const [start] = parseTimeRangeIST(slots[i].timeRange, istDate);
-    if (istDate < start) {
-      const timeDiff = start.getTime() - istDate.getTime();
-      if (timeDiff < minTimeDiff) {
-        minTimeDiff = timeDiff;
-        closestNextSlot = slots[i];
-      }
-    } else {
-      const tomorrowDate = new Date(istDate);
-      tomorrowDate.setDate(tomorrowDate.getDate() + 1);
-      const tomorrowStart = new Date(
-        tomorrowDate.getFullYear(),
-        tomorrowDate.getMonth(),
-        tomorrowDate.getDate(),
+    let compareStart = start;
+    if (istDate > start) {
+      const tomorrow = new Date(istDate);
+      tomorrow.setDate(tomorrow.getDate() + 1);
+      compareStart = new Date(
+        tomorrow.getFullYear(),
+        tomorrow.getMonth(),
+        tomorrow.getDate(),
         start.getHours(),
-        start.getMinutes(),
-        0
+        start.getMinutes()
       );
-      const timeDiff = tomorrowStart.getTime() - istDate.getTime();
-      if (timeDiff < minTimeDiff) {
-        minTimeDiff = timeDiff;
-        closestNextSlot = slots[i];
-      }
+    }
+    const timeDiff = compareStart.getTime() - istDate.getTime();
+    if (timeDiff < minTimeDiff) {
+      minTimeDiff = timeDiff;
+      closestNextSlot = slots[i];
     }
   }
-  next = closestNextSlot || slots[0];
-  return { current, next };
+  return { current, next: closestNextSlot };
 };
 
 export default function Home() {
@@ -81,12 +64,11 @@ export default function Home() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [viewAll, setViewAll] = useState(false);
-  const [isSpeaking, setIsSpeaking] = useState(false);
-  const isSpeakingRef = React.useRef(false);
+  const [speakingIndex, setSpeakingIndex] = useState(null);
+  const speechRef = useRef(null);
 
   const fetchTime = async () => {
     setLoading(true);
-    setError(null);
     try {
       const now = new Date();
       const utcNow = new Date(now.getTime() + now.getTimezoneOffset() * 60000);
@@ -94,73 +76,82 @@ export default function Home() {
       const istTime = new Date(utcNow.getTime() + istOffset);
       setIst({ time: istTime, rawUtc: utcNow.getTime(), offset: istOffset });
     } catch (e) {
-      console.error("Error calculating IST:", e);
-      setError("Could not calculate IST. Please check your internet.");
+      setError("Failed to fetch IST.");
     }
     setLoading(false);
   };
 
   useEffect(() => {
     fetchTime();
-    const timer = setInterval(fetchTime, 30000);
-    return () => clearInterval(timer);
+    const interval = setInterval(fetchTime, 30000);
+    return () => clearInterval(interval);
   }, []);
 
   const { current: currentSlot, next: nextSlot } = ist
     ? getCurrentAndNextSlotIST(new Date(ist.rawUtc + ist.offset), medicineSlots)
     : { current: null, next: null };
 
-  const speakReminder = (slot, isCurrent) => {
+  const toggleSpeak = (slot, index, isCurrent) => {
     if (!slot) return;
-    if (speechSynthesis.speaking) {
+
+    const speakNow = (voices) => {
+      if (speechSynthesis.speaking && speakingIndex === index) {
+        speechSynthesis.cancel();
+        setSpeakingIndex(null);
+        return;
+      }
+
+      const label = isCurrent ? "Currently" : "Upcoming";
+      const text = `${label} time: ${slot.timeRange}. Medicines: ${slot.tablets
+        .map((t) => t.name)
+        .join(", ")}`;
+
+      const englishVoice =
+        voices.find(
+          (v) => v.lang === "en-IN" && v.name.toLowerCase().includes("female")
+        ) ||
+        voices.find((v) => v.lang === "en-IN") ||
+        voices.find(
+          (v) =>
+            v.lang.startsWith("en") && v.name.toLowerCase().includes("female")
+        ) ||
+        voices.find((v) => v.lang.startsWith("en")) ||
+        voices[0];
+
+      const utter = new SpeechSynthesisUtterance(text);
+      utter.lang = "en-IN";
+      utter.rate = 0.95;
+      utter.pitch = 1.0;
+      utter.voice = englishVoice;
+
+      utter.onend = () => setSpeakingIndex(null);
+      setSpeakingIndex(index);
       speechSynthesis.cancel();
-      setIsSpeaking(false);
-      return;
+      speechSynthesis.speak(utter);
+    };
+
+    const voices = speechSynthesis.getVoices();
+    if (voices.length) {
+      speakNow(voices);
+    } else {
+      speechSynthesis.onvoiceschanged = () => {
+        speakNow(speechSynthesis.getVoices());
+      };
     }
-    const label = isCurrent ? "ప్రస్తుతం" : "తర్వాతి";
-    const text = `${label} ${slot.timeRange}. ${getTeluguText(slot.tablets)}`;
-    speakTelugu(
-      text,
-      () => setIsSpeaking(true),
-      () => setIsSpeaking(false)
-    );
   };
 
-  const toggleViewAll = () => setViewAll(!viewAll);
-
   return (
-    <main className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-b from-gray-900 to-black text-white px-4 py-8 w-full">
+    <main className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-purple-900 via-purple-700 to-indigo-900 text-white px-6 py-12 w-full text-lg">
       {!viewAll ? (
-        <div className="w-full max-w-2xl mx-auto flex flex-col items-center justify-center">
-          <header className="flex flex-col items-center gap-3 mb-8 text-center">
-            <h1
-              className="text-4xl sm:text-5xl font-extrabold tracking-tight text-white"
-              style={{
-                letterSpacing: "-0.02em",
-                fontFamily: "'Roboto', sans-serif",
-                textShadow: "2px 2px 4px #000000",
-              }}
-            >
-              Sarada Devi's Tablet Reminder
-              <span role="img" aria-label="clock" className="ml-2">
-                ⏰
-              </span>
-              <span role="img" aria-label="calendar" className="ml-2">
-                📅
-              </span>
+        <div className="w-full max-w-2xl mx-auto flex flex-col items-center justify-center scale-105">
+          <header className="flex flex-col items-center gap-4 mb-10 text-center">
+            <h1 className="text-5xl font-bold tracking-tight text-white drop-shadow-lg">
+              Sarada Devi's Tablet Reminder <span>⏰📅</span>
             </h1>
-            <div className="flex flex-col items-center">
-              <div className="flex items-center gap-2 bg-gray-800 bg-opacity-50 px-5 py-3 rounded-xl shadow-md text-xl font-mono font-bold">
-                <span
-                  className="font-medium text-white text-lg"
-                  style={{ textShadow: "1px 1px 2px #000000" }}
-                >
-                  Time
-                </span>
-                <span
-                  className="text-yellow-300"
-                  style={{ textShadow: "1px 1px 2px #000000" }}
-                >
+            <div className="flex flex-col items-center mt-4">
+              <div className="flex items-center gap-2 bg-white/10 px-6 py-3 rounded-xl shadow-md text-2xl font-bold backdrop-blur-md text-purple-100">
+                <span className="text-gray-300">Time</span>
+                <span className="text-purple-200">
                   {ist
                     ? new Date(ist.rawUtc + ist.offset).toLocaleTimeString(
                         "en-IN",
@@ -173,177 +164,100 @@ export default function Home() {
                     : "--:--"}
                 </span>
               </div>
-              <span
-                className="text-sm text-white mt-1"
-                style={{ textShadow: "1px 1px 2px #000000" }}
-              >
+              <span className="text-base text-gray-300 mt-2">
                 Indian Standard Time
               </span>
             </div>
           </header>
 
-          {/* Main content - Current or Next Medicine */}
-          <div className="w-full flex flex-col items-center">
-            {loading ? (
-              <div className="flex justify-center items-center h-24 text-gray-400">
-                <svg
-                  className="animate-spin h-8 w-8 text-blue-500"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                >
-                  <circle
-                    className="opacity-25"
-                    cx="12"
-                    cy="12"
-                    r="10"
-                    stroke="currentColor"
-                    strokeWidth="4"
-                  ></circle>
-                  <path
-                    className="opacity-75"
-                    fill="currentColor"
-                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                  ></path>
-                </svg>
+          {loading ? (
+            <div className="animate-spin h-10 w-10 border-4 border-purple-400 border-t-transparent rounded-full"></div>
+          ) : error ? (
+            <div className="text-red-400 font-semibold">{error}</div>
+          ) : (
+            <section className="w-full max-w-3xl p-10 rounded-3xl shadow-2xl backdrop-blur-lg bg-white/10 animate-fade-in">
+              <div className="text-center mb-4 text-3xl font-semibold text-purple-100">
+                {currentSlot
+                  ? `Current: ${currentSlot.label}`
+                  : "No medicines right now"}
               </div>
-            ) : error ? (
-              <div className="flex flex-col items-center gap-4 text-center">
-                <div className="text-red-500 text-xl font-semibold">
-                  {error}
-                </div>
+              <div className="text-center mb-4 text-xl text-purple-200 font-medium">
+                {(currentSlot || nextSlot)?.timeRange}
+              </div>
+              <div className="flex flex-wrap gap-5 justify-center mb-6">
+                {(currentSlot || nextSlot)?.tablets.map((tab) => (
+                  <div
+                    key={tab.name}
+                    className="bg-purple-500/30 text-white px-5 py-4 rounded-xl shadow-inner min-w-[140px] text-center hover:scale-105 transition duration-300 backdrop-blur-md"
+                  >
+                    <div className="font-semibold text-white text-lg">
+                      {tab.name}
+                    </div>
+                    <div className="text-sm text-purple-100 mt-1">
+                      {tab.desc}
+                    </div>
+                  </div>
+                ))}
+              </div>
+              <div className="flex justify-center">
                 <button
-                  className="px-5 py-2 rounded-lg bg-blue-600 text-white font-semibold hover:bg-blue-700 hover:blur-md transition-all duration-300 ease-in-out"
-                  onClick={fetchTime}
+                  className={`px-7 py-3 rounded-full font-bold text-white shadow-xl flex items-center gap-2 transition-all duration-300 text-lg ${
+                    speakingIndex === -1
+                      ? "bg-red-600 hover:shadow-red-400/50"
+                      : "bg-purple-600 hover:shadow-purple-400/50"
+                  }`}
+                  onClick={() =>
+                    toggleSpeak(currentSlot || nextSlot, -1, !!currentSlot)
+                  }
                 >
-                  Retry
+                  {speakingIndex === -1 ? "⏸️" : "▶️"} Speak
                 </button>
               </div>
-            ) : (
-              <>
-                {currentSlot ? (
-                  <section className="rounded-2xl shadow-lg bg-green-800 bg-opacity-50 p-8 mb-6 flex flex-col gap-5 items-center w-full max-w-xl border border-green-700">
-                    <div className="flex flex-col items-center gap-2">
-                      <span
-                        className="text-2xl font-bold text-white"
-                        style={{ textShadow: "1px 1px 2px #000000" }}
-                      >
-                        Current: {currentSlot.label}
-                      </span>
-                      <span className="text-base px-3 py-1 rounded bg-green-700 text-white font-medium">
-                        {currentSlot.timeRange}
-                      </span>
-                    </div>
-                    <div className="flex flex-wrap gap-4 justify-center mt-4">
-                      {currentSlot.tablets.map((tab) => (
-                        <div
-                          key={tab.name}
-                          className="px-5 py-3 rounded-xl bg-blue-50 shadow-sm text-lg font-medium flex flex-col items-center min-w-[140px] border border-blue-100"
-                        >
-                          <span className="mb-1 text-center text-gray-800">
-                            {tab.name}
-                          </span>
-                          <span className="text-sm text-gray-500 text-center">
-                            {tab.desc}
-                          </span>
-                        </div>
-                      ))}
-                    </div>
-                    <div className="flex justify-center mt-4">
-                      <button
-                        aria-label="Speak Reminder"
-                        className="px-4 py-2 rounded-lg bg-blue-600 text-white font-bold shadow hover:bg-blue-700 transition-all duration-300 ease-in-out flex items-center gap-2"
-                        onClick={() =>
-                          speakReminder(currentSlot || nextSlot, !!currentSlot)
-                        }
-                      >
-                        {isSpeaking ? "⏸️" : "▶️"}
-                        <span>Speak</span>
-                      </button>
-                    </div>
-                  </section>
-                ) : (
-                  <section className="rounded-2xl shadow-lg bg-orange-800 bg-opacity-50 p-10 mb-8 flex flex-col gap-6 items-center w-full max-w-3xl border border-orange-700">
-                    <div className="text-2xl font-bold text-white mb-2 text-center">
-                      No medicines at this time
-                    </div>
-                    {nextSlot && (
-                      <div className="flex flex-col items-center text-lg text-white">
-                        <span className="mb-1 bg-black px-2 py-1 rounded">
-                          Upcoming:
-                        </span>
-                        <span
-                          className="font-bold text-orange-400 text-xl"
-                          style={{ textShadow: "1px 1px 2px #000000" }}
-                        >
-                          {nextSlot.label}
-                        </span>
-                        <span className="text-base text-white">
-                          {nextSlot.timeRange}
-                        </span>
-                      </div>
-                    )}
-                    <div className="flex justify-center mt-4">
-                      <button
-                        aria-label="Speak Reminder"
-                        className="px-4 py-2 rounded-lg bg-blue-600 text-white font-bold shadow hover:bg-blue-700 transition-all duration-300 ease-in-out flex items-center gap-2"
-                        onClick={() => speakReminder(nextSlot, false)}
-                      >
-                        {isSpeaking ? "⏸️" : "▶️"}
-                        <span>Speak</span>
-                      </button>
-                    </div>
-                  </section>
-                )}
-                {/* Button to view all medicines */}
-                <div className="flex justify-center mb-4">
-                  <button
-                    className="px-6 py-3 rounded-xl bg-blue-600 text-white font-bold shadow hover:bg-blue-700 hover:blur-md transition-all duration-300 ease-in-out text-xl"
-                    onClick={toggleViewAll}
-                    aria-expanded={viewAll}
-                  >
-                    View All Medicines
-                  </button>
-                </div>
-              </>
-            )}
-          </div>
+            </section>
+          )}
+
+          <button
+            className="mt-10 px-8 py-4 rounded-xl bg-purple-700 text-white font-bold shadow-xl hover:shadow-purple-500/50 transition duration-300 text-2xl"
+            onClick={() => setViewAll(true)}
+          >
+            View All Medicines
+          </button>
         </div>
       ) : (
-        <div className="w-full h-full flex flex-col items-center justify-center bg-gradient-to-br from-white via-blue-50 to-white px-4 py-8">
+        <div className="w-full flex flex-col items-center justify-center bg-gradient-to-br from-purple-900 via-purple-800 to-indigo-900 px-6 py-10">
           <button
-            className="absolute top-4 left-4 px-4 py-2 rounded-lg bg-blue-600 text-white font-bold shadow hover:bg-blue-700 hover:blur-md transition-all duration-300 ease-in-out flex items-center gap-2"
-            onClick={toggleViewAll}
+            className="absolute top-5 left-5 px-5 py-2 rounded-lg bg-purple-800 text-white font-bold shadow hover:shadow-purple-500/50 transition duration-300"
+            onClick={() => setViewAll(false)}
           >
-            <span>←</span> Back
+            ← Back
           </button>
-          <h2 className="text-4xl font-bold mb-10 text-center text-gray-800">
+          <h2 className="text-4xl font-bold mb-10 text-center text-white drop-shadow-md">
             All Medicines
           </h2>
-          <div className="flex flex-col gap-8 w-full max-w-3xl">
-            {medicineSlots.map((slot) => (
+          <div className="flex flex-col gap-8 w-full max-w-4xl">
+            {medicineSlots.map((slot, i) => (
               <div
                 key={slot.label}
-                className="rounded-3xl bg-white bg-opacity-80 backdrop-blur-lg shadow-xl p-8 flex flex-col items-center border border-gray-200 mb-4 w-full animate-fade-in"
+                className="rounded-3xl bg-white/10 backdrop-blur-md shadow-xl p-8 flex flex-col items-center border border-purple-700 w-full animate-fade-in hover:scale-[1.02] transition duration-300"
               >
                 <div className="flex items-center justify-between w-full mb-4">
-                  <span className="text-2xl font-semibold text-gray-800">
+                  <span className="text-2xl font-bold text-purple-100">
                     {slot.label}
                   </span>
-                  <span className="text-sm px-4 py-1 rounded bg-blue-100 text-blue-700 font-medium shadow">
+                  <span className="text-sm px-4 py-1 rounded bg-purple-700 text-white font-medium shadow">
                     {slot.timeRange}
                   </span>
                 </div>
-                <div className="flex flex-wrap gap-4 justify-center">
+                <div className="flex flex-wrap gap-5 justify-center">
                   {slot.tablets.map((tab) => (
                     <div
                       key={tab.name}
-                      className="px-6 py-4 rounded-xl bg-gradient-to-br from-blue-100 to-white shadow-md text-base font-medium flex flex-col items-center min-w-[140px] border border-blue-200"
+                      className="px-6 py-4 rounded-xl bg-purple-500/30 text-white shadow-md flex flex-col items-center min-w-[140px] border border-purple-400 hover:shadow-lg transition"
                     >
-                      <span className="mb-1 text-center text-gray-900 font-semibold">
+                      <span className="mb-1 text-center font-semibold text-lg">
                         {tab.name}
                       </span>
-                      <span className="text-sm text-gray-600 text-center">
+                      <span className="text-sm text-purple-100 text-center">
                         {tab.desc}
                       </span>
                     </div>
@@ -351,38 +265,27 @@ export default function Home() {
                 </div>
                 <button
                   aria-label="Speak Reminder"
-                  className="mt-6 px-5 py-2 rounded-full bg-blue-600 text-white font-bold shadow hover:bg-blue-700 hover:scale-105 transition-transform duration-300 ease-in-out flex items-center gap-2"
-                  onClick={() => speakReminder(slot, false)}
+                  className={`mt-6 px-6 py-2 rounded-full font-bold shadow transition-all duration-300 flex items-center gap-2 ${
+                    speakingIndex === i
+                      ? "bg-red-600 hover:shadow-red-400/50"
+                      : "bg-purple-600 hover:shadow-purple-400/50"
+                  } text-white ${speakingIndex === i ? "animate-pulse" : ""}`}
+                  onClick={() => toggleSpeak(slot, i, false)}
                 >
-                  ▶️<span>Speak</span>
+                  {speakingIndex === i ? "⏸️" : "▶️"}{" "}
+                  <span>{speakingIndex === i ? "Pause" : "Speak"}</span>
                 </button>
               </div>
             ))}
           </div>
           <button
-            className="mt-6 px-6 py-3 rounded-xl bg-blue-600 text-white font-bold shadow hover:bg-blue-700 hover:blur-md transition-all duration-300 ease-in-out flex items-center gap-2"
-            onClick={toggleViewAll}
+            className="mt-12 px-8 py-4 rounded-xl bg-purple-800 text-white font-bold shadow hover:shadow-purple-500/50 transition duration-300 text-xl"
+            onClick={() => setViewAll(false)}
           >
-            <span>←</span> Back to Current
+            ← Back to Current
           </button>
         </div>
       )}
-      <style jsx global>{`
-        .animate-fade-in {
-          animation: fadeIn 0.5s;
-        }
-        @keyframes fadeIn {
-          from {
-            opacity: 0;
-            transform: translateY(10px);
-          }
-          to {
-            opacity: 1;
-            transform: none;
-          }
-        }
-        @import url("https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap");
-      `}</style>
     </main>
   );
 }
