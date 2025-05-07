@@ -2,19 +2,25 @@
 import React, { useEffect, useState } from "react";
 import medicineSlots from "../data/medicines";
 import { fetchIST } from "../utils/time";
+import { getTeluguText, speakTelugu } from "../utils/speech";
 
-// Ensure IST is used consistently throughout the code
-// Remove any local time usage and ensure all time calculations and displays are based on IST
-
-// Update the parseTimeRangeIST function to ensure IST is used
 function parseTimeRangeIST(range, istDate) {
   const [startStr, endStr] = range.split("–").map((s) => s.trim());
   const toISTDate = (t) => {
     const [time, meridian] = t.split(" ");
     let [h, m] = time.split(":").map(Number);
-    if (meridian.toUpperCase() === "PM" && h !== 12) h += 12;
-    if (meridian.toUpperCase() === "AM" && h === 12) h = 0;
-    // Always use IST date's year/month/day for slot times
+    if (
+      typeof meridian === "string" &&
+      meridian.toUpperCase() === "PM" &&
+      h !== 12
+    )
+      h += 12;
+    if (
+      typeof meridian === "string" &&
+      meridian.toUpperCase() === "AM" &&
+      h === 12
+    )
+      h = 0;
     return new Date(
       istDate.getFullYear(),
       istDate.getMonth(),
@@ -27,38 +33,28 @@ function parseTimeRangeIST(range, istDate) {
   return [toISTDate(startStr), toISTDate(endStr)];
 }
 
-// Fix the logic for determining the current and next slots based on IST
 const getCurrentAndNextSlotIST = (istDate, slots) => {
   let current = null;
   let next = null;
-
-  // First, check if current time falls within any slot's time range
   for (let i = 0; i < slots.length; i++) {
     const [start, end] = parseTimeRangeIST(slots[i].timeRange, istDate);
     if (istDate >= start && istDate <= end) {
       current = slots[i];
-      next = slots[(i + 1) % slots.length]; // Use modulo to wrap around to the first slot
+      next = slots[(i + 1) % slots.length];
       return { current, next };
     }
   }
-
-  // If no current slot is found, find the next upcoming slot
   let closestNextSlot = null;
   let minTimeDiff = Infinity;
-
   for (let i = 0; i < slots.length; i++) {
-    const [start, end] = parseTimeRangeIST(slots[i].timeRange, istDate);
-
+    const [start] = parseTimeRangeIST(slots[i].timeRange, istDate);
     if (istDate < start) {
-      // This slot is in the future today
       const timeDiff = start.getTime() - istDate.getTime();
       if (timeDiff < minTimeDiff) {
         minTimeDiff = timeDiff;
         closestNextSlot = slots[i];
       }
     } else {
-      // Check if this slot is the earliest slot for tomorrow
-      // Clone istDate and set to tomorrow with the same slot time
       const tomorrowDate = new Date(istDate);
       tomorrowDate.setDate(tomorrowDate.getDate() + 1);
       const tomorrowStart = new Date(
@@ -76,9 +72,7 @@ const getCurrentAndNextSlotIST = (istDate, slots) => {
       }
     }
   }
-
-  next = closestNextSlot || slots[0]; // Default to first slot if nothing else found
-
+  next = closestNextSlot || slots[0];
   return { current, next };
 };
 
@@ -86,38 +80,28 @@ export default function Home() {
   const [ist, setIst] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [showAll, setShowAll] = useState(false);
   const [viewAll, setViewAll] = useState(false);
   const [isSpeaking, setIsSpeaking] = useState(false);
+  const isSpeakingRef = React.useRef(false);
 
   const fetchTime = async () => {
     setLoading(true);
     setError(null);
     try {
-      // Use a direct method to get the current time in India
       const now = new Date();
       const utcNow = new Date(now.getTime() + now.getTimezoneOffset() * 60000);
-      const istOffset = 5.5 * 60 * 60 * 1000; // IST is UTC+5:30 (5.5 hours in milliseconds)
+      const istOffset = 5.5 * 60 * 60 * 1000;
       const istTime = new Date(utcNow.getTime() + istOffset);
-
-      setIst({
-        time: istTime,
-        rawUtc: utcNow.getTime(),
-        offset: istOffset,
-        display: istTime.toISOString(),
-      });
+      setIst({ time: istTime, rawUtc: utcNow.getTime(), offset: istOffset });
     } catch (e) {
       console.error("Error calculating IST:", e);
-      setError(
-        "Could not calculate IST. Please check your internet connection and try again."
-      );
+      setError("Could not calculate IST. Please check your internet.");
     }
     setLoading(false);
   };
 
   useEffect(() => {
     fetchTime();
-    // Update time every 30 seconds
     const timer = setInterval(fetchTime, 30000);
     return () => clearInterval(timer);
   }, []);
@@ -126,27 +110,23 @@ export default function Home() {
     ? getCurrentAndNextSlotIST(new Date(ist.rawUtc + ist.offset), medicineSlots)
     : { current: null, next: null };
 
-  // Ensure IST is displayed correctly in the UI
-  const formatIST = (date) =>
-    date?.toLocaleTimeString("en-IN", {
-      hour: "2-digit",
-      minute: "2-digit",
-      hour12: true,
-      timeZone: "Asia/Kolkata",
-    }) || "--:--";
+  const speakReminder = (slot, isCurrent) => {
+    if (!slot) return;
+    if (speechSynthesis.speaking) {
+      speechSynthesis.cancel();
+      setIsSpeaking(false);
+      return;
+    }
+    const label = isCurrent ? "ప్రస్తుతం" : "తర్వాతి";
+    const text = `${label} ${slot.timeRange}. ${getTeluguText(slot.tablets)}`;
+    speakTelugu(
+      text,
+      () => setIsSpeaking(true),
+      () => setIsSpeaking(false)
+    );
+  };
 
-  // Debug output to console
-  if (ist) {
-    console.log("IST from API:", ist.toString());
-    console.log("Current slot:", currentSlot ? currentSlot.label : null);
-    console.log("Next slot:", nextSlot ? nextSlot.label : null);
-  }
-
-  // Function to toggle screen view
   const toggleViewAll = () => setViewAll(!viewAll);
-
-  // Use a ref to manage speech synthesis state
-  const isSpeakingRef = React.useRef(false);
 
   return (
     <main className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-b from-gray-900 to-black text-white px-4 py-8 w-full">
@@ -273,7 +253,9 @@ export default function Home() {
                       <button
                         aria-label="Speak Reminder"
                         className="px-4 py-2 rounded-lg bg-blue-600 text-white font-bold shadow hover:bg-blue-700 transition-all duration-300 ease-in-out flex items-center gap-2"
-                        onClick={() => speakReminder(currentSlot, true)}
+                        onClick={() =>
+                          speakReminder(currentSlot || nextSlot, !!currentSlot)
+                        }
                       >
                         {isSpeaking ? "⏸️" : "▶️"}
                         <span>Speak</span>
@@ -305,7 +287,7 @@ export default function Home() {
                       <button
                         aria-label="Speak Reminder"
                         className="px-4 py-2 rounded-lg bg-blue-600 text-white font-bold shadow hover:bg-blue-700 transition-all duration-300 ease-in-out flex items-center gap-2"
-                        onClick={() => speakReminder(currentSlot, true)}
+                        onClick={() => speakReminder(nextSlot, false)}
                       >
                         {isSpeaking ? "⏸️" : "▶️"}
                         <span>Speak</span>
@@ -398,49 +380,3 @@ export default function Home() {
     </main>
   );
 }
-
-const speakReminder = (slot, isCurrent) => {
-  if (!slot) return;
-  if (speechSynthesis.speaking) {
-    speechSynthesis.cancel();
-    setIsSpeaking(false);
-    return;
-  }
-  const label = isCurrent ? "ప్రస్తుతం" : "తర్వాతి";
-  const teluguText = `${label} ${slot.timeRange}. ${getTeluguText(
-    slot.tablets
-  )}`;
-  const utterance = new SpeechSynthesisUtterance(teluguText);
-  utterance.lang = "te-IN";
-  utterance.rate = 0.85;
-  const voices = speechSynthesis.getVoices();
-  utterance.voice =
-    voices.find(
-      (v) => v.lang === "te-IN" && v.name.toLowerCase().includes("female")
-    ) ||
-    voices.find((v) => v.lang === "te-IN") ||
-    voices[0];
-  utterance.onend = () => setIsSpeaking(false);
-  speechSynthesis.speak(utterance);
-  setIsSpeaking(true);
-};
-
-// Update speakTelugu for slow, female Telugu accent
-const speakTelugu = (text) => {
-  const msg = new SpeechSynthesisUtterance(text);
-  msg.lang = "te-IN";
-  const voices = speechSynthesis.getVoices();
-  msg.voice =
-    voices.find(
-      (voice) =>
-        voice.lang === "te-IN" && voice.name.toLowerCase().includes("female")
-    ) ||
-    voices.find((voice) => voice.lang === "te-IN") ||
-    voices[0];
-  speechSynthesis.speak(msg);
-};
-
-// Define the getTeluguText function
-const getTeluguText = (tablets) => {
-  return tablets.map((tab) => `${tab.name} for ${tab.desc}`).join(", ");
-};
