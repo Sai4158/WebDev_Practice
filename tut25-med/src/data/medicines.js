@@ -2,7 +2,7 @@
 const medicineSlots = [
   {
     label: "Early Morning",
-    timeRange: "6:00 AM – 9:15 AM",
+    timeRange: "6:00 AM – 9:14 AM",
     tablets: [
       { name: "Thyronorm 75 mg", desc: "for thyroid" },
       { name: "Lasix 40 mg", desc: "removes extra fluid, lowers BP" },
@@ -10,7 +10,7 @@ const medicineSlots = [
   },
   {
     label: "Before Breakfast",
-    timeRange: "9:15 AM – 10:33 AM",
+    timeRange: "9:15 AM – 10:15 AM",
     tablets: [
       { name: "Gemer DS 4", desc: "controls blood sugar" },
       { name: "Xarelto 2.5 mg", desc: "prevents clots/strokes" },
@@ -23,7 +23,7 @@ const medicineSlots = [
   },
   {
     label: "After Breakfast",
-    timeRange: "10:15 AM – 12:00 PM",
+    timeRange: "10:16 AM – 12:00 PM",
     tablets: [{ name: "Cinod 20 mg", desc: "lowers BP, supports heart" }],
   },
   {
@@ -41,7 +41,7 @@ const medicineSlots = [
   },
   {
     label: "Before Dinner",
-    timeRange: "8:25 PM – 10:00 PM",
+    timeRange: "7:25 PM – 10:00 PM",
     tablets: [
       { name: "Gemer DA 3/4", desc: "controls blood sugar" },
       { name: "Xarelto 2.5 mg", desc: "prevents clots/strokes" },
@@ -49,7 +49,7 @@ const medicineSlots = [
   },
   {
     label: "After Dinner",
-    timeRange: "10:00 PM – 11:30 PM",
+    timeRange: "10:01 PM – 12:30 PM",
     tablets: [
       { name: "Sorbitrate 10 mg", desc: "improves blood flow" },
       { name: "Razowel F 20 mg", desc: "for gas/stomach acid" },

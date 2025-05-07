@@ -101,10 +101,10 @@ export default function Home() {
         return;
       }
 
-      const label = isCurrent ? "Currently" : "Upcoming";
-      const text = `${label} time: ${slot.timeRange}. Medicines: ${slot.tablets
+      const label = slot.label || (isCurrent ? "Now" : "Upcoming");
+      const text = `${label}, time: ${slot.timeRange}. Medicines: ${slot.tablets
         .map((t) => t.name)
-        .join(", ")}`;
+        .join(", ")}.`;
 
       const englishVoice =
         voices.find(
@@ -120,8 +120,8 @@ export default function Home() {
 
       const utter = new SpeechSynthesisUtterance(text);
       utter.lang = "en-IN";
-      utter.rate = 0.95;
-      utter.pitch = 1.0;
+      utter.rate = 0.86;
+      utter.pitch = 1.1;
       utter.voice = englishVoice;
 
       utter.onend = () => setSpeakingIndex(null);
@@ -139,17 +139,17 @@ export default function Home() {
       };
     }
   };
-
   return (
-    <main className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-purple-900 via-purple-700 to-indigo-900 text-white px-6 py-12 w-full text-lg">
+    <main className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-purple-900 via-purple-700 to-indigo-900 text-white px-4 sm:px-6 py-10 sm:py-12 w-full text-base sm:text-lg">
       {!viewAll ? (
-        <div className="w-full max-w-2xl mx-auto flex flex-col items-center justify-center scale-105">
+        <div className="w-full max-w-xl mx-auto flex flex-col items-center justify-center scale-100 sm:scale-105">
           <header className="flex flex-col items-center gap-4 mb-10 text-center">
-            <h1 className="text-5xl font-bold tracking-tight text-white drop-shadow-lg">
-              Sarada Devi's Tablet Reminder <span>⏰📅</span>
+            <h1 className="text-4xl sm:text-5xl font-bold tracking-tight text-white drop-shadow-lg">
+              Sarada Devi's <br />
+              Tablet Reminder <span>⏰📅</span>
             </h1>
             <div className="flex flex-col items-center mt-4">
-              <div className="flex items-center gap-2 bg-white/10 px-6 py-3 rounded-xl shadow-md text-2xl font-bold backdrop-blur-md text-purple-100">
+              <div className="flex items-center gap-2 bg-white/10 px-5 py-2 sm:px-6 sm:py-3 rounded-xl shadow-md text-xl sm:text-2xl font-bold backdrop-blur-md text-purple-100">
                 <span className="text-gray-300">Time</span>
                 <span className="text-purple-200">
                   {ist
@@ -164,7 +164,7 @@ export default function Home() {
                     : "--:--"}
                 </span>
               </div>
-              <span className="text-base text-gray-300 mt-2">
+              <span className="text-sm sm:text-base text-gray-300 mt-2">
                 Indian Standard Time
               </span>
             </div>
@@ -174,23 +174,21 @@ export default function Home() {
             <div className="animate-spin h-10 w-10 border-4 border-purple-400 border-t-transparent rounded-full"></div>
           ) : error ? (
             <div className="text-red-400 font-semibold">{error}</div>
-          ) : (
-            <section className="w-full max-w-3xl p-10 rounded-3xl shadow-2xl backdrop-blur-lg bg-white/10 animate-fade-in">
-              <div className="text-center mb-4 text-3xl font-semibold text-purple-100">
-                {currentSlot
-                  ? `Current: ${currentSlot.label}`
-                  : "No medicines right now"}
+          ) : currentSlot ? (
+            <section className="w-full max-w-3xl p-6 sm:p-10 rounded-3xl shadow-2xl backdrop-blur-lg bg-white/10 animate-fade-in">
+              <div className="text-center mb-4 text-2xl sm:text-3xl font-bold text-white">
+                Current: {currentSlot.label}
               </div>
-              <div className="text-center mb-4 text-xl text-purple-200 font-medium">
-                {(currentSlot || nextSlot)?.timeRange}
+              <div className="text-center mb-4 text-lg sm:text-xl font-semibold text-purple-200">
+                {currentSlot.timeRange}
               </div>
-              <div className="flex flex-wrap gap-5 justify-center mb-6">
-                {(currentSlot || nextSlot)?.tablets.map((tab) => (
+              <div className="flex flex-wrap gap-4 sm:gap-5 justify-center mb-6">
+                {currentSlot.tablets.map((tab) => (
                   <div
                     key={tab.name}
-                    className="bg-purple-500/30 text-white px-5 py-4 rounded-xl shadow-inner min-w-[140px] text-center hover:scale-105 transition duration-300 backdrop-blur-md"
+                    className="bg-purple-500/30 text-white px-4 py-3 sm:px-5 sm:py-4 rounded-xl shadow-inner min-w-[120px] sm:min-w-[140px] text-center hover:scale-[1.02] transition duration-300 backdrop-blur-md"
                   >
-                    <div className="font-semibold text-white text-lg">
+                    <div className="font-semibold text-white text-base sm:text-lg">
                       {tab.name}
                     </div>
                     <div className="text-sm text-purple-100 mt-1">
@@ -201,60 +199,75 @@ export default function Home() {
               </div>
               <div className="flex justify-center">
                 <button
-                  className={`px-7 py-3 rounded-full font-bold text-white shadow-xl flex items-center gap-2 transition-all duration-300 text-lg ${
+                  className={`px-5 py-2 sm:px-7 sm:py-3 rounded-full font-bold text-white shadow-xl flex items-center gap-2 transition-all duration-300 text-sm sm:text-lg ${
                     speakingIndex === -1
                       ? "bg-red-600 hover:shadow-red-400/50"
                       : "bg-purple-600 hover:shadow-purple-400/50"
                   }`}
-                  onClick={() =>
-                    toggleSpeak(currentSlot || nextSlot, -1, !!currentSlot)
-                  }
+                  onClick={() => toggleSpeak(currentSlot, -1, true)}
                 >
                   {speakingIndex === -1 ? "⏸️" : "▶️"} Speak
                 </button>
               </div>
             </section>
+          ) : (
+            <section className="w-full max-w-3xl  p-6 sm:p-10 rounded-3xl shadow-2xl backdrop-blur-lg bg-white/10 text-center text-white animate-fade-in">
+              <div className="text-2xl  mb-2">
+                All Medicines ✅ <br />
+                <a className=" text-gray-200">
+                  {" "}
+                  {nextSlot ? (
+                    <>
+                      Please check again at {nextSlot.label} <br /> (
+                      {nextSlot.timeRange}).
+                    </>
+                  ) : (
+                    "No more medicines for today. 🎉"
+                  )}
+                </a>
+              </div>
+            </section>
           )}
 
           <button
-            className="mt-10 px-8 py-4 rounded-xl bg-purple-700 text-white font-bold shadow-xl hover:shadow-purple-500/50 transition duration-300 text-2xl"
+            className="mt-10 px-6 py-3 sm:px-8 sm:py-4 rounded-xl bg-purple-700 text-white  shadow-xl hover:shadow-purple-500/50 transition duration-300 text-xl sm:text-2xl"
             onClick={() => setViewAll(true)}
           >
-            View All Medicines
+            See All Medicines
           </button>
         </div>
       ) : (
-        <div className="w-full flex flex-col items-center justify-center bg-gradient-to-br from-purple-900 via-purple-800 to-indigo-900 px-6 py-10">
+        <div className="w-full flex flex-col items-center justify-center bg-gradient-to-br from-purple-900 via-purple-800 to-indigo-900 px-4 sm:px-6 py-10">
           <button
-            className="absolute top-5 left-5 px-5 py-2 rounded-lg bg-purple-800 text-white font-bold shadow hover:shadow-purple-500/50 transition duration-300"
+            className="absolute top-12 left-6 px-5 py-2 rounded-lg bg-purple-800 text-white font-bold shadow hover:shadow-purple-500/50 transition duration-300"
             onClick={() => setViewAll(false)}
           >
             ← Back
           </button>
-          <h2 className="text-4xl font-bold mb-10 text-center text-white drop-shadow-md">
-            All Medicines
+          <h2 className="text-3xl sm:text-4xl font-bold mb-10 text-center text-white drop-shadow-md">
+            All Medicines💊
           </h2>
           <div className="flex flex-col gap-8 w-full max-w-4xl">
             {medicineSlots.map((slot, i) => (
               <div
                 key={slot.label}
-                className="rounded-3xl bg-white/10 backdrop-blur-md shadow-xl p-8 flex flex-col items-center border border-purple-700 w-full animate-fade-in hover:scale-[1.02] transition duration-300"
+                className="rounded-3xl bg-white/10 backdrop-blur-md shadow-xl p-6 sm:p-8 flex flex-col items-center border border-purple-700 w-full animate-fade-in hover:scale-[1.01] transition duration-300"
               >
                 <div className="flex items-center justify-between w-full mb-4">
-                  <span className="text-2xl font-bold text-purple-100">
+                  <span className="text-xl sm:text-2xl font-bold text-white">
                     {slot.label}
                   </span>
-                  <span className="text-sm px-4 py-1 rounded bg-purple-700 text-white font-medium shadow">
+                  <span className="text-sm sm:text-base px-4 py-1 rounded bg-purple-700 text-purple-100 font-semibold shadow">
                     {slot.timeRange}
                   </span>
                 </div>
-                <div className="flex flex-wrap gap-5 justify-center">
+                <div className="flex flex-wrap gap-4 sm:gap-5 justify-center">
                   {slot.tablets.map((tab) => (
                     <div
                       key={tab.name}
-                      className="px-6 py-4 rounded-xl bg-purple-500/30 text-white shadow-md flex flex-col items-center min-w-[140px] border border-purple-400 hover:shadow-lg transition"
+                      className="px-5 py-3 sm:px-6 sm:py-4 rounded-xl bg-purple-500/30 text-white shadow-md flex flex-col items-center min-w-[120px] sm:min-w-[140px] border border-purple-400 hover:shadow-lg transition"
                     >
-                      <span className="mb-1 text-center font-semibold text-lg">
+                      <span className="mb-1 text-center font-semibold text-base sm:text-lg">
                         {tab.name}
                       </span>
                       <span className="text-sm text-purple-100 text-center">
@@ -265,7 +278,7 @@ export default function Home() {
                 </div>
                 <button
                   aria-label="Speak Reminder"
-                  className={`mt-6 px-6 py-2 rounded-full font-bold shadow transition-all duration-300 flex items-center gap-2 ${
+                  className={`mt-6 px-5 py-2 sm:px-6 sm:py-2 rounded-full font-bold shadow transition-all duration-300 flex items-center gap-2 ${
                     speakingIndex === i
                       ? "bg-red-600 hover:shadow-red-400/50"
                       : "bg-purple-600 hover:shadow-purple-400/50"
@@ -279,10 +292,10 @@ export default function Home() {
             ))}
           </div>
           <button
-            className="mt-12 px-8 py-4 rounded-xl bg-purple-800 text-white font-bold shadow hover:shadow-purple-500/50 transition duration-300 text-xl"
+            className="mt-12 px-6 py-3 sm:px-8 sm:py-4 rounded-xl bg-purple-800 text-white font-bold shadow hover:shadow-purple-500/50 transition duration-300 text-lg sm:text-xl"
             onClick={() => setViewAll(false)}
           >
-            ← Back to Current
+            ← Back
           </button>
         </div>
       )}
