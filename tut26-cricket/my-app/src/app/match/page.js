@@ -184,127 +184,138 @@ export default function MatchPage() {
   };
 
   return (
-    <main className="min-h-screen bg-gradient-to-b from-white to-blue-100 p-6 text-center text-gray-900">
-      <h1 className="text-3xl font-bold mb-2">🏏 Live Match</h1>
-      <div className="text-xl font-semibold mb-4">Score: {score}</div>
+    <div>
+      <main className="min-h-screen bg-gradient-to-b from-white to-blue-100 p-6 text-center text-gray-900">
+        <h1 className="text-3xl font-bold mb-2">🏏 Live Match</h1>
+        <div className="text-xl font-semibold mb-4">Score: {score}</div>
 
-      {showNewOverBanner && (
-        <div className="mb-4 text-lg font-bold text-green-700 animate-bounce">
-          🔄 New Over Started!
-        </div>
-      )}
-
-      <div className="flex justify-center gap-2 mb-4 flex-wrap">
-        {Array.from({ length: 6 }).map((_, i) =>
-          currentBalls[i] ? (
-            renderBall(currentBalls[i], i)
-          ) : (
-            <div
-              key={i}
-              className="w-10 h-10 border-2 border-gray-400 rounded-full flex items-center justify-center text-sm text-gray-500"
-            >
-              {i + 1}
-            </div>
-          )
+        {showNewOverBanner && (
+          <div className="mb-4 text-lg font-bold text-green-700 animate-bounce">
+            🔄 New Over Started!
+          </div>
         )}
-      </div>
 
-      <div className="grid grid-cols-3 gap-4 max-w-sm mx-auto mb-6">
-        {[1, 2, 3, 4, 6].map((num) => (
-          <button
-            key={num}
-            onClick={() => addRun(num)}
-            className={`text-white font-semibold py-2 rounded-lg ${
-              num === 1
-                ? "bg-blue-600"
-                : num === 2
-                ? "bg-green-600"
-                : num === 3
-                ? "bg-purple-600"
-                : num === 4
-                ? "bg-orange-500"
-                : "bg-indigo-600"
-            }`}
-          >
-            {num} Run{num > 1 && "s"}
-          </button>
-        ))}
-        <button onClick={handleDot} className="btn-secondary">
-          Dot Ball
-        </button>
-        <button onClick={handleOut} className="btn-out">
-          OUT
-        </button>
-        <button onClick={handleWide} className="btn-wide">
-          WIDE
-        </button>
-      </div>
-
-      <div className="flex justify-center gap-4 mb-6">
-        <button onClick={undo} className="btn-ghost">
-          Undo
-        </button>
-        <button onClick={resetMatch} className="btn-dark">
-          Reset
-        </button>
-        <button
-          onClick={() => setShowHistory(!showHistory)}
-          className="btn-toggle"
-        >
-          {showHistory ? "Hide" : "Show"} History
-        </button>
-      </div>
-
-      {showHistory && (
-        <div className="mt-6 max-w-md mx-auto bg-white p-4 rounded-lg border border-gray-200 shadow">
-          <h2 className="text-xl font-bold mb-3 text-center">
-            📜 Over History
-          </h2>
-          {renderOvers()}
+        <div className="flex justify-center gap-2 mb-4 flex-wrap">
+          {Array.from({ length: 6 }).map((_, i) =>
+            currentBalls[i] ? (
+              renderBall(currentBalls[i], i)
+            ) : (
+              <div
+                key={i}
+                className="w-10 h-10 border-2 border-gray-400 rounded-full flex items-center justify-center text-sm text-gray-500"
+              >
+                {i + 1}
+              </div>
+            )
+          )}
         </div>
-      )}
 
-      <style jsx>{`
-        .btn-secondary {
-          background-color: #f3f4f6;
-          color: #111827;
-          padding: 12px;
-          border-radius: 12px;
-          font-weight: 500;
-        }
-        .btn-out {
-          background: linear-gradient(to right, #dc2626, #b91c1c);
-          color: white;
-          padding: 12px;
-          border-radius: 12px;
-          font-weight: 600;
-        }
-        .btn-wide {
-          background: linear-gradient(to right, #fde68a, #facc15);
-          color: black;
-          padding: 12px;
-          border-radius: 12px;
-          font-weight: 600;
-        }
-        .btn-ghost {
-          background-color: #e5e7eb;
-          color: #111827;
-          padding: 10px 20px;
-          border-radius: 10px;
-        }
-        .btn-dark {
-          background-color: #374151;
-          color: white;
-          padding: 10px 20px;
-          border-radius: 10px;
-        }
-        .btn-toggle {
-          background: linear-gradient(to right, #06b6d4, #0891b2);
-          color: white;
-          padding: 10px 20px;
-          border-radius: 10px;
-        }
-      `}</style>
-    </main>
+        <div className="grid grid-cols-3 gap-4 max-w-sm mx-auto mb-6">
+          {[1, 2, 3, 4, 6].map((num) => (
+            <button
+              key={num}
+              onClick={() => addRun(num)}
+              className={`text-white font-semibold py-2 rounded-lg ${
+                num === 1
+                  ? "bg-blue-600"
+                  : num === 2
+                  ? "bg-green-600"
+                  : num === 3
+                  ? "bg-purple-600"
+                  : num === 4
+                  ? "bg-orange-500"
+                  : "bg-indigo-600"
+              }`}
+            >
+              {num} Run{num > 1 && "s"}
+            </button>
+          ))}
+          <button onClick={handleDot} className="btn-secondary">
+            Dot Ball
+          </button>
+          <button onClick={handleOut} className="btn-out">
+            OUT
+          </button>
+          <button onClick={handleWide} className="btn-wide">
+            WIDE
+          </button>
+        </div>
+
+        <div className="flex justify-center gap-4 mb-6">
+          <button onClick={undo} className="btn-ghost">
+            Undo
+          </button>
+          <button onClick={resetMatch} className="btn-dark">
+            Reset
+          </button>
+          <button
+            onClick={() => setShowHistory(!showHistory)}
+            className="btn-toggle"
+          >
+            {showHistory ? "Hide" : "Show"} History
+          </button>
+        </div>
+
+        {showHistory && (
+          <div className="mt-6 max-w-md mx-auto bg-white p-4 rounded-lg border border-gray-200 shadow">
+            <h2 className="text-xl font-bold mb-3 text-center">
+              📜 Over History
+            </h2>
+            {renderOvers()}
+          </div>
+        )}
+
+        <style jsx>{`
+          .btn-secondary {
+            background-color: #f3f4f6;
+            color: #111827;
+            padding: 12px;
+            border-radius: 12px;
+            font-weight: 500;
+          }
+          .btn-out {
+            background: linear-gradient(to right, #dc2626, #b91c1c);
+            color: white;
+            padding: 12px;
+            border-radius: 12px;
+            font-weight: 600;
+          }
+          .btn-wide {
+            background: linear-gradient(to right, #fde68a, #facc15);
+            color: black;
+            padding: 12px;
+            border-radius: 12px;
+            font-weight: 600;
+          }
+          .btn-ghost {
+            background-color: #e5e7eb;
+            color: #111827;
+            padding: 10px 20px;
+            border-radius: 10px;
+          }
+          .btn-dark {
+            background-color: #374151;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 10px;
+          }
+          .btn-toggle {
+            background: linear-gradient(to right, #06b6d4, #0891b2);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 10px;
+          }
+        `}</style>
+
+        <div className=" mt-8">
+          <a
+            href="/"
+            className="inline-block bg-blue-600 text-white px-3 py-2 rounded-xl hover:bg-blue-700 transition"
+          >
+            Back to Home
+          </a>
+        </div>
+      </main>
+    </div>
   );
 }
