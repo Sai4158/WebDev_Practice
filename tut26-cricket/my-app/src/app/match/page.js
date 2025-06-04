@@ -18,7 +18,7 @@ export default function MatchPage() {
   useEffect(() => {
     if (balls.length > 0 && balls.length % 6 === 0) {
       setShowNewOverBanner(true);
-      const timer = setTimeout(() => setShowNewOverBanner(false), 1500);
+      const timer = setTimeout(() => setShowNewOverBanner(false), 7000);
       return () => clearTimeout(timer);
     }
   }, [balls]);
@@ -129,48 +129,58 @@ export default function MatchPage() {
   };
 
   const renderOvers = () => {
-    const overs = [];
     const grouped = {};
-
     history.forEach((item) => {
-      const label = `Over ${item.over + 1}`;
-      if (!grouped[label]) grouped[label] = [];
-      grouped[label].push(item);
+      const key = `Over ${item.over + 1}`;
+      if (!grouped[key]) grouped[key] = [];
+      grouped[key].push(item);
     });
 
-    for (const over in grouped) {
-      overs.push(
-        <div key={over} className="text-left mb-4">
-          <div className="font-bold mb-2">{over}</div>
+    return Object.entries(grouped)
+      .reverse()
+      .map(([over, items], idx) => (
+        <div key={idx} className="mb-3 text-left">
+          <div className="font-bold mb-1">{over}</div>
           <div className="flex gap-2 flex-wrap">
-            {grouped[over].map((item, i) => (
-              <div
-                key={i}
-                className={`px-3 py-1 rounded-lg text-sm font-medium ${
-                  item.type === "out"
-                    ? "bg-red-600 text-white"
-                    : item.type === "dot"
-                    ? "bg-gray-200 text-gray-800"
-                    : item.type === "wide"
-                    ? "bg-yellow-300 text-black"
-                    : "bg-blue-600 text-white"
-                }`}
-              >
-                {item.type === "out"
-                  ? "W"
-                  : item.type === "dot"
-                  ? "•"
+            {items.map((item, i) => {
+              const colorMap = {
+                1: "bg-blue-600",
+                2: "bg-green-600",
+                3: "bg-purple-600",
+                4: "bg-orange-500",
+                6: "bg-indigo-600",
+              };
+
+              const bg =
+                item.type === "dot"
+                  ? "bg-gray-500 text-white"
+                  : item.type === "out"
+                  ? "bg-red-600 text-white"
                   : item.type === "wide"
-                  ? `Wd+${item.value}`
-                  : item.value}
-              </div>
-            ))}
+                  ? "bg-yellow-400 text-black"
+                  : `${colorMap[item.value] || "bg-blue-600"} text-white`;
+
+              const label =
+                item.type === "dot"
+                  ? "•"
+                  : item.type === "out"
+                  ? "W"
+                  : item.type === "wide"
+                  ? `Wd${item.value > 0 ? "+" + item.value : ""}`
+                  : item.value;
+
+              return (
+                <div
+                  key={i}
+                  className={`px-3 py-1 rounded-lg text-sm font-medium ${bg}`}
+                >
+                  {label}
+                </div>
+              );
+            })}
           </div>
         </div>
-      );
-    }
-
-    return overs;
+      ));
   };
 
   return (
