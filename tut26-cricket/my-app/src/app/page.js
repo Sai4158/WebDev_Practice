@@ -74,8 +74,7 @@ export default function HomePage() {
               className="w-full h-auto aspect-video"
               controls
               preload="metadata"
-              poster={`/videos/${clip}.jpg`}
-              tumbnail={`/gvLogo.png`}
+              poster={`/Thumb${i + 1}.png`}
             >
               <source src={`/videos/${clip}.mp4`} type="video/mp4" />
               Sorry, your browser doesn’t support embedded videos.
