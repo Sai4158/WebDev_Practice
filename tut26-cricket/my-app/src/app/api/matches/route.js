@@ -5,14 +5,8 @@ export async function POST(req) {
   try {
     const data = await req.json();
     await connectDB();
-
-    const newMatch = new Match({
-      ...data,
-      isOngoing: true, // Ensure isOngoing is true at start
-    });
-
+    const newMatch = new Match({ ...data, isOngoing: true });
     await newMatch.save();
-
     return new Response(JSON.stringify(newMatch), {
       status: 201,
       headers: { "Content-Type": "application/json" },
@@ -55,13 +49,11 @@ export async function PATCH(req) {
   try {
     const data = await req.json();
     await connectDB();
-
     const updated = await Match.findOneAndUpdate(
       { isOngoing: true },
       { ...data },
       { new: true }
     );
-
     return new Response(JSON.stringify(updated), {
       status: 200,
       headers: { "Content-Type": "application/json" },

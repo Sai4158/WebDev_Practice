@@ -19,23 +19,26 @@ export default function MatchPage() {
   const maxOuts = 10;
 
   const fetchMatch = async () => {
-    const res = await fetch("/api/matches");
-    const matches = await res.json();
-    const live = matches.find((m) => m.isOngoing);
-    if (live) {
-      setScore(live.score || 0);
-      setBalls(live.balls || []);
-      setHistory(live.history || []);
-      setOuts(live.outs || 0);
-      setTeamAScore(live.teamAScore || 0);
-      setInnings(live.innings || "first");
-      setMaxOvers(live.overs || 6);
+    const matchId = localStorage.getItem("matchId");
+    if (!matchId) return;
+
+    const res = await fetch(`/api/matches/${matchId}`);
+    const match = await res.json();
+
+    if (match) {
+      setScore(match.score || 0);
+      setBalls(match.balls || []);
+      setHistory(match.history || []);
+      setOuts(match.outs || 0);
+      setTeamAScore(match.teamAScore || 0);
+      setInnings(match.innings || "first");
+      setMaxOvers(match.overs || 6);
     }
   };
 
   useEffect(() => {
     fetchMatch();
-    const interval = setInterval(fetchMatch, 4000);
+    const interval = setInterval(fetchMatch, 1000);
     return () => clearInterval(interval);
   }, []);
 
@@ -49,8 +52,34 @@ export default function MatchPage() {
 
   useEffect(() => {
     const isOver = balls.length === maxBalls || outs >= maxOuts;
+
+    const saveMatchUpdate = async (payload) => {
+      await fetch("/api/matches", {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+    };
+
     if (innings === "first" && isOver) {
-      setTeamAScore(score);
+      const teamAScoreFinal = score;
+
+      // Save first innings end state to DB
+      saveMatchUpdate({
+        score: 0,
+        balls: [],
+        history: [],
+        outs: 0,
+        innings: "second",
+        teamAScore: teamAScoreFinal,
+        overs: maxOvers,
+        isOngoing: true,
+        teamA: JSON.parse(localStorage.getItem("teamA")) || [],
+        teamB: JSON.parse(localStorage.getItem("teamB")) || [],
+        tossWinner: localStorage.getItem("tossWinner") || "",
+      });
+
+      setTeamAScore(teamAScoreFinal);
       setScore(0);
       setBalls([]);
       setHistory([]);
@@ -68,20 +97,16 @@ export default function MatchPage() {
           ? "Team A Wins!"
           : "Match Drawn!";
 
-      fetch("/api/matches", {
-        method: "PATCH",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          score,
-          balls,
-          history,
-          outs,
-          innings,
-          teamAScore,
-          overs: maxOvers,
-          result,
-          isOngoing: false,
-        }),
+      saveMatchUpdate({
+        score,
+        balls,
+        history,
+        outs,
+        innings,
+        teamAScore,
+        overs: maxOvers,
+        result,
+        isOngoing: false,
       });
 
       localStorage.setItem("result", JSON.stringify({ result }));
@@ -90,7 +115,10 @@ export default function MatchPage() {
   }, [balls, outs]);
 
   const saveMatch = async () => {
-    await fetch("/api/matches", {
+    const matchId = localStorage.getItem("matchId");
+    if (!matchId) return;
+
+    await fetch(`/api/matches/${matchId}`, {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -183,6 +211,9 @@ export default function MatchPage() {
     } else {
       alert("❌ Incorrect PIN");
     }
+    localStorage.removeItem("teamA");
+    localStorage.removeItem("teamB");
+    localStorage.removeItem("tossWinner");
   };
 
   const renderBall = (ball, i) => {
