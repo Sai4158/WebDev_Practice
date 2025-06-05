@@ -1,5 +1,6 @@
 // src/app/api/sessions/[id]/route.js
-import Session from "@/models/Session";
+
+import Session from "../../../../models/Session";
 import { connectDB } from "../../../lib/db";
 
 // ---------- GET  ----------  /api/sessions/:id

@@ -1,198 +1,192 @@
-/* ---------------------------------------------------------------
-   src/app/teams/[id]/page.jsx  – team selector (modern UI theme)
----------------------------------------------------------------- */
+/* ------------------------------------------------------------------
+   src/app/teams/[id]/page.jsx   – pick players & overs, then create match
+-------------------------------------------------------------------*/
 "use client";
 import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 
 export default function TeamSelection() {
-  /* ───────── state ───────── */
-  const [teamA, setTeamA] = useState([]);
-  const [teamB, setTeamB] = useState([]);
-  const [player, setPlayer] = useState("");
-  const [side, setSide] = useState("A");
-  const [overs, setOvers] = useState(6);
+  const { id: sessionId } = useParams(); // <- ✨ session _id in the URL
   const router = useRouter();
 
+  /* ───────── local UI state ───────── */
+  const [teamA, setTeamA] = useState([]);
+  const [teamB, setTeamB] = useState([]);
+  const [name, setName] = useState("");
+  const [side, setSide] = useState("A"); // A | B
+  const [overs, setOvers] = useState(6);
+  const [busy, setBusy] = useState(false);
+
   /* ───────── helpers ───────── */
-  const addPlayer = () => {
-    const n = player.trim();
+  const add = () => {
+    const n = name.trim();
     if (!n) return;
     (side === "A" ? setTeamA : setTeamB)((prev) => [...prev, n]);
-    setPlayer("");
+    setName("");
   };
   const remove = (idx, who) =>
-    (who === "A" ? setTeamA : setTeamB)((prev) =>
-      prev.filter((_, i) => i !== idx)
-    );
+    (who === "A" ? setTeamA : setTeamB)((p) => p.filter((_, i) => i !== idx));
 
-  const inc = () => overs < 20 && setOvers((o) => o + 1);
-  const dec = () => overs > 1 && setOvers((o) => o - 1);
-
-  /* ───────── start match ───────── */
+  /* ───────── create match + wire to session ───────── */
   const start = async () => {
-    if (!teamA.length || !teamB.length)
-      return alert("Add at least one player to both teams.");
-
+    if (!teamA.length || !teamB.length) {
+      alert("Add at least one player to *both* teams.");
+      return;
+    }
+    setBusy(true);
     try {
-      const res = await fetch("/api/matches", {
+      /* 1️⃣  create the match */
+      const mRes = await fetch("/api/matches", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ teamA, teamB, overs }),
+      });
+      if (!mRes.ok) throw new Error(await mRes.text());
+      const match = await mRes.json();
+
+      /* 2️⃣  patch the parent session with that match id & rosters */
+      await fetch(`/api/sessions/${sessionId}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
+          match: match._id,
           teamA,
           teamB,
           overs,
-          teamAScore: 0,
-          teamBScore: 0,
-          result: "",
-          history: [],
+          isLive: true,
         }),
       });
-      if (!res.ok) throw new Error(await res.text());
-      const m = await res.json();
-      router.push(`/toss/${m._id}`);
+
+      /* 3️⃣  go to the toss using the *session* id */
+      router.push(`/toss/${sessionId}`);
     } catch (e) {
-      alert("Failed to start match – " + e.message);
+      console.error(e);
+      alert("Failed: " + e.message);
+      setBusy(false);
     }
   };
 
-  /* ───────── ui ───────── */
+  /* ────────────  UI  ──────────── */
   return (
-    <main
-      className="min-h-screen flex flex-col items-center justify-center
-                 bg-gradient-to-b from-black via-zinc-900 to-zinc-950 px-6 py-10
-                 text-zinc-200"
-    >
-      <div
-        className="w-full max-w-md bg-zinc-900/60 backdrop-blur-md
-                      rounded-3xl ring-1 ring-red-800/60 shadow-[0_0_35px_-10px_rgba(255,0,0,0.65)]
-                      p-7 space-y-6"
+    <main className="min-h-screen flex flex-col items-center bg-black text-zinc-100 py-10 px-5">
+      <h1
+        className="text-3xl font-extrabold mb-6
+                     bg-gradient-to-r from-yellow-200 via-rose-100 to-orange-300
+                     bg-clip-text text-transparent"
       >
-        {/* header */}
-        <h1
-          className="text-3xl font-extrabold text-center
-                       bg-clip-text text-transparent
-                       bg-gradient-to-r from-yellow-200 via-rose-100 to-orange-300"
-        >
-          🏏 Team Selection
-        </h1>
+        🏏 Team Selection
+      </h1>
 
+      <section
+        className="w-full max-w-md bg-zinc-900/70 ring-1 ring-zinc-700
+                          rounded-3xl p-8 space-y-6 shadow-[0_0_30px_#ff1133dd]"
+      >
         {/* player input */}
-        <input
-          value={player}
-          onChange={(e) => setPlayer(e.target.value)}
-          placeholder="Type player name & hit ➕"
-          className="w-full p-3 rounded-xl bg-zinc-800 placeholder-zinc-500
-                     focus:outline-none focus:ring-2 focus:ring-rose-500"
-        />
+        <div className="flex gap-3">
+          <input
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            placeholder="Player name"
+            className="flex-1 px-4 py-2 rounded-xl bg-zinc-800
+                            focus:ring-2 focus:ring-rose-400 outline-none"
+          />
+          <button
+            onClick={add}
+            className="px-4 rounded-xl bg-green-600 font-bold"
+          >
+            ＋
+          </button>
+        </div>
 
-        {/* side toggle */}
+        {/* team toggle */}
         <div className="flex gap-4 justify-center">
           {["A", "B"].map((t) => (
             <button
               key={t}
               onClick={() => setSide(t)}
-              className={`px-5 py-2 rounded-xl font-semibold transition
-                          ${
-                            side === t
-                              ? t === "A"
-                                ? "bg-blue-600 shadow-[0_0_10px_2px_rgba(30,144,255,0.6)]"
-                                : "bg-rose-600 shadow-[0_0_10px_2px_rgba(255,82,82,0.6)]"
-                              : "bg-zinc-700"
-                          }`}
+              className={`px-5 py-2 rounded-xl font-semibold
+                      ${
+                        side === t
+                          ? (t === "A" ? "bg-blue-600" : "bg-red-600") +
+                            " text-white"
+                          : "bg-zinc-700"
+                      }`}
             >
               Team {t} ({t === "A" ? teamA.length : teamB.length})
             </button>
           ))}
         </div>
 
-        {/* add btn */}
-        <button
-          onClick={addPlayer}
-          className="w-full py-3 rounded-xl font-semibold
-                     bg-gradient-to-r from-yellow-300 via-rose-200 to-orange-300
-                     text-black hover:brightness-110 transition
-                     shadow-[0_4px_20px_rgba(255,100,100,0.55)]"
-        >
-          ➕ Add Player
-        </button>
-
         {/* rosters */}
         <Roster
           title="Team A"
-          colour="text-blue-400"
           list={teamA}
-          remove={(i) => remove(i, "A")}
+          colour="text-blue-400"
+          onRemove={(i) => remove(i, "A")}
         />
         <Roster
           title="Team B"
-          colour="text-rose-400"
           list={teamB}
-          remove={(i) => remove(i, "B")}
+          colour="text-red-400"
+          onRemove={(i) => remove(i, "B")}
         />
 
-        {/* overs selector */}
-        <div className="text-left space-y-2">
-          <label className="font-semibold">Overs</label>
-          <div className="flex items-center gap-6 justify-between">
-            <Step symbol="−" click={dec} />
-            <span className="text-lg font-bold">{overs}</span>
-            <Step symbol="+" click={inc} />
+        {/* overs picker */}
+        <div>
+          <label className="block mb-1 text-sm">Overs</label>
+          <div className="flex items-center justify-between gap-4">
+            <Step sym="−" onClick={() => overs > 1 && setOvers((o) => o - 1)} />
+            <span className="text-xl font-bold">{overs}</span>
+            <Step
+              sym="＋"
+              onClick={() => overs < 20 && setOvers((o) => o + 1)}
+            />
           </div>
         </div>
 
-        {/* start btn */}
         <button
           onClick={start}
-          className="w-full py-3 rounded-xl font-bold uppercase tracking-wide
-                     bg-gradient-to-r from-yellow-200 via-rose-100 to-orange-300
-                     text-black hover:brightness-110 transition
-                     shadow-[0_4px_20px_rgba(255,100,100,0.55)]"
+          disabled={busy}
+          className="w-full py-3 rounded-xl font-semibold
+                           bg-gradient-to-r from-yellow-200 via-rose-100 to-orange-300
+                           text-black shadow-lg shadow-rose-800/40
+                           disabled:opacity-60"
         >
-          Start Match
+          {busy ? "Saving…" : "Proceed → Toss"}
         </button>
 
-        <a href="/" className="block text-center text-yellow-300 underline">
-          ← Home
+        <a href="/" className="block mt-4 underline text-amber-300 text-sm">
+          ⬅ Back home
         </a>
-      </div>
+      </section>
     </main>
   );
 }
 
-/* ----- tiny helpers ----- */
-function Step({ symbol, click }) {
+/* ---------- tiny bits ---------- */
+function Step({ sym, onClick }) {
   return (
     <button
-      onClick={click}
-      className="w-10 h-10 rounded-full bg-zinc-700 hover:bg-zinc-600
-                 text-xl font-extrabold"
+      onClick={onClick}
+      className="w-10 h-10 rounded-full bg-zinc-800 font-bold text-xl"
     >
-      {symbol}
+      {sym}
     </button>
   );
 }
 
-function Roster({ title, colour, list, remove }) {
+function Roster({ title, colour, list, onRemove }) {
   return (
-    <div className="space-y-1">
-      <h2 className={`font-semibold ${colour}`}>
-        {title} ({list.length})
-      </h2>
+    <div>
+      <h2 className={`font-bold mb-1 ${colour}`}>{title}</h2>
       <ul className="space-y-1 text-sm">
         {list.map((p, i) => (
-          <li key={i} className="flex justify-between items-center">
+          <li key={i} className="flex justify-between">
             <span>
               {i + 1}. {p}
             </span>
-            <button
-              onClick={() => remove(i)}
-              className="w-6 h-6 rounded-full bg-rose-600 text-xs
-                         flex items-center justify-center hover:bg-rose-500
-                         shadow-[0_0_6px_rgba(255,60,60,0.8)]"
-              title="remove"
-            >
-              ✕
+            <button onClick={() => onRemove(i)} className="hover:text-red-400">
+              🗑️
             </button>
           </li>
         ))}

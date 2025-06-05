@@ -2,19 +2,22 @@ import mongoose from "mongoose";
 
 const SessionSchema = new mongoose.Schema(
   {
-    // human-readable label on the home screen (optional in the UI for now)
-    name: { type: String, default: "Untitled session" },
+    /* basic meta */
+    name: { type: String, required: true, trim: true },
+    overs: { type: Number, default: null }, // ✅ not required
+    isLive: { type: Boolean, default: false },
 
-    /* teams & match setup */
-    teamA: { type: [String], required: true },
-    teamB: { type: [String], required: true },
-    overs: { type: Number, required: true },
+    /* links & results */
+    match: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Match",
+      default: null,
+    },
+    tossWinner: { type: String, enum: ["Team A", "Team B", ""], default: "" },
 
-    /* live-match linkage (filled after /teams page) */
-    match: { type: mongoose.Schema.Types.ObjectId, ref: "Match" },
-
-    /* housekeeping */
-    isLive: { type: Boolean, default: true },
+    /* rosters */
+    teamA: { type: [String], default: [] },
+    teamB: { type: [String], default: [] },
   },
   { timestamps: true }
 );

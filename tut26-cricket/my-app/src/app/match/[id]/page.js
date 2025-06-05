@@ -31,7 +31,14 @@ export default function MatchPage() {
     if (!id) return;
     const res = await fetch(`/api/matches/${id}`);
     if (!res.ok) return;
+
     const m = await res.json();
+    if (!m) {
+      alert("Match not found");
+      router.push("/session");
+      return;
+    }
+
     setScore(m.score ?? 0);
     setBalls(m.balls ?? []);
     setHistory(m.history ?? []);

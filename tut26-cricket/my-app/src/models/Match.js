@@ -21,4 +21,4 @@ const MatchSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-export default mongoose.models.Match ?? mongoose.model("Match", MatchSchema);
+export default mongoose.models.Match || mongoose.model("Match", MatchSchema);
