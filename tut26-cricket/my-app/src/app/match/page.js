@@ -169,6 +169,7 @@ export default function MatchPage() {
     const pin = prompt("Enter PIN to reset:");
     if (pin === "0000") {
       await fetch("/api/matches", { method: "DELETE" });
+
       setScore(0);
       setWidesInRow(0);
       setBalls([]);
@@ -177,6 +178,8 @@ export default function MatchPage() {
       setOuts(0);
       setInnings("first");
       setTeamAScore(0);
+
+      router.push("/"); // go to home only if pin is correct
     } else {
       alert("❌ Incorrect PIN");
     }
@@ -308,8 +311,9 @@ export default function MatchPage() {
           Undo
         </button>
         <button onClick={resetMatch} className="btn-dark">
-          <a href="/">Reset</a>
+          Reset
         </button>
+
         <button
           onClick={() => setShowHistory(!showHistory)}
           className="btn-toggle"
