@@ -15,32 +15,41 @@ export default function MatchPage() {
   const [outs, setOuts] = useState(0);
   const [maxOvers, setMaxOvers] = useState(6);
 
-  useEffect(() => {
-    const storedOvers = parseInt(localStorage.getItem("overs"));
-    if (!isNaN(storedOvers)) setMaxOvers(storedOvers);
-  }, []);
-
   const maxBalls = maxOvers * 6;
   const maxOuts = 10;
 
-  const oversArray = [];
-  for (let i = 0; i < Math.ceil(balls.length / 6); i++) {
-    oversArray.push(balls.slice(i * 6, i * 6 + 6));
-  }
-  const currentBalls = oversArray[oversArray.length - 1] || [];
+  const fetchMatch = async () => {
+    const res = await fetch("/api/matches");
+    const matches = await res.json();
+    const live = matches.find((m) => m.isOngoing);
+    if (live) {
+      setScore(live.score || 0);
+      setBalls(live.balls || []);
+      setHistory(live.history || []);
+      setOuts(live.outs || 0);
+      setTeamAScore(live.teamAScore || 0);
+      setInnings(live.innings || "first");
+      setMaxOvers(live.overs || 6);
+    }
+  };
+
+  useEffect(() => {
+    fetchMatch();
+    const interval = setInterval(fetchMatch, 4000);
+    return () => clearInterval(interval);
+  }, []);
 
   useEffect(() => {
     if (balls.length > 0 && balls.length % 6 === 0) {
       setShowNewOverBanner(true);
-      const timer = setTimeout(() => setShowNewOverBanner(false), 3000);
+      const timer = setTimeout(() => setShowNewOverBanner(false), 7000);
       return () => clearTimeout(timer);
     }
   }, [balls]);
 
   useEffect(() => {
-    const isInningsOver = balls.length === maxBalls || outs >= maxOuts;
-
-    if (innings === "first" && isInningsOver) {
+    const isOver = balls.length === maxBalls || outs >= maxOuts;
+    if (innings === "first" && isOver) {
       setTeamAScore(score);
       setScore(0);
       setBalls([]);
@@ -51,7 +60,7 @@ export default function MatchPage() {
       alert("End of First Innings! Team B to bat now.");
     }
 
-    if (innings === "second" && (isInningsOver || score > teamAScore)) {
+    if (innings === "second" && (isOver || score > teamAScore)) {
       const result =
         score > teamAScore
           ? "Team B Wins!"
@@ -59,34 +68,55 @@ export default function MatchPage() {
           ? "Team A Wins!"
           : "Match Drawn!";
 
-      const payload = {
-        teamAScore,
-        teamBScore: score,
-        winner: result,
-        overs: maxOvers,
-        history,
-        date: new Date().toISOString(),
-      };
-
       fetch("/api/matches", {
-        method: "POST",
+        method: "PATCH",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
+        body: JSON.stringify({
+          score,
+          balls,
+          history,
+          outs,
+          innings,
+          teamAScore,
+          overs: maxOvers,
+          result,
+          isOngoing: false,
+        }),
       });
 
-      localStorage.setItem("result", JSON.stringify(payload));
+      localStorage.setItem("result", JSON.stringify({ result }));
       router.push("/result");
     }
   }, [balls, outs]);
 
+  const saveMatch = async () => {
+    await fetch("/api/matches", {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        score,
+        balls,
+        history,
+        outs,
+        innings,
+        teamAScore,
+        overs: maxOvers,
+        isOngoing: true,
+        teamA: JSON.parse(localStorage.getItem("teamA")) || [],
+        teamB: JSON.parse(localStorage.getItem("teamB")) || [],
+        tossWinner: localStorage.getItem("tossWinner") || "",
+      }),
+    });
+  };
+
   const updateScore = (runs) => setScore((prev) => prev + runs);
 
-  const addBall = (type, value = 0, countedInOver = true) => {
+  const addBall = async (type, value = 0, countedInOver = true) => {
     const newBalls = countedInOver ? [...balls, { type, value }] : [...balls];
-    setBalls(newBalls);
     const overIndex = Math.floor(
       (newBalls.length - (countedInOver ? 1 : 0)) / 6
     );
+    setBalls(newBalls);
     setHistory((prev) => [
       ...prev,
       {
@@ -96,34 +126,35 @@ export default function MatchPage() {
         ball: countedInOver ? ((newBalls.length - 1) % 6) + 1 : "-",
       },
     ]);
+    await saveMatch();
   };
 
-  const addRun = (runs) => {
+  const addRun = async (runs) => {
     updateScore(runs);
-    addBall("run", runs);
+    await addBall("run", runs);
     setWidesInRow(0);
   };
 
-  const handleDot = () => {
-    addBall("dot");
+  const handleDot = async () => {
+    await addBall("dot");
     setWidesInRow(0);
   };
 
-  const handleOut = () => {
-    addBall("out");
+  const handleOut = async () => {
+    await addBall("out");
     setOuts((prev) => prev + 1);
     setWidesInRow(0);
   };
 
-  const handleWide = () => {
-    const nextWides = widesInRow + 1;
-    const bonus = nextWides > 1 ? 1 : 0;
+  const handleWide = async () => {
+    const next = widesInRow + 1;
+    const bonus = next > 1 ? 1 : 0;
     if (bonus > 0) updateScore(bonus);
-    addBall("wide", bonus, false);
-    setWidesInRow(nextWides);
+    await addBall("wide", bonus, false);
+    setWidesInRow(next);
   };
 
-  const undo = () => {
+  const undo = async () => {
     if (history.length === 0) return;
     const last = history[history.length - 1];
     setHistory(history.slice(0, -1));
@@ -131,13 +162,13 @@ export default function MatchPage() {
     if (["run", "dot", "out"].includes(last.type)) setBalls(balls.slice(0, -1));
     if (last.type === "wide") setWidesInRow((prev) => Math.max(prev - 1, 0));
     if (last.type === "out") setOuts((prev) => Math.max(prev - 1, 0));
+    await saveMatch();
   };
 
   const resetMatch = async () => {
     const pin = prompt("Enter PIN to reset:");
     if (pin === "0000") {
       await fetch("/api/matches", { method: "DELETE" });
-
       setScore(0);
       setWidesInRow(0);
       setBalls([]);
@@ -152,21 +183,19 @@ export default function MatchPage() {
   };
 
   const renderBall = (ball, i) => {
-    const colorMap = {
+    const colors = {
       1: "bg-blue-600",
       2: "bg-green-600",
       3: "bg-purple-600",
       4: "bg-orange-500",
       6: "bg-indigo-600",
     };
-
-    const classMap = {
-      run: `${colorMap[ball.value] || "bg-blue-600"} text-white`,
+    const style = {
+      run: `${colors[ball.value] || "bg-blue-600"} text-white`,
       dot: "bg-gray-500 text-white",
       out: "bg-red-600 text-white",
       wide: "bg-yellow-400 text-black",
     };
-
     const label =
       ball.type === "dot"
         ? "•"
@@ -180,28 +209,12 @@ export default function MatchPage() {
       <div
         key={i}
         className={`w-10 h-10 rounded-full flex items-center justify-center font-bold ${
-          classMap[ball.type]
+          style[ball.type]
         }`}
       >
         {label}
       </div>
     );
-  };
-  const saveMatchProgress = async () => {
-    await fetch("/api/matches", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        teamA: JSON.parse(localStorage.getItem("teamA")) || [],
-        teamB: JSON.parse(localStorage.getItem("teamB")) || [],
-        tossWinner: localStorage.getItem("tossWinner"),
-        overs: maxOvers,
-        teamAScore: innings === "first" ? score : teamAScore,
-        teamBScore: innings === "second" ? score : 0,
-        result: "",
-        history,
-      }),
-    });
   };
 
   const renderOvers = () => {
@@ -218,44 +231,17 @@ export default function MatchPage() {
         <div key={idx} className="mb-3 text-left">
           <div className="font-bold mb-1">{over}</div>
           <div className="flex gap-2 flex-wrap">
-            {items.map((item, i) => {
-              const colorMap = {
-                1: "bg-blue-600",
-                2: "bg-green-600",
-                3: "bg-purple-600",
-                4: "bg-orange-500",
-                6: "bg-indigo-600",
-              };
-              const bg =
-                item.type === "dot"
-                  ? "bg-gray-500 text-white"
-                  : item.type === "out"
-                  ? "bg-red-600 text-white"
-                  : item.type === "wide"
-                  ? "bg-yellow-400 text-black"
-                  : `${colorMap[item.value] || "bg-blue-600"} text-white`;
-              const label =
-                item.type === "dot"
-                  ? "•"
-                  : item.type === "out"
-                  ? "W"
-                  : item.type === "wide"
-                  ? `Wd${item.value > 0 ? "+" + item.value : ""}`
-                  : item.value;
-
-              return (
-                <div
-                  key={i}
-                  className={`px-3 py-1 rounded-lg text-sm font-medium ${bg}`}
-                >
-                  {label}
-                </div>
-              );
-            })}
+            {items.map((item, i) => renderBall(item, i))}
           </div>
         </div>
       ));
   };
+
+  const oversArray = [];
+  for (let i = 0; i < Math.ceil(balls.length / 6); i++) {
+    oversArray.push(balls.slice(i * 6, i * 6 + 6));
+  }
+  const currentBalls = oversArray[oversArray.length - 1] || [];
 
   return (
     <main className="min-h-screen bg-gradient-to-b from-white to-blue-100 p-6 text-center text-gray-900">
@@ -322,7 +308,7 @@ export default function MatchPage() {
           Undo
         </button>
         <button onClick={resetMatch} className="btn-dark">
-          Reset
+          <a href="/">Reset</a>
         </button>
         <button
           onClick={() => setShowHistory(!showHistory)}
