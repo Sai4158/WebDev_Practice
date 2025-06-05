@@ -33,7 +33,7 @@ export default function HomePage() {
       {/* -------------------- CTA Buttons -------------------- */}
       <section className="w-full max-w-lg flex flex-col sm:flex-row gap-6">
         <a
-          href="/teams"
+          href="/session/new"
           className="flex-1 text-center py-3 rounded-2xl
            bg-gradient-to-r from-yellow-200 via-rose-100 to-orange-300 text-black
             font-semibold shadow-lg shadow-rose-800/40 transition"
