@@ -1,4 +1,3 @@
-// File: app/match/page.tsx
 "use client";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
@@ -14,16 +13,11 @@ export default function MatchPage() {
   const [innings, setInnings] = useState("first");
   const [teamAScore, setTeamAScore] = useState(0);
   const [outs, setOuts] = useState(0);
-
-  const [maxOvers, setMaxOvers] = useState(6); // default 6
+  const [maxOvers, setMaxOvers] = useState(6);
 
   useEffect(() => {
-    if (typeof window !== "undefined") {
-      const storedOvers = parseInt(localStorage.getItem("overs"));
-      if (!isNaN(storedOvers)) {
-        setMaxOvers(storedOvers);
-      }
-    }
+    const storedOvers = parseInt(localStorage.getItem("overs"));
+    if (!isNaN(storedOvers)) setMaxOvers(storedOvers);
   }, []);
 
   const maxBalls = maxOvers * 6;
@@ -45,6 +39,7 @@ export default function MatchPage() {
 
   useEffect(() => {
     const isInningsOver = balls.length === maxBalls || outs >= maxOuts;
+
     if (innings === "first" && isInningsOver) {
       setTeamAScore(score);
       setScore(0);
@@ -63,14 +58,23 @@ export default function MatchPage() {
           : score < teamAScore
           ? "Team A Wins!"
           : "Match Drawn!";
-      localStorage.setItem(
-        "result",
-        JSON.stringify({
-          teamAScore,
-          teamBScore: score,
-          winner: result,
-        })
-      );
+
+      const payload = {
+        teamAScore,
+        teamBScore: score,
+        winner: result,
+        overs: maxOvers,
+        history,
+        date: new Date().toISOString(),
+      };
+
+      fetch("/api/matches", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+
+      localStorage.setItem("result", JSON.stringify(payload));
       router.push("/result");
     }
   }, [balls, outs]);
@@ -204,7 +208,6 @@ export default function MatchPage() {
                 4: "bg-orange-500",
                 6: "bg-indigo-600",
               };
-
               const bg =
                 item.type === "dot"
                   ? "bg-gray-500 text-white"
@@ -213,7 +216,6 @@ export default function MatchPage() {
                   : item.type === "wide"
                   ? "bg-yellow-400 text-black"
                   : `${colorMap[item.value] || "bg-blue-600"} text-white`;
-
               const label =
                 item.type === "dot"
                   ? "•"
@@ -320,6 +322,48 @@ export default function MatchPage() {
           {renderOvers()}
         </div>
       )}
+
+      <style jsx>{`
+        .btn-secondary {
+          background-color: #f3f4f6;
+          color: #111827;
+          padding: 12px;
+          border-radius: 12px;
+          font-weight: 500;
+        }
+        .btn-out {
+          background: linear-gradient(to right, #dc2626, #b91c1c);
+          color: white;
+          padding: 12px;
+          border-radius: 12px;
+          font-weight: 600;
+        }
+        .btn-wide {
+          background: linear-gradient(to right, #fde68a, #facc15);
+          color: black;
+          padding: 12px;
+          border-radius: 12px;
+          font-weight: 600;
+        }
+        .btn-ghost {
+          background-color: #e5e7eb;
+          color: #111827;
+          padding: 10px 20px;
+          border-radius: 10px;
+        }
+        .btn-dark {
+          background-color: #374151;
+          color: white;
+          padding: 10px 20px;
+          border-radius: 10px;
+        }
+        .btn-toggle {
+          background: linear-gradient(to right, #06b6d4, #0891b2);
+          color: white;
+          padding: 10px 20px;
+          border-radius: 10px;
+        }
+      `}</style>
     </main>
   );
 }

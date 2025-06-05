@@ -18,11 +18,8 @@ export default function TeamSelection() {
   };
 
   const removePlayer = (index, team) => {
-    if (team === "A") {
-      setTeamA(teamA.filter((_, i) => i !== index));
-    } else {
-      setTeamB(teamB.filter((_, i) => i !== index));
-    }
+    if (team === "A") setTeamA(teamA.filter((_, i) => i !== index));
+    else setTeamB(teamB.filter((_, i) => i !== index));
   };
 
   const incrementOvers = () => {
@@ -33,11 +30,22 @@ export default function TeamSelection() {
     if (overs > 1) setOvers(overs - 1);
   };
 
-  const startMatch = () => {
-    localStorage.setItem("teamA", JSON.stringify(teamA));
-    localStorage.setItem("teamB", JSON.stringify(teamB));
-    localStorage.setItem("overs", overs.toString());
-    router.push("/toss");
+  const startMatch = async () => {
+    try {
+      await fetch("/api/teams", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ teamA, teamB, overs }),
+      });
+
+      localStorage.setItem("teamA", JSON.stringify(teamA));
+      localStorage.setItem("teamB", JSON.stringify(teamB));
+      localStorage.setItem("overs", overs.toString());
+      router.push("/toss");
+    } catch (err) {
+      alert("Failed to save teams.");
+      console.error(err);
+    }
   };
 
   return (
