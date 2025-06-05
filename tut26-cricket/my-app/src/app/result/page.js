@@ -15,33 +15,56 @@ export default function ResultPage() {
   }, []);
 
   return (
-    <main className="min-h-screen p-6 bg-gray-100 text-center">
-      <h1 className="text-3xl font-bold mb-6">🏁 Match Summary</h1>
+    <main className="min-h-screen bg-gradient-to-b from-blue-50 to-white p-8 text-gray-900">
+      <h1 className="text-4xl font-extrabold text-center mb-8 text-blue-700">
+        🏁 Match Summary
+      </h1>
 
-      <div className="mb-4">
-        <div className="text-lg font-semibold">Toss Winner: {tossWinner}</div>
-        <div className="text-xl mt-2">
-          Final Score: <span className="font-bold">{score}</span>
+      <div className="bg-white max-w-xl mx-auto rounded-xl shadow-lg p-6 space-y-6">
+        <div className="text-center">
+          <div className="text-lg text-gray-600 font-medium">Toss Winner:</div>
+          <div className="text-2xl font-bold text-indigo-600">
+            {tossWinner || "N/A"}
+          </div>
+        </div>
+
+        <div className="text-center">
+          <div className="text-lg text-gray-600 font-medium">Final Score:</div>
+          <div className="text-3xl font-extrabold text-green-700">{score}</div>
+        </div>
+
+        <div className="flex justify-around flex-wrap gap-6 text-left">
+          <div className="w-full md:w-1/2">
+            <h2 className="text-blue-700 font-bold mb-2">
+              Team A ({teamA.length} players)
+            </h2>
+            <ul className="list-disc list-inside text-gray-800">
+              {teamA.map((p, i) => (
+                <li key={i}>{p}</li>
+              ))}
+            </ul>
+          </div>
+
+          <div className="w-full md:w-1/2">
+            <h2 className="text-red-700 font-bold mb-2">
+              Team B ({teamB.length} players)
+            </h2>
+            <ul className="list-disc list-inside text-gray-800">
+              {teamB.map((p, i) => (
+                <li key={i}>{p}</li>
+              ))}
+            </ul>
+          </div>
         </div>
       </div>
 
-      <div className="flex justify-center gap-8 mt-6 text-left">
-        <div>
-          <h2 className="font-bold text-lg mb-2">Team A</h2>
-          <ul className="list-disc list-inside">
-            {teamA.map((p, i) => (
-              <li key={i}>{p}</li>
-            ))}
-          </ul>
-        </div>
-        <div>
-          <h2 className="font-bold text-lg mb-2">Team B</h2>
-          <ul className="list-disc list-inside">
-            {teamB.map((p, i) => (
-              <li key={i}>{p}</li>
-            ))}
-          </ul>
-        </div>
+      <div className="text-center mt-10">
+        <a
+          href="/"
+          className="inline-block bg-blue-600 text-white px-6 py-3 rounded-xl shadow-md hover:bg-blue-700 transition"
+        >
+          🔙 Back to Home
+        </a>
       </div>
     </main>
   );
