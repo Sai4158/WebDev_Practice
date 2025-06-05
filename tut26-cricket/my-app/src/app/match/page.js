@@ -133,9 +133,11 @@ export default function MatchPage() {
     if (last.type === "out") setOuts((prev) => Math.max(prev - 1, 0));
   };
 
-  const resetMatch = () => {
+  const resetMatch = async () => {
     const pin = prompt("Enter PIN to reset:");
     if (pin === "0000") {
+      await fetch("/api/matches", { method: "DELETE" });
+
       setScore(0);
       setWidesInRow(0);
       setBalls([]);
@@ -184,6 +186,22 @@ export default function MatchPage() {
         {label}
       </div>
     );
+  };
+  const saveMatchProgress = async () => {
+    await fetch("/api/matches", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        teamA: JSON.parse(localStorage.getItem("teamA")) || [],
+        teamB: JSON.parse(localStorage.getItem("teamB")) || [],
+        tossWinner: localStorage.getItem("tossWinner"),
+        overs: maxOvers,
+        teamAScore: innings === "first" ? score : teamAScore,
+        teamBScore: innings === "second" ? score : 0,
+        result: "",
+        history,
+      }),
+    });
   };
 
   const renderOvers = () => {

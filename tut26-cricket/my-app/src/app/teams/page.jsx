@@ -32,10 +32,18 @@ export default function TeamSelection() {
 
   const startMatch = async () => {
     try {
-      await fetch("/api/teams", {
+      await fetch("/api/matches", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ teamA, teamB, overs }),
+        body: JSON.stringify({
+          teamA,
+          teamB,
+          overs,
+          teamAScore: 0,
+          teamBScore: 0,
+          result: "",
+          history: [],
+        }),
       });
 
       localStorage.setItem("teamA", JSON.stringify(teamA));
