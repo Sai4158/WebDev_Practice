@@ -11,9 +11,10 @@ export default function TeamSelection() {
   const router = useRouter();
 
   const addPlayer = () => {
-    if (!playerName.trim()) return;
-    if (selectedTeam === "A") setTeamA([...teamA, playerName.trim()]);
-    else setTeamB([...teamB, playerName.trim()]);
+    const name = playerName.trim();
+    if (!name) return;
+    if (selectedTeam === "A") setTeamA([...teamA, name]);
+    else setTeamB([...teamB, name]);
     setPlayerName("");
   };
 
@@ -22,17 +23,16 @@ export default function TeamSelection() {
     else setTeamB(teamB.filter((_, i) => i !== index));
   };
 
-  const incrementOvers = () => {
-    if (overs < 20) setOvers(overs + 1);
-  };
-
-  const decrementOvers = () => {
-    if (overs > 1) setOvers(overs - 1);
-  };
+  const incrementOvers = () => overs < 20 && setOvers(overs + 1);
+  const decrementOvers = () => overs > 1 && setOvers(overs - 1);
 
   const startMatch = async () => {
+    if (!teamA.length || !teamB.length) {
+      alert("Add at least one player to both teams.");
+      return;
+    }
     try {
-      await fetch("/api/matches", {
+      const res = await fetch("/api/matches", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -45,14 +45,12 @@ export default function TeamSelection() {
           history: [],
         }),
       });
-
-      localStorage.setItem("teamA", JSON.stringify(teamA));
-      localStorage.setItem("teamB", JSON.stringify(teamB));
-      localStorage.setItem("overs", overs.toString());
-      router.push("/toss");
+      if (!res.ok) throw new Error(await res.text());
+      const match = await res.json();
+      router.push(`/toss/${match._id}`); // pass id forward, no localStorage needed
     } catch (err) {
-      alert("Failed to save teams.");
       console.error(err);
+      alert("Failed to start match: " + err.message);
     }
   };
 

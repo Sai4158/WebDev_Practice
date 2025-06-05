@@ -1,23 +1,30 @@
 import { connectDB } from "../../lib/db";
 import Match from "../../models/Match";
 
+// POST /api/matches  → create a new match (before the toss)
 export async function POST(req) {
   try {
     const data = await req.json();
     await connectDB();
-    const newMatch = new Match({ ...data, isOngoing: true });
+
+    // tossWinner will be added later, so we don't require it here
+    const newMatch = new Match({
+      ...data,
+      isOngoing: true, // start live
+    });
+
     await newMatch.save();
+
     return new Response(JSON.stringify(newMatch), {
       status: 201,
       headers: { "Content-Type": "application/json" },
     });
-  } catch (error) {
-    return new Response("Error saving match: " + error.message, {
-      status: 500,
-    });
+  } catch (err) {
+    return new Response("Error saving match: " + err.message, { status: 500 });
   }
 }
 
+// GET /api/matches  → list recent matches (optional helper)
 export async function GET() {
   try {
     await connectDB();
@@ -26,40 +33,8 @@ export async function GET() {
       status: 200,
       headers: { "Content-Type": "application/json" },
     });
-  } catch (error) {
-    return new Response("Error fetching matches: " + error.message, {
-      status: 500,
-    });
-  }
-}
-
-export async function DELETE() {
-  try {
-    await connectDB();
-    await Match.deleteMany({});
-    return new Response("All matches deleted", { status: 200 });
-  } catch (error) {
-    return new Response("Error deleting matches: " + error.message, {
-      status: 500,
-    });
-  }
-}
-
-export async function PATCH(req) {
-  try {
-    const data = await req.json();
-    await connectDB();
-    const updated = await Match.findOneAndUpdate(
-      { isOngoing: true },
-      { ...data },
-      { new: true }
-    );
-    return new Response(JSON.stringify(updated), {
-      status: 200,
-      headers: { "Content-Type": "application/json" },
-    });
-  } catch (error) {
-    return new Response("Error updating match: " + error.message, {
+  } catch (err) {
+    return new Response("Error fetching matches: " + err.message, {
       status: 500,
     });
   }
