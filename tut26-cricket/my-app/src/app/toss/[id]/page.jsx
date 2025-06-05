@@ -1,16 +1,17 @@
 /* -------------------------------------------------------------------
-   src/app/toss/[id]/page.jsx  – DB-only; no localStorage
+   src/app/toss/[id]/page.jsx  – DB-only, no localStorage
 --------------------------------------------------------------------*/
 "use client";
+
 import { useEffect, useState } from "react";
 import { useRouter, useParams } from "next/navigation";
 
 export default function TossPage() {
   /* routing */
-  const { id } = useParams(); // session / match id in URL
+  const { id } = useParams(); // /toss/[id]
   const router = useRouter();
 
-  /* UI state */
+  /* ui-state */
   const [seconds, setSeconds] = useState(5);
   const [side, setSide] = useState(null); // "heads" | "tails"
   const [winner, setWinner] = useState(null); // "Team A" | "Team B"
@@ -19,15 +20,15 @@ export default function TossPage() {
   const [teamA, setTeamA] = useState([]);
   const [teamB, setTeamB] = useState([]);
 
-  /* load rosters once */
+  /* fetch roster once */
   useEffect(() => {
     if (!id) return;
     (async () => {
-      const res = await fetch(`/api/sessions/${id}`);
+      const res = await fetch(`/api/sessions/${id}`); // ← session doc
       if (!res.ok) return;
-      const sess = await res.json();
-      setTeamA(sess.teamA ?? []);
-      setTeamB(sess.teamB ?? []);
+      const data = await res.json();
+      setTeamA(data.teamA ?? []);
+      setTeamB(data.teamB ?? []);
     })();
   }, [id]);
 
@@ -43,17 +44,17 @@ export default function TossPage() {
             setSide(heads ? "heads" : "tails");
             setWinner(heads ? "Team A" : "Team B");
             setFlipping(false);
-          }, 1000);
+          }, 1_000);
         }
         return s - 1;
       });
-    }, 1000);
+    }, 1_000);
     return () => clearInterval(t);
   }, []);
 
-  /* persist toss + go to match */
-  const handleContinue = async () => {
-    await fetch(`/api/matches/${id}`, {
+  /* persist toss & continue */
+  const onContinue = async () => {
+    await fetch(`/api/sessions/${id}`, {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ tossWinner: winner }),
@@ -61,7 +62,7 @@ export default function TossPage() {
     router.push(`/match/${id}`);
   };
 
-  /* roster column */
+  /* roster helper */
   const Roster = ({ title, players, color }) => (
     <div className="w-full sm:w-1/2">
       <h3 className={`font-bold mb-2 ${color}`}>{title}</h3>
@@ -73,18 +74,13 @@ export default function TossPage() {
     </div>
   );
 
-  /* render */
+  /* ui */
   return (
-    <main
-      className="min-h-screen flex flex-col items-center justify-center
-                     bg-gradient-to-br from-indigo-100 via-sky-200 to-cyan-100
-                     p-6 text-gray-900"
-    >
-      <section
-        className="w-full max-w-3xl bg-white/70 backdrop-blur-lg
-                          shadow-xl border border-white/40 rounded-3xl px-10 py-12"
-      >
-        <h1 className="text-5xl font-extrabold text-center mb-10">🪙Toss🪙</h1>
+    <main className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-indigo-100 via-sky-200 to-cyan-100 p-6 text-gray-900">
+      <section className="w-full max-w-3xl bg-white/70 backdrop-blur-lg shadow-xl border border-white/40 rounded-3xl px-10 py-12">
+        <h1 className="text-5xl font-extrabold text-center mb-10">
+          🪙 Toss 🪙
+        </h1>
 
         {/* coin */}
         <div className="flex flex-col items-center gap-4 mb-10">
@@ -96,17 +92,15 @@ export default function TossPage() {
                     ? "https://www.clker.com/cliparts/7/d/e/0/139362185558690588heads-hi.png"
                     : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSdoZLuNlaCnMK2BUyCux5c511ccayIXEIsUg&s"
                 }
-                alt={side}
+                alt={side || "coin"}
                 className="w-32 h-32"
               />
               <div className="text-4xl font-semibold text-green-700">
                 {winner}
               </div>
               <button
-                onClick={handleContinue}
-                className="mt-6 bg-gradient-to-r from-blue-600 to-indigo-600
-                           hover:to-indigo-700 text-white px-10 py-4
-                           rounded-xl font-semibold shadow-lg transition"
+                onClick={onContinue}
+                className="mt-6 bg-gradient-to-r from-blue-600 to-indigo-600 hover:to-indigo-700 text-white px-10 py-4 rounded-xl font-semibold shadow-lg transition"
               >
                 Start Match
               </button>

@@ -1,23 +1,24 @@
-import { connectDB } from "../../lib/db";
-import Session from "../../models/Session";
+// src/app/api/sessions/[id]/route.js
+import Session from "@/models/Session";
+import { connectDB } from "../../../lib/db";
 
+/* GET /api/sessions/:id */
 export async function GET(_req, { params }) {
   await connectDB();
-  const session = await Session.findById(params.id).populate("match");
-  return new Response(JSON.stringify(session), { status: 200 });
+  const doc = await Session.findById(params.id);
+  return Response.json(doc);
 }
 
+/* PATCH /api/sessions/:id */
 export async function PATCH(req, { params }) {
-  const data = await req.json();
-  await connectDB();
-  const updated = await Session.findByIdAndUpdate(params.id, data, {
-    new: true,
-  });
-  return new Response(JSON.stringify(updated), { status: 200 });
-}
-
-export async function DELETE(_req, { params }) {
-  await connectDB();
-  await Session.findByIdAndDelete(params.id);
-  return new Response(null, { status: 204 });
+  try {
+    await connectDB();
+    const body = await req.json();
+    const updated = await Session.findByIdAndUpdate(params.id, body, {
+      new: true,
+    });
+    return Response.json(updated);
+  } catch (e) {
+    return new Response("Patch failed – " + e.message, { status: 500 });
+  }
 }

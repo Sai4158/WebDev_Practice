@@ -1,5 +1,5 @@
+import Match from "../../../models/Match";
 import { connectDB } from "../../lib/db";
-import Match from "../../models/Match";
 
 // POST /api/matches  → create a new match (before the toss)
 export async function POST(req) {

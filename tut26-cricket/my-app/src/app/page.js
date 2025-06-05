@@ -40,6 +40,14 @@ export default function HomePage() {
         >
           Start&nbsp;Match
         </a>
+        <a
+          href="/session"
+          className="flex-1 text-center py-3 rounded-2xl
+           bg-gradient-to-r from-yellow-200 via-rose-100 to-orange-300 text-black
+            font-semibold shadow-lg shadow-rose-800/40 transition"
+        >
+          View&nbsp;Sessions
+        </a>
 
         <a
           href="/rules"

@@ -1,17 +1,23 @@
+import Session from "../../../models/Session.js";
 import { connectDB } from "../../lib/db";
-import Session from "../../models/Session";
 
-// POST  /api/sessions  – create blank session
+/* POST /api/sessions – create session */
 export async function POST(req) {
-  const { name } = await req.json();
-  await connectDB();
-  const session = await Session.create({ name });
-  return new Response(JSON.stringify(session), { status: 201 });
+  try {
+    const body = await req.json();
+    await connectDB();
+    const doc = await Session.create(body);
+    return Response.json(doc, { status: 201 });
+  } catch (e) {
+    return new Response("Could not create session – " + e.message, {
+      status: 500,
+    });
+  }
 }
 
-// GET   /api/sessions  – latest first
+/* GET /api/sessions – all sessions (latest first) */
 export async function GET() {
   await connectDB();
-  const sessions = await Session.find().sort({ createdAt: -1 }).limit(10);
-  return new Response(JSON.stringify(sessions), { status: 200 });
+  const sessions = await Session.find().sort({ createdAt: -1 });
+  return Response.json(sessions);
 }

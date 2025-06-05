@@ -1,5 +1,5 @@
 import { connectDB } from "../../../lib/db";
-import Match from "../../../models/Match";
+import Match from "../../../../models/Match";
 
 // GET /api/matches/:id  → fetch full match state
 export async function GET(_req, { params }) {
