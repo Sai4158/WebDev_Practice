@@ -6,14 +6,14 @@ import Link from "next/link";
 export default function RulesPage() {
   return (
     <main
-      className="min-h-screen px-5 py-10 flex flex-col items-center
+      className="min-h-screen px-3 py-10 flex flex-col items-center
       bg-[linear-gradient(135deg,theme(colors.red.800)_0%,theme(colors.black.900)_40%,theme(colors.black)_85%)]
       text-zinc-200"
     >
       {/* ---------- Back button ---------- */}
       <Link
         href="/"
-        className="fixed left-4 top-4 sm:left-8 sm:top-8
+        className="fixed left-4 top-6 sm:left-8 sm:top-8
           text-sm sm:text-base font-semibold
           bg-white/10 backdrop-blur-md px-4 py-2 rounded-full
           hover:bg-white/15 ring-1 ring-white/10 transition"
@@ -23,7 +23,7 @@ export default function RulesPage() {
 
       {/* ---------- Title ---------- */}
       <h1
-        className="text-4xl sm:text-5xl font-extrabold text-center mb-10
+        className="text-4xl sm:text-5xl font-extrabold text-center my-10 mb-10
         bg-clip-text text-transparent
         bg-gradient-to-r from-yellow-200 via-rose-100 to-orange-300"
       >
