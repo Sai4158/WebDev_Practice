@@ -1,7 +1,7 @@
 import Session from "../../../models/Session.js";
 import { connectDB } from "../../lib/db";
 
-/* POST /api/sessions – create session */
+// ------------- POST -------------  /api/sessions
 export async function POST(req) {
   try {
     const body = await req.json();
@@ -15,7 +15,7 @@ export async function POST(req) {
   }
 }
 
-/* GET /api/sessions – all sessions (latest first) */
+// ------------- GET --------------  /api/sessions   (list all)
 export async function GET() {
   await connectDB();
   const sessions = await Session.find().sort({ createdAt: -1 });

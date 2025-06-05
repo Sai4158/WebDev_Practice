@@ -2,14 +2,15 @@
 import Session from "@/models/Session";
 import { connectDB } from "../../../lib/db";
 
-/* GET /api/sessions/:id */
+// ---------- GET  ----------  /api/sessions/:id
 export async function GET(_req, { params }) {
   await connectDB();
   const doc = await Session.findById(params.id);
+  if (!doc) return new Response("Session not found", { status: 404 });
   return Response.json(doc);
 }
 
-/* PATCH /api/sessions/:id */
+// ---------- PATCH ----------  /api/sessions/:id
 export async function PATCH(req, { params }) {
   try {
     await connectDB();

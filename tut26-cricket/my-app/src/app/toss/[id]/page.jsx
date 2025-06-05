@@ -23,14 +23,26 @@ export default function TossPage() {
   /* fetch roster once */
   useEffect(() => {
     if (!id) return;
+
     (async () => {
-      const res = await fetch(`/api/sessions/${id}`); // ← session doc
-      if (!res.ok) return;
+      const res = await fetch(`/api/sessions/${id}`);
+      if (!res.ok) {
+        console.error("Session load failed", await res.text());
+        router.push("/"); // bounce home on error
+        return;
+      }
+
       const data = await res.json();
+      if (!data) {
+        // null from Mongo
+        router.push("/");
+        return;
+      }
+
       setTeamA(data.teamA ?? []);
       setTeamB(data.teamB ?? []);
     })();
-  }, [id]);
+  }, [id, router]);
 
   /* countdown + flip */
   useEffect(() => {
