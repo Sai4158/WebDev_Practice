@@ -1,80 +1,137 @@
 /* ---------------------------------------------------------------
-   src/app/session/new/page.jsx – step 0: name the session
+   src/app/session/new/page.jsx – (Modern, Dark UI Version)
 ---------------------------------------------------------------- */
 "use client";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { FaPen, FaCalendarAlt, FaArrowRight } from "react-icons/fa";
+
+// Get today's date in MM/DD/YYYY format
+const today = new Date().toLocaleDateString("en-US");
 
 export default function NewSessionPage() {
   const [name, setName] = useState("");
+  const [date, setDate] = useState(today);
   const [saving, setSaving] = useState(false);
+  const [error, setError] = useState("");
   const router = useRouter();
 
   const createSession = async () => {
+    setError(""); // Clear previous errors
     if (!name.trim()) {
-      alert("Type a session name first!");
+      setError("Please enter a session name.");
+      return;
+    }
+    if (!date.trim()) {
+      setError("Please enter a valid date.");
       return;
     }
     setSaving(true);
+
     try {
-      const r = await fetch("/api/sessions", {
+      const res = await fetch("/api/sessions", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name: name.trim() }),
+        body: JSON.stringify({ name: name.trim(), date: date.trim() }),
       });
-      if (!r.ok) throw new Error(await r.text());
-      const s = await r.json();
-      router.push(`/teams/${s._id}`); // 👉 jump to team-selection step
+
+      if (!res.ok) {
+        const errData = await res
+          .json()
+          .catch(() => ({ message: "An unknown error occurred." }));
+        throw new Error(errData.message || "Failed to create session.");
+      }
+
+      const session = await res.json();
+      router.push(`/teams/${session._id}`); // Jump to the team-selection step
     } catch (e) {
-      alert("Could not create session – " + e.message);
+      setError(e.message);
       setSaving(false);
     }
   };
 
   return (
-    <main
-      className="min-h-screen flex flex-col items-center justify-center
-                 bg-[linear-gradient(135deg,theme(colors.red.800)_0%,theme(colors.black.900)_40%,theme(colors.black)_85%)]
-                 text-zinc-200 px-6"
-    >
-      <div
-        className="w-full max-w-sm bg-black/30 backdrop-blur-md ring-1 ring-white/10
-                      rounded-2xl shadow-2xl shadow-black/60 p-8 space-y-6"
-      >
-        <h1
-          className="text-3xl font-extrabold text-center
-                     bg-clip-text text-transparent
-                     bg-gradient-to-r from-yellow-200 via-rose-100 to-orange-300"
-        >
-          🆕 New Session
+    <main className="min-h-screen flex flex-col items-center justify-center bg-zinc-950 text-zinc-200 p-4">
+      {/* Main container with modern styling */}
+      <div className="w-full max-w-md bg-zinc-900/50 p-8 rounded-2xl shadow-2xl ring-1 ring-white/10">
+        <h1 className="text-4xl font-bold text-center text-white mb-2">
+          Create New Session
         </h1>
+        <p className="text-center text-zinc-400 mb-8">
+          Start by giving your match a name and date.
+        </p>
 
-        <input
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          placeholder="Session name (e.g. 2025 Summer League G3)"
-          className="w-full p-3 rounded-xl bg-black/20 ring-1 ring-yellow-300/30
-                     focus:ring-rose-300 outline-none text-white placeholder:text-zinc-400"
-        />
+        <div className="space-y-4">
+          {/* Styled input for Session Name */}
+          <div>
+            <label
+              htmlFor="session-name"
+              className="text-sm font-medium text-zinc-400"
+            >
+              Session Name
+            </label>
+            <div className="relative mt-1">
+              <FaPen className="absolute left-3 top-1/2 -translate-y-1/2 text-zinc-500" />
+              <input
+                id="session-name"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                placeholder="e.g., Summer League Final"
+                className="w-full p-3 pl-10 rounded-lg bg-zinc-800/50 ring-1 ring-zinc-700 focus:ring-blue-500 outline-none text-white placeholder:text-zinc-500 transition"
+              />
+            </div>
+          </div>
 
+          {/* Styled input for Date */}
+          <div>
+            <label
+              htmlFor="session-date"
+              className="text-sm font-medium text-zinc-400"
+            >
+              Date
+            </label>
+            <div className="relative mt-1">
+              <FaCalendarAlt className="absolute left-3 top-1/2 -translate-y-1/2 text-zinc-500" />
+              <input
+                id="session-date"
+                value={date}
+                onChange={(e) => setDate(e.target.value)}
+                placeholder="e.g., 6/6/2025"
+                className="w-full p-3 pl-10 rounded-lg bg-zinc-800/50 ring-1 ring-zinc-700 focus:ring-blue-500 outline-none text-white placeholder:text-zinc-500 transition"
+              />
+            </div>
+          </div>
+        </div>
+
+        {/* New error display component */}
+        {error && (
+          <div className="mt-6 text-center bg-red-900/30 text-red-300 p-3 rounded-lg text-sm">
+            {error}
+          </div>
+        )}
+
+        {/* Redesigned primary button */}
         <button
           onClick={createSession}
           disabled={saving}
-          className={`w-full py-3 rounded-xl font-semibold transition
-                      bg-gradient-to-r from-yellow-200 via-rose-100 to-orange-300 text-black
-                      shadow-lg shadow-rose-800/40
-                      hover:shadow-red-600/70 active:scale-[.98]
-                      disabled:opacity-60 disabled:shadow-none`}
+          className={`w-full mt-8 py-3 px-6 rounded-lg font-semibold transition-all flex items-center justify-center gap-2
+                         bg-blue-600 text-white
+                         shadow-lg shadow-blue-600/20
+                         hover:bg-blue-500 active:scale-[.98]
+                         disabled:opacity-60 disabled:shadow-none disabled:bg-zinc-700`}
         >
-          {saving ? "Creating…" : "Next → Select Teams"}
+          {saving ? "Creating..." : "Next: Select Teams"}
+          {!saving && <FaArrowRight />}
         </button>
 
-        <a
-          href="/"
-          className="block text-center mt-2 text-sm text-amber-300 hover:underline"
-        >
-          ← Back&nbsp;Home
-        </a>
+        <div className="text-center mt-6">
+          <a
+            href="/"
+            className="text-sm text-zinc-500 hover:text-zinc-300 transition"
+          >
+            ← Back to Home
+          </a>
+        </div>
       </div>
     </main>
   );

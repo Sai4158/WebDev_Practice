@@ -195,7 +195,7 @@ export default function ResultPage() {
   const innings2Stats = calculateInningsStats(match.innings2);
 
   return (
-    <main className="min-h-screen bg-zinc-950 p-4 sm:p-8 text-zinc-300 font-sans">
+    <main className="min-h-screen bg-zinc-950 p-4 sm:p-8 text-zinc-300 font-sans mt-12">
       <div className="max-w-2xl mx-auto space-y-8">
         {match.result && <CongratulationsCard result={match.result} />}
 
@@ -221,12 +221,22 @@ export default function ResultPage() {
 
         <div className="text-center pt-4">
           <button
-            onClick={() => router.push("/")}
+            onClick={() => router.push("/session")}
             className="inline-flex items-center gap-2 bg-blue-600 text-white px-6 py-3 rounded-xl shadow-lg hover:bg-blue-500 transition-colors"
+          >
+            View match history
+          </button>
+          <br />
+          <br />
+          <button
+            onClick={() => router.push("/")}
+            className="inline-flex items-center gap-2 bg-blue-600 text-white px-6 py-3 mb-5 rounded-xl shadow-lg hover:bg-blue-500 transition-colors"
           >
             <FaArrowLeft />
             Back to Home
           </button>
+          <br />
+          <br />
         </div>
       </div>
     </main>

@@ -1,57 +1,171 @@
 /* ------------------------------------------------------------------
-   src/app/session/[id]/view/page.jsx – (Corrected)
+   src/app/session/[id]/view/page.jsx – (Corrected, Modern, Live View)
 -------------------------------------------------------------------*/
 "use client";
 
-import { useState } from "react"; // ✅ FIX: Added the missing import for useState
-import { useParams } from "next/navigation";
+import { useState, useEffect } from "react";
+import { useParams, useRouter } from "next/navigation";
 import useSWR from "swr";
 import Link from "next/link";
-import { FaCopy } from "react-icons/fa";
+import { motion, AnimatePresence } from "framer-motion";
+import { FaCopy, FaSync, FaArrowLeft, FaCheck } from "react-icons/fa";
 
 const fetcher = (url) => fetch(url).then((res) => res.json());
 
-// --- Shared Colorful Ball Component ---
-const Ball = ({ runs, isOut, isExtra }) => {
-  const getBallStyle = () => {
-    if (isOut) return "bg-rose-600 ring-rose-500";
-    if (runs === 6) return "bg-purple-600 ring-purple-500";
-    if (runs >= 4) return "bg-sky-500 ring-sky-400";
-    if (isExtra) return "bg-yellow-500 text-black";
-    if (runs > 0) return "bg-green-600";
-    return "bg-zinc-600";
-  };
+// --- Helper function for accurate Run Rate ---
+const calculateRunRate = (score, history) => {
+  if (!history || !score) return "0.00";
+  const legalBalls = history
+    .flatMap((o) => o.balls)
+    .filter((b) => b.extraType !== "wide" && b.extraType !== "noball").length;
+  if (legalBalls === 0) return "0.00";
+  const overs = legalBalls / 6;
+  return (score / overs).toFixed(2);
+};
+
+// --- UI Components ---
+
+const Ball = ({ runs, isOut, extraType }) => {
+  let style, label;
+  if (isOut) {
+    style = "bg-rose-600 text-white";
+    label = "W";
+  } else if (extraType === "wide") {
+    style = "bg-amber-500 text-black";
+    label = `${runs}Wd`;
+  } else if (extraType) {
+    style = "bg-purple-500 text-white";
+    label = `${runs}${extraType.substring(0, 2)}`;
+  } else if (runs === 0) {
+    style = "bg-zinc-700 text-zinc-300";
+    label = "•";
+  } else if (runs === 6) {
+    style = "bg-purple-500 text-white";
+    label = "6";
+  } else if (runs === 4) {
+    style = "bg-sky-500 text-white";
+    label = "4";
+  } else {
+    style = "bg-green-600 text-white";
+    label = runs;
+  }
   return (
     <div
-      className={`w-9 h-9 rounded-full flex items-center justify-center font-bold text-sm ring-1 ring-inset ring-black/20 ${getBallStyle()}`}
+      className={`w-9 h-9 rounded-full flex items-center justify-center font-bold text-sm shadow-md ${style}`}
     >
-      {isOut ? "W" : runs}
+      {label}
     </div>
   );
 };
 
-export default function ViewSessionPage() {
-  const { id: sessionId } = useParams();
+const SplashMsg = ({ children }) => (
+  <main className="min-h-screen flex flex-col items-center justify-center bg-zinc-950 text-zinc-300 text-center px-4">
+    <p className="text-xl font-medium">{children}</p>
+    <Link
+      href="/"
+      className="mt-6 underline text-lg text-blue-400 hover:text-blue-300 transition"
+    >
+      ← Back to Home
+    </Link>
+  </main>
+);
 
-  // Step 1: Fetch the session to get the match ID
+const LiveScoreCard = ({ match }) => {
+  const isFirstInnings = match.innings === "first";
+  const battingInnings = isFirstInnings ? match.innings1 : match.innings2;
+  const battingTeam = battingInnings.team;
+  const runRate = calculateRunRate(match.score, battingInnings.history);
+  const legalBalls = battingInnings.history
+    .flatMap((o) => o.balls)
+    .filter((b) => b.extraType !== "wide" && b.extraType !== "noball").length;
+  const oversDisplay = `${Math.floor(legalBalls / 6)}.${legalBalls % 6}`;
+
+  return (
+    <div className="w-full max-w-xl bg-black/30 backdrop-blur-sm ring-1 ring-white/10 rounded-3xl p-6 text-center space-y-2 shadow-2xl shadow-zinc-900">
+      <p className="text-xl font-bold text-amber-300 tracking-wide">
+        🏏 {battingTeam} Batting
+      </p>
+      <p className="text-8xl font-extrabold text-white">
+        {match.score}/{match.outs}
+      </p>
+      <div className="text-lg text-zinc-400 flex justify-center items-center gap-4">
+        <span>
+          Overs: <span className="font-bold text-zinc-200">{oversDisplay}</span>
+        </span>
+        <span className="text-zinc-600">|</span>
+        <span>
+          Run Rate: <span className="font-bold text-zinc-200">{runRate}</span>
+        </span>
+      </div>
+    </div>
+  );
+};
+
+const TeamInningsDetail = ({ title, teamData, inningsData }) => {
+  const runRate = calculateRunRate(inningsData.score, inningsData.history);
+  return (
+    <div className="bg-zinc-900/50 p-6 rounded-2xl ring-1 ring-zinc-800">
+      <div className="flex justify-between items-center mb-4">
+        <h2 className="text-2xl font-bold text-white">{title}</h2>
+        <span className="text-3xl font-mono font-bold text-amber-300">
+          {inningsData?.score ?? 0}
+        </span>
+      </div>
+      <div className="text-sm text-zinc-400 mb-4">Run Rate: {runRate}</div>
+
+      <div className="space-y-4 max-h-72 overflow-y-auto pr-2 custom-scrollbar">
+        {inningsData?.history.length > 0 ? (
+          [...inningsData.history].reverse().map((over) => (
+            <div key={over.overNumber}>
+              <p className="font-semibold text-zinc-300 mb-2">
+                Over {over.overNumber}
+              </p>
+              <div className="flex gap-2 flex-wrap">
+                {over.balls.map((ball, i) => (
+                  <Ball key={i} {...ball} />
+                ))}
+              </div>
+            </div>
+          ))
+        ) : (
+          <p className="text-sm text-zinc-500">No overs bowled yet.</p>
+        )}
+      </div>
+    </div>
+  );
+};
+
+// --- Main Page Component ---
+export default function ViewSessionPage() {
+  // ✅ FIX: All hooks are now called at the top level of the component.
+  const { id: sessionId } = useParams();
+  const [copied, setCopied] = useState(false);
+  const router = useRouter();
+
   const { data: session } = useSWR(
     sessionId ? `/api/sessions/${sessionId}` : null,
     fetcher
   );
-
-  // Step 2: Conditionally fetch the match data, and poll for live updates
   const { data: match, error } = useSWR(
     () => (session?.match ? `/api/matches/${session.match}` : null),
     fetcher,
-    { refreshInterval: 5000 }
+    { refreshInterval: 2000 } // Fetch every 2 seconds
   );
+
+  // This useEffect hook is now correctly placed at the top level.
+  useEffect(() => {
+    if (match && match.result) {
+      router.push(`/result/${match._id}`);
+    }
+  }, [match, router]);
 
   const handleCopy = () => {
     navigator.clipboard.writeText(window.location.href);
-    alert("Link copied!");
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000); // Reset after 2 seconds
   };
 
-  // ✅ FIX: Handle the case where the ID in the URL is missing or "undefined"
+  // Conditional returns now happen AFTER all hooks have been called.
   if (!sessionId) return <SplashMsg>No Session ID provided.</SplashMsg>;
   if (!session) return <SplashMsg>Loading Session...</SplashMsg>;
   if (!session.match)
@@ -59,131 +173,61 @@ export default function ViewSessionPage() {
   if (error) return <SplashMsg>Could not load match data.</SplashMsg>;
   if (!match) return <SplashMsg>Loading Live Score...</SplashMsg>;
 
-  const isFirstInnings = match.innings === "first";
-  const teamABatting =
-    match.tossWinner === match.teamA[0] ? isFirstInnings : !isFirstInnings;
-  const battingTeamName = teamABatting ? "Team A" : "Team B";
-  const runRate =
-    match.innings1?.history.length > 0
-      ? (match.innings1.score / match.innings1.history.length).toFixed(2)
-      : "0.00";
-
   return (
-    <main className="min-h-screen bg-black text-white font-sans p-4 pb-10 flex flex-col items-center">
-      <header className="w-full max-w-xl text-center my-8 relative">
-        <Link
-          href="/session"
-          className="absolute top-2 left-2 text-amber-300 underline text-sm"
+    <main className="min-h-screen bg-zinc-950 text-white font-sans p-4 pb-10 flex flex-col items-center">
+      <header className="w-full max-w-4xl text-center my-8 relative">
+        <button
+          onClick={() => router.push("/session")}
+          className="absolute top-1/2 -translate-y-1/2 left-2 p-2 text-zinc-400 hover:text-white transition-colors"
+          aria-label="Back to Sessions"
         >
-          ← All Sessions
-        </Link>
+          <FaArrowLeft size={20} />
+        </button>
+        <div>
+          <h1 className="text-4xl font-extrabold text-white">{session.name}</h1>
+          <p className="text-amber-400">Live Spectator View</p>
+        </div>
         <button
           onClick={handleCopy}
-          className="absolute top-2 right-2 p-2 text-zinc-400 hover:text-white"
+          className="absolute top-1/2 -translate-y-1/2 right-2 p-2 text-zinc-400 hover:text-white transition-colors"
+          aria-label="Copy Link"
         >
-          <FaCopy />
+          {copied ? (
+            <FaCheck className="text-green-500" size={20} />
+          ) : (
+            <FaCopy size={20} />
+          )}
         </button>
-        <h1 className="text-4xl font-extrabold text-amber-300">
-          Live Scoreboard
-        </h1>
-        <p className="text-zinc-300">{session.name}</p>
       </header>
 
-      {/* Live Score */}
-      <section className="w-full max-w-xl bg-black/50 backdrop-blur-sm ring-1 ring-zinc-700 rounded-3xl p-6 text-center space-y-2 shadow-2xl shadow-amber-700/20">
-        <p className="text-xl font-bold text-white">
-          🏏 {battingTeamName} Batting
-        </p>
-        <p className="text-7xl font-extrabold">
-          {match.score}/{match.outs}
-        </p>
-        <div className="text-lg text-zinc-400">
-          <span>
-            Overs:{" "}
-            {match[isFirstInnings ? "innings1" : "innings2"]?.history.length ??
-              0}
-          </span>
-          <span className="mx-2">|</span>
-          <span>Run Rate: {runRate}</span>
-        </div>
-      </section>
+      <LiveScoreCard match={match} />
 
-      {/* Team Cards with History */}
-      <div className="w-full max-w-6xl grid grid-cols-1 md:grid-cols-2 gap-6 mt-10">
-        <TeamCard
-          title="Team A"
-          players={match.teamA}
+      <div className="w-full max-w-4xl grid grid-cols-1 md:grid-cols-2 gap-6 mt-10">
+        <TeamInningsDetail
+          title={match.innings1.team}
           inningsData={match.innings1}
         />
-        <TeamCard
-          title="Team B"
-          players={match.teamB}
+        <TeamInningsDetail
+          title={match.innings2.team}
           inningsData={match.innings2}
         />
       </div>
+
+      <style jsx global>{`
+        .custom-scrollbar::-webkit-scrollbar {
+          width: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+          background: transparent;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+          background: #4b5563;
+          border-radius: 10px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+          background: #6b7280;
+        }
+      `}</style>
     </main>
   );
 }
-
-const TeamCard = ({ title, players, inningsData }) => {
-  const [showHistory, setShowHistory] = useState(true);
-  const teamColor = title === "Team A" ? "text-sky-400" : "text-rose-400";
-  return (
-    <div className="bg-zinc-900/50 p-6 rounded-2xl ring-1 ring-zinc-800">
-      <h2
-        className={`text-2xl font-bold mb-4 flex justify-between items-center ${teamColor}`}
-      >
-        <span>{title}</span>
-        <span className="text-white text-3xl font-mono">
-          {inningsData?.score ?? 0}
-        </span>
-      </h2>
-
-      <div className="mb-4">
-        <h3 className="font-semibold mb-2 text-zinc-300">Players</h3>
-        <ul className="text-zinc-400 grid grid-cols-2 gap-1">
-          {players.map((p, i) => (
-            <li key={i}>{p}</li>
-          ))}
-        </ul>
-      </div>
-
-      <button
-        onClick={() => setShowHistory((s) => !s)}
-        className="text-amber-300 underline text-sm mb-4"
-      >
-        {showHistory ? "Hide" : "Show"} Over History
-      </button>
-
-      {showHistory && (
-        <div className="space-y-4 max-h-72 overflow-y-auto pr-2">
-          {inningsData?.history.length > 0 ? (
-            inningsData.history.map((over) => (
-              <div key={over.overNumber}>
-                <p className="font-semibold text-zinc-200">
-                  Over {over.overNumber}
-                </p>
-                <div className="flex gap-2 flex-wrap mt-1">
-                  {over.balls.map((ball, i) => (
-                    <Ball key={i} {...ball} />
-                  ))}
-                </div>
-              </div>
-            ))
-          ) : (
-            <p className="text-sm text-zinc-500">No overs bowled yet.</p>
-          )}
-        </div>
-      )}
-    </div>
-  );
-};
-
-const SplashMsg = ({ children }) => (
-  <main className="min-h-screen flex flex-col items-center justify-center bg-black text-amber-200 text-center px-4">
-    <p className="text-xl">{children}</p>
-    <Link href="/session" className="mt-6 underline text-lg">
-      ← Back to sessions
-    </Link>
-  </main>
-);
