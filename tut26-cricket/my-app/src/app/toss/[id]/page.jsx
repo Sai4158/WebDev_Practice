@@ -98,7 +98,7 @@ export default function TossPage() {
 
   // State Management
   const [status, setStatus] = useState("counting");
-  const [countdown, setCountdown] = useState(5); // CHANGED: Countdown starts from 20
+  const [countdown, setCountdown] = useState(15);
   const [playerChoice, setPlayerChoice] = useState(null);
   const [tossResult, setTossResult] = useState({
     side: null,
@@ -158,7 +158,7 @@ export default function TossPage() {
   // NEW: Function to reset the toss process
   const redoToss = () => {
     setStatus("counting");
-    setCountdown(20); // Reset countdown to 20
+    setCountdown(7);
     setPlayerChoice(null);
     setTossResult({ side: null, winner: null, call: null });
   };
@@ -204,7 +204,7 @@ export default function TossPage() {
                 exit={{ opacity: 0, scale: 0.5 }}
                 className="w-full"
               >
-                <p className="text-zinc-300 mb-4">Team A, pick a side:</p>
+                <p className="text-white text-2xl mb-4">Team A, pick a side:</p>
                 <div className="flex justify-center gap-4 mb-6">
                   <button
                     onClick={() => setPlayerChoice("heads")}

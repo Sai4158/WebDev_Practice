@@ -115,9 +115,9 @@ export default function NewSessionPage() {
           onClick={createSession}
           disabled={saving}
           className={`w-full mt-8 py-3 px-6 rounded-lg font-semibold transition-all flex items-center justify-center gap-2
-                         bg-blue-600 text-white
+                         bg-gradient-to-r from-yellow-400 via-amber-300 to-orange-400 text-black text-xl
                          shadow-lg shadow-blue-600/20
-                         hover:bg-blue-500 active:scale-[.98]
+                         hover:scale-105
                          disabled:opacity-60 disabled:shadow-none disabled:bg-zinc-700`}
         >
           {saving ? "Creating..." : "Next: Select Teams"}
@@ -127,7 +127,7 @@ export default function NewSessionPage() {
         <div className="text-center mt-6">
           <a
             href="/"
-            className="text-sm text-zinc-500 hover:text-zinc-300 transition"
+            className="text-sm text-white hover:text-zinc-300 transition"
           >
             ← Back to Home
           </a>

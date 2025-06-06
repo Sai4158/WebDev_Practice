@@ -162,8 +162,12 @@ const Header = ({ match }) => {
   const target = isFirstInnings ? null : (match.innings1.score ?? 0) + 1;
   return (
     <header className="text-center mb-6">
-      <h1 className="text-4xl md:text-5xl font-bold text-white tracking-tight">
-        {battingTeam.team}
+      <h1 className="text-5xl md:text-6xl font-bold text-white tracking-tight">
+        Empire View
+      </h1>
+      <br />
+      <h1 className="text-xl md:text-2xl font-bold text-white tracking-tight">
+        {battingTeam.team}'s Team Is Batting Now!
       </h1>
       {target && (
         <p className="text-zinc-400 text-lg mt-1">
@@ -361,34 +365,120 @@ const InningsEndModal = ({ match, onNext }) => (
 );
 
 const RulesModal = ({ onClose }) => (
-  <ModalBase title="Scoring Rules" onExit={onClose}>
-    <div className="text-left space-y-4 text-zinc-300">
-      <div>
-        <h3 className="font-bold text-white">Normal Scoring</h3>
-        <p>Runs (0-6), Dot balls, and Outs are recorded as standard.</p>
+  <div className="fixed inset-0 z-50 bg-black bg-opacity-70 flex items-center justify-center p-4">
+    <div className="relative w-full max-w-3xl max-h-[90vh] bg-zinc-900 rounded-2xl overflow-hidden ring-1 ring-white/10 shadow-lg flex flex-col">
+      {/* Top bar with close button */}
+      <div className="flex items-center justify-between px-6 py-4 border-b border-zinc-800">
+        <button
+          onClick={onClose}
+          className="text-zinc-400 hover:text-white transition"
+          aria-label="Close Rules"
+        >
+          <FaTimes className="text-3xl" />
+        </button>
+        <h2 className="text-lg font-bold text-white text-center flex-1 -ml-6">
+          Scoring Rules
+        </h2>
       </div>
-      <div>
-        <h3 className="font-bold text-white">Wide Balls</h3>
-        {/* ✅ NEW: Updated rules text for clarity */}
-        <p>There are two buttons to handle wide balls explicitly:</p>
-        <ul className="list-disc list-inside mt-2 pl-2">
-          <li>
-            <strong className="text-amber-300">Wide (0):</strong> Records a wide
-            ball and adds <strong className="text-amber-300">0 runs</strong> to
-            the score.
-          </li>
-          <li>
-            <strong className="text-amber-300">Wide (+1):</strong> Records a
-            wide ball and adds <strong className="text-amber-300">1 run</strong>{" "}
-            to the score.
-          </li>
-        </ul>
-        <p className="text-sm text-zinc-400 mt-2">
-          This provides direct control over any runs scored from a wide.
-        </p>
+
+      {/* Scrollable content */}
+      <div className="overflow-y-auto p-6 space-y-6 text-left text-zinc-300">
+        {/* Wide Balls */}
+        <div>
+          <h3 className="font-bold text-white">Wide Balls</h3>
+          <p>There are two wide ball options:</p>
+          <ul className="list-disc list-inside mt-2 pl-2">
+            <li>
+              <strong className="text-amber-300">Wide (0):</strong> Adds{" "}
+              <strong>0</strong> runs. Used when no extra run is gained on the
+              wide.
+            </li>
+            <li>
+              <strong className="text-amber-300">Wide (+1):</strong> Adds{" "}
+              <strong>1</strong> run. Use this if the batter or team gains a run
+              from a wide.
+            </li>
+          </ul>
+          <p className="text-sm text-zinc-400 mt-2">
+            This gives umpires control over how wides impact the score.
+          </p>
+        </div>
+
+        {/* Core Gameplay */}
+        <div>
+          <h3 className="font-bold text-green-400">Core Gameplay Rules</h3>
+          <ul className="list-disc list-inside mt-2 pl-2">
+            <li>
+              Max <strong>3 overs</strong> per batsman.
+            </li>
+            <li>
+              Max <strong>2 overs</strong> per bowler.
+            </li>
+            <li>
+              To score runs, the ball must hit the grass. Aerial flicks earn
+              nothing.
+            </li>
+            <li>
+              An umpire and wicket-keeper must be present throughout the match.
+            </li>
+          </ul>
+        </div>
+
+        {/* Fair Play */}
+        <div>
+          <h3 className="font-bold text-teal-400">
+            Fair Play & Team Selection
+          </h3>
+          <ul className="list-disc list-inside mt-2 pl-2">
+            <li>
+              Every player must bat and bowl for at least{" "}
+              <strong>1 over</strong>.
+            </li>
+            <li>
+              Teams should be <strong>randomized</strong> to avoid bias.
+            </li>
+            <li>
+              Toss winner chooses to bat or bowl; other captain gets first team
+              pick.
+            </li>
+            <li>
+              Fair rotation: The player who bats first bowls last, and vice
+              versa.
+            </li>
+          </ul>
+        </div>
+
+        {/* Umpiring & Dismissals */}
+        <div>
+          <h3 className="font-bold text-red-400">Umpiring & Dismissals</h3>
+          <ul className="list-disc list-inside mt-2 pl-2">
+            <li>The umpire’s call is final and should be loud and clear.</li>
+            <li>Stumping is allowed.</li>
+            <li>
+              <strong>No LBWs</strong> (Leg Before Wicket).
+            </li>
+            <li>
+              <strong>No back runs</strong> or pitch-boundary running allowed.
+            </li>
+            <li>
+              Waist-high full toss = <strong>No Ball</strong> → Free Hit next
+              ball.
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      {/* Bottom close button */}
+      <div className="p-4 border-t border-zinc-800 text-center">
+        <button
+          onClick={onClose}
+          className="px-6 py-2 bg-zinc-800 text-white rounded-lg hover:bg-zinc-700 transition"
+        >
+          Close
+        </button>
       </div>
     </div>
-  </ModalBase>
+  </div>
 );
 
 const ModalBase = ({ children, title, onExit }) => {
@@ -495,35 +585,35 @@ export default function MatchPage() {
           <Scoreboard match={match} history={oversHistory} />
           <BallTracker history={oversHistory} />
           <Controls onScore={handleScoreEvent} disabled={controlsDisabled} />
-          <footer className="flex items-center justify-around gap-2 mt-8 border-t border-white/10 pt-4">
-            <ActionButton
-              onClick={handleUndo}
-              icon={<FaUndo size={20} />}
-              label="Undo"
-              disabled={isUpdating || historyStack.length === 0}
-            />
-            <ActionButton
-              onClick={() => setShowHistory(true)}
-              icon={<FaBookOpen size={20} />}
-              label="History"
-            />
+          <div className="flex items-center justify-around gap-2 mt-8 border-t border-white/10 pt-4">
             <ActionButton
               onClick={() => setShowRules(true)}
-              icon={<FaInfoCircle size={20} />}
+              icon={<FaInfoCircle size={40} />}
               label="Rules"
             />
             <ActionButton
               onClick={() => mutate()}
-              icon={<FaSyncAlt size={20} />}
+              icon={<FaSyncAlt size={40} />}
               label="Sync"
               disabled={isUpdating}
             />
             <ActionButton
               onClick={handleCopyShareLink}
-              icon={<FaShareAlt size={20} />}
+              icon={<FaShareAlt size={40} />}
               label="Share"
             />
-          </footer>
+            <ActionButton
+              onClick={() => setShowHistory(true)}
+              icon={<FaBookOpen size={50} />}
+              label="History"
+            />
+            <ActionButton
+              onClick={handleUndo}
+              icon={<FaUndo size={50} />}
+              label="Undo"
+              disabled={isUpdating || historyStack.length === 0}
+            />
+          </div>
         </div>
       </main>
       <AnimatePresence>

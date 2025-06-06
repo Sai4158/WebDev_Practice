@@ -118,11 +118,11 @@ const SessionCard = ({ session, onUmpireClick }) => {
       <div className="flex gap-3 flex-wrap mt-auto">
         {session.match && (
           <button
-            onClick={onUmpireClick}
+            onClick={() => onUmpireClick(session, isLive)} // Pass isLive along with session
             className="flex-1 px-4 py-2 rounded-lg bg-blue-600 text-white font-semibold shadow hover:bg-blue-500 transition flex items-center justify-center gap-2"
           >
             <FaLock />
-            <span>{isLive ? "Umpire Mode" : "Umpire Mode (Saved)"}</span>
+            <span>{isLive ? "Umpire Mode (Live)" : "Umpire Mode (Saved)"}</span>
           </button>
         )}
         <Link
@@ -144,6 +144,11 @@ export default function SessionsPage() {
   const [selectedSession, setSelectedSession] = useState(null); // For PIN modal
   const router = useRouter();
 
+  // Accept sessionIsLive argument from SessionCard
+  const handleUmpireClick = (session, sessionIsLive) => {
+    setSelectedSession({ ...session, sessionIsLive }); // Store it in selectedSession
+  };
+
   useEffect(() => {
     fetch("/api/sessions")
       .then((res) => res.json())
@@ -155,16 +160,14 @@ export default function SessionsPage() {
       .finally(() => setLoading(false));
   }, []);
 
-  const handleUmpireClick = (session) => {
-    setSelectedSession(session);
-  };
-
   const handlePinSubmit = () => {
     if (!selectedSession) return;
-    const isLive = selectedSession.result === "";
-    const path = isLive
+
+    // Use the sessionIsLive property stored in selectedSession
+    const path = selectedSession.sessionIsLive
       ? `/match/${selectedSession.match}`
       : `/result/${selectedSession.match}`;
+
     router.push(path);
     setSelectedSession(null); // Close modal
   };
@@ -195,11 +198,13 @@ export default function SessionsPage() {
         <div className="flex justify-between items-center mb-10">
           <Link
             href="/"
-            className="text-sm text-zinc-400 hover:text-white flex items-center gap-2 transition"
+            className="text-sm text-white hover:text-white flex items-center gap-2 transition"
           >
-            <FaArrowLeft /> Back to Home
+            <FaArrowLeft /> Back
           </Link>
-          <h1 className="text-4xl font-extrabold text-white">All Sessions</h1>
+          <h1 className="text-4xl font-extrabold text-white mt-10">
+            All Sessions
+          </h1>
           <Link
             href="/session/new"
             className="px-4 py-2 rounded-lg bg-blue-600 text-white font-semibold shadow flex items-center gap-2"
@@ -213,7 +218,10 @@ export default function SessionsPage() {
             <SessionCard
               key={s._id}
               session={s}
-              onUmpireClick={() => handleUmpireClick(s)}
+              // FIX: Correctly pass the session and its isLive status to handleUmpireClick
+              onUmpireClick={(clickedSession, clickedIsLive) =>
+                handleUmpireClick(clickedSession, clickedIsLive)
+              }
             />
           ))}
         </div>

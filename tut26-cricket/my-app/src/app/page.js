@@ -113,29 +113,30 @@ export default function HomePage() {
                 It all started in 2022 with a few friends who loved the game.
                 Today, we're a friendly league of over{" "}
                 <strong className="text-white">50+ members</strong> who meet for
-                fun, competitive cricket. This app is our custom-built tool to
-                make scoring simple, fast, and accessible to everyone.
+                fun, competitive cricket. This app is our custom built tool to
+                make scoring simple, fast, and accessible to everyone in{" "}
+                <strong className="text-white">real time.</strong>
               </p>
             </div>
             <div className="w-full max-w-md flex flex-col gap-5">
               <Link
                 href="/session/new"
-                className="text-center py-4 rounded-2xl bg-gradient-to-r from-yellow-400 via-amber-300 to-orange-400 text-black text-2xl font-bold shadow-lg shadow-amber-900/40 hover:scale-105 transition-transform"
+                className=" text-center py-4 rounded-2xl bg-gradient-to-r from-yellow-400 via-amber-300 to-orange-400 text-black text-2xl font-bold shadow-lg shadow-amber-900/40 hover:scale-105 transition-transform"
               >
                 Launch Umpire <br />
                 Mode
               </Link>
               <Link
                 href="/session"
-                className="text-center py-4 rounded-2xl bg-gradient-to-r from-yellow-400 via-amber-300 to-orange-400 text-black text-2xl font-bold shadow-lg shadow-amber-900/40 hover:scale-105 transition-transform"
+                className="text-center py-4 rounded-2xl bg-gradient-to-r from-yellow-400 via-amber-500 to-yellow-300 text-black text-2xl font-bold shadow-lg shadow-amber-900/40 hover:scale-105 transition-transform"
               >
-                View Past/live <br /> Sessions
+                View Past/Live <br /> Sessions
               </Link>
               <Link
                 href="/rules"
-                className="text-center py-4 rounded-2xl bg-zinc-800 text-white/80 text-2xl font-bold ring-1 ring-zinc-700 hover:bg-zinc-700 hover:text-white transition"
+                className="text-center  py-4 rounded-2xl bg-zinc-700 text-white/80 text-2xl font-bold ring-1 ring-zinc-700 hover:bg-zinc-700 hover:text-white transition hover:scale-105 transition-transform"
               >
-                View All Rules
+                View All Rules!
               </Link>
             </div>
           </section>
@@ -146,12 +147,14 @@ export default function HomePage() {
             <div className="bg-white/5 backdrop-blur-md rounded-3xl p-8 md:p-12 space-y-12 ring-1 ring-white/10 shadow-2xl shadow-black/40">
               <div className="text-center">
                 <h2 className="text-4xl md:text-5xl font-bold text-amber-300">
-                  How Our App Works 🏏
+                  How This App Works 🏏
                 </h2>
-                <p className="mt-4 max-w-2xl mx-auto text-lg text-zinc-300">
-                  Say goodbye to memorizing. This is a real-time scoring tool
-                  designed for our games, perfect for practice matches, league
-                  play, or just having fun with friends.
+                <p className="mt-4 max-w-2xl mx-auto text-xl text-white">
+                  Say goodbye to memorizing. <br />
+                  <br />
+                  This is a real time scoring tool designed for our games,
+                  perfect for practice matches, league play, or just having fun
+                  with friends.
                 </p>
               </div>
 
@@ -162,9 +165,37 @@ export default function HomePage() {
                   <h3 className="text-xl font-semibold text-white mb-2">
                     Session Dashboard
                   </h3>
-                  <p className="text-zinc-400">
+                  <p className="text-gray">
                     Your central hub to see all past games, create new ones, or
-                    jump back into a match with a secure Umpire PIN.
+                    jump back into a <b>unfinished</b> match with a secure
+                    Umpire PIN.
+                  </p>
+                </div>
+
+                {/* Step 4 */}
+                <div className="bg-black/20 p-6 rounded-2xl ring-1 ring-white/10">
+                  <FaPenSquare className="mx-auto text-cyan-300 text-4xl mb-4" />
+                  <h3 className="text-xl font-semibold text-white mb-2">
+                    Live Umpire Scoring
+                  </h3>
+                  <p className="text-gray">
+                    The umpire's cockpit. Score every ball with simple, color
+                    coded buttons for runs, wides, dots, and outs.
+                  </p>
+                </div>
+                {/* Step 5 */}
+                <div className="bg-black/20 p-6 rounded-2xl ring-1 ring-white/10">
+                  <FaEye className="mx-auto text-cyan-300 text-4xl mb-4" />
+                  <h3 className="text-xl font-semibold text-white mb-2">
+                    Spectator View
+                  </h3>
+                  <p className="text-gray">
+                    Share the live scoreboard! <br />
+                    <br />
+                    Perfect for friends to follow along or for displaying the
+                    score on a big screen during a game. <br /> <br />
+                    You can instantly see if the session is live or completed.
+                    live matches show a red pulse, and finished ones show green.
                   </p>
                 </div>
                 {/* Step 2 */}
@@ -173,7 +204,7 @@ export default function HomePage() {
                   <h3 className="text-xl font-semibold text-white mb-2">
                     New Match Setup
                   </h3>
-                  <p className="text-zinc-400">
+                  <p className="text-gray">
                     Start a game in seconds. Just enter a match name, add
                     players to Team A & B, and pick the number of overs.
                   </p>
@@ -184,32 +215,9 @@ export default function HomePage() {
                   <h3 className="text-xl font-semibold text-white mb-2">
                     Animated Coin Toss
                   </h3>
-                  <p className="text-zinc-400">
+                  <p className="text-gray">
                     To make it official! A fun coin flip animation decides who
                     bats first, then automatically starts the match.
-                  </p>
-                </div>
-                {/* Step 4 */}
-                <div className="bg-black/20 p-6 rounded-2xl ring-1 ring-white/10">
-                  <FaPenSquare className="mx-auto text-cyan-300 text-4xl mb-4" />
-                  <h3 className="text-xl font-semibold text-white mb-2">
-                    Live Umpire Scoring
-                  </h3>
-                  <p className="text-zinc-400">
-                    The umpire's cockpit. Score every ball with simple,
-                    color-coded buttons for runs, wides, dots, and outs.
-                  </p>
-                </div>
-                {/* Step 5 */}
-                <div className="bg-black/20 p-6 rounded-2xl ring-1 ring-white/10">
-                  <FaEye className="mx-auto text-cyan-300 text-4xl mb-4" />
-                  <h3 className="text-xl font-semibold text-white mb-2">
-                    Spectator View
-                  </h3>
-                  <p className="text-zinc-400">
-                    A read-only live scoreboard. Perfect for friends to follow
-                    along or for displaying the score on a big screen during a
-                    game.
                   </p>
                 </div>
                 {/* Step 6 */}
@@ -218,10 +226,10 @@ export default function HomePage() {
                   <h3 className="text-xl font-semibold text-white mb-2">
                     Final Results
                   </h3>
-                  <p className="text-zinc-400">
+                  <p className="text-gray">
                     Get an instant summary showing who won, the final scores,
-                    and key stats. All games are archived for you to review
-                    later.
+                    and key stats. All games are saved in the cloud for you to
+                    review later.
                   </p>
                 </div>
               </div>

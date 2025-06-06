@@ -1,18 +1,15 @@
-/* ------------------------------------------------------------------
-   src/app/session/[id]/view/page.jsx – (Corrected, Modern, Live View)
--------------------------------------------------------------------*/
 "use client";
 
 import { useState, useEffect } from "react";
 import { useParams, useRouter } from "next/navigation";
 import useSWR from "swr";
 import Link from "next/link";
-import { motion, AnimatePresence } from "framer-motion";
 import { FaCopy, FaSync, FaArrowLeft, FaCheck } from "react-icons/fa";
 
+// --- Fetcher ---
 const fetcher = (url) => fetch(url).then((res) => res.json());
 
-// --- Helper function for accurate Run Rate ---
+// --- Helper function ---
 const calculateRunRate = (score, history) => {
   if (!history || !score) return "0.00";
   const legalBalls = history
@@ -24,7 +21,6 @@ const calculateRunRate = (score, history) => {
 };
 
 // --- UI Components ---
-
 const Ball = ({ runs, isOut, extraType }) => {
   let style, label;
   if (isOut) {
@@ -71,6 +67,8 @@ const SplashMsg = ({ children }) => (
 );
 
 const LiveScoreCard = ({ match }) => {
+  if (!match || !match.innings1 || !match.innings2) return null;
+
   const isFirstInnings = match.innings === "first";
   const battingInnings = isFirstInnings ? match.innings1 : match.innings2;
   const battingTeam = battingInnings.team;
@@ -83,7 +81,7 @@ const LiveScoreCard = ({ match }) => {
   return (
     <div className="w-full max-w-xl bg-black/30 backdrop-blur-sm ring-1 ring-white/10 rounded-3xl p-6 text-center space-y-2 shadow-2xl shadow-zinc-900">
       <p className="text-xl font-bold text-amber-300 tracking-wide">
-        🏏 {battingTeam} Batting
+        🏏 {battingTeam}'s Team
       </p>
       <p className="text-8xl font-extrabold text-white">
         {match.score}/{match.outs}
@@ -101,18 +99,18 @@ const LiveScoreCard = ({ match }) => {
   );
 };
 
-const TeamInningsDetail = ({ title, teamData, inningsData }) => {
+const TeamInningsDetail = ({ title, inningsData }) => {
+  if (!inningsData) return null;
   const runRate = calculateRunRate(inningsData.score, inningsData.history);
   return (
     <div className="bg-zinc-900/50 p-6 rounded-2xl ring-1 ring-zinc-800">
       <div className="flex justify-between items-center mb-4">
-        <h2 className="text-2xl font-bold text-white">{title}</h2>
+        <h2 className="text-2xl font-bold text-white">{title}'s Team</h2>
         <span className="text-3xl font-mono font-bold text-amber-300">
           {inningsData?.score ?? 0}
         </span>
       </div>
       <div className="text-sm text-zinc-400 mb-4">Run Rate: {runRate}</div>
-
       <div className="space-y-4 max-h-72 overflow-y-auto pr-2 custom-scrollbar">
         {inningsData?.history.length > 0 ? (
           [...inningsData.history].reverse().map((over) => (
@@ -137,22 +135,26 @@ const TeamInningsDetail = ({ title, teamData, inningsData }) => {
 
 // --- Main Page Component ---
 export default function ViewSessionPage() {
-  // ✅ FIX: All hooks are now called at the top level of the component.
   const { id: sessionId } = useParams();
   const [copied, setCopied] = useState(false);
   const router = useRouter();
 
-  const { data: session } = useSWR(
+  const { data, error } = useSWR(
     sessionId ? `/api/sessions/${sessionId}` : null,
-    fetcher
-  );
-  const { data: match, error } = useSWR(
-    () => (session?.match ? `/api/matches/${session.match}` : null),
-    fetcher,
-    { refreshInterval: 2000 } // Fetch every 2 seconds
+    async (url) => {
+      const session = await fetch(url).then((res) => res.json());
+      if (!session.match) throw new Error("Match not linked to session");
+      const match = await fetch(`/api/matches/${session.match}`).then((res) =>
+        res.json()
+      );
+      return { session, match };
+    },
+    { refreshInterval: 2000 }
   );
 
-  // This useEffect hook is now correctly placed at the top level.
+  const sessionData = data?.session;
+  const match = data?.match;
+
   useEffect(() => {
     if (match && match.result) {
       router.push(`/result/${match._id}`);
@@ -162,16 +164,16 @@ export default function ViewSessionPage() {
   const handleCopy = () => {
     navigator.clipboard.writeText(window.location.href);
     setCopied(true);
-    setTimeout(() => setCopied(false), 2000); // Reset after 2 seconds
+    setTimeout(() => setCopied(false), 2000);
   };
 
-  // Conditional returns now happen AFTER all hooks have been called.
   if (!sessionId) return <SplashMsg>No Session ID provided.</SplashMsg>;
-  if (!session) return <SplashMsg>Loading Session...</SplashMsg>;
-  if (!session.match)
-    return <SplashMsg>The match hasn't started yet.</SplashMsg>;
-  if (error) return <SplashMsg>Could not load match data.</SplashMsg>;
-  if (!match) return <SplashMsg>Loading Live Score...</SplashMsg>;
+  if (error) return <SplashMsg>Could not load session data.</SplashMsg>;
+  if (!sessionData) return <SplashMsg>Loading Session...</SplashMsg>;
+  if (!match)
+    return (
+      <SplashMsg>The match for this session hasn't started yet.</SplashMsg>
+    );
 
   return (
     <main className="min-h-screen bg-zinc-950 text-white font-sans p-4 pb-10 flex flex-col items-center">
@@ -184,7 +186,9 @@ export default function ViewSessionPage() {
           <FaArrowLeft size={20} />
         </button>
         <div>
-          <h1 className="text-4xl font-extrabold text-white">{session.name}</h1>
+          <h1 className="text-4xl font-extrabold text-white">
+            {sessionData.name}
+          </h1>
           <p className="text-amber-400">Live Spectator View</p>
         </div>
         <button
@@ -204,11 +208,11 @@ export default function ViewSessionPage() {
 
       <div className="w-full max-w-4xl grid grid-cols-1 md:grid-cols-2 gap-6 mt-10">
         <TeamInningsDetail
-          title={match.innings1.team}
+          title={match.innings1?.team || "Team A"}
           inningsData={match.innings1}
         />
         <TeamInningsDetail
-          title={match.innings2.team}
+          title={match.innings2?.team || "Team B"}
           inningsData={match.innings2}
         />
       </div>
