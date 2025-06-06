@@ -75,7 +75,9 @@ const Scorecard = ({ innings1, innings2, tossWinner }) => (
     </h2>
     <div className="space-y-3">
       <div className="flex justify-between items-center p-3 bg-zinc-800 rounded-lg">
-        <span className="font-bold text-lg text-zinc-200">{innings1.team}</span>
+        <span className="font-bold text-lg text-zinc-200">
+          {innings1.team}'s Team
+        </span>
         <span className="font-mono text-xl font-extrabold text-white">
           {innings1.score}/
           {
@@ -85,7 +87,9 @@ const Scorecard = ({ innings1, innings2, tossWinner }) => (
         </span>
       </div>
       <div className="flex justify-between items-center p-3 bg-zinc-800 rounded-lg">
-        <span className="font-bold text-lg text-zinc-200">{innings2.team}</span>
+        <span className="font-bold text-lg text-zinc-200">
+          {innings2.team}'s Team
+        </span>
         <span className="font-mono text-xl font-extrabold text-white">
           {innings2.score}/
           {
@@ -97,7 +101,7 @@ const Scorecard = ({ innings1, innings2, tossWinner }) => (
     </div>
     <p className="text-center text-sm text-zinc-400 pt-3 border-t border-white/10">
       Toss won by{" "}
-      <span className="font-semibold text-zinc-200">{tossWinner}</span>.
+      <span className="font-semibold text-zinc-200">{tossWinner}'s Team</span>.
     </p>
   </div>
 );
@@ -110,7 +114,7 @@ const MatchStats = ({ stats1, stats2, team1Name, team2Name }) => (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6">
       <div className="space-y-2">
         <h3 className="font-bold text-lg text-center text-blue-400 mb-3">
-          {team1Name}
+          {team1Name}'s Team
         </h3>
         <StatItem label="Run Rate" value={stats1.runRate} />
         <StatItem label="Fours" value={stats1.fours} />
@@ -120,7 +124,7 @@ const MatchStats = ({ stats1, stats2, team1Name, team2Name }) => (
       </div>
       <div className="space-y-2">
         <h3 className="font-bold text-lg text-center text-red-400 mb-3">
-          {team2Name}
+          {team2Name}'s Team
         </h3>
         <StatItem label="Run Rate" value={stats2.runRate} />
         <StatItem label="Fours" value={stats2.fours} />
@@ -139,7 +143,7 @@ const PlayerLists = ({ teamA, teamB, team1Name, team2Name }) => (
     </h2>
     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
       <div>
-        <h3 className="font-bold text-blue-400 mb-2">{team1Name}</h3>
+        <h3 className="font-bold text-blue-400 mb-2">{team1Name}'s Team</h3>
         <ul className="list-disc list-inside text-zinc-300">
           {teamA.map((player, i) => (
             <li key={i}>{player}</li>
@@ -147,7 +151,7 @@ const PlayerLists = ({ teamA, teamB, team1Name, team2Name }) => (
         </ul>
       </div>
       <div>
-        <h3 className="font-bold text-red-400 mb-2">{team2Name}</h3>
+        <h3 className="font-bold text-red-400 mb-2">{team2Name}'s Team</h3>
         <ul className="list-disc list-inside text-zinc-300">
           {teamB.map((player, i) => (
             <li key={i}>{player}</li>

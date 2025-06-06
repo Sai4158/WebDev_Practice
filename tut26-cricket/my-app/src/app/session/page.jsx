@@ -195,16 +195,13 @@ export default function SessionsPage() {
   return (
     <main className="min-h-screen bg-zinc-950 p-6 text-zinc-100">
       <div className="max-w-6xl mx-auto">
-        <div className="flex justify-between items-center mb-10">
+        <div className="flex justify-between items-center mb-10 mt-5">
           <Link
             href="/"
-            className="text-sm text-white hover:text-white flex items-center gap-2 transition"
+            className="text-sm text-white hover:text-white flex items-center gap-2 transition font-bold"
           >
             <FaArrowLeft /> Back
           </Link>
-          <h1 className="text-4xl font-extrabold text-white mt-10">
-            All Sessions
-          </h1>
           <Link
             href="/session/new"
             className="px-4 py-2 rounded-lg bg-blue-600 text-white font-semibold shadow flex items-center gap-2"
@@ -212,6 +209,10 @@ export default function SessionsPage() {
             <FaPlus /> New
           </Link>
         </div>
+
+        <h1 className="text-4xl text-center font-extrabold text-white mt-10 mb-5">
+          All Sessions
+        </h1>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {sessions.map((s) => (
