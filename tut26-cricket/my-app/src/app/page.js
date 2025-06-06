@@ -129,13 +129,13 @@ export default function HomePage() {
                 href="/session"
                 className="text-center py-4 rounded-2xl bg-gradient-to-r from-yellow-400 via-amber-300 to-orange-400 text-black text-2xl font-bold shadow-lg shadow-amber-900/40 hover:scale-105 transition-transform"
               >
-                View Past Sessions
+                View Past/live <br /> Sessions
               </Link>
               <Link
                 href="/rules"
                 className="text-center py-4 rounded-2xl bg-zinc-800 text-white/80 text-2xl font-bold ring-1 ring-zinc-700 hover:bg-zinc-700 hover:text-white transition"
               >
-                View Custom Rules
+                View All Rules
               </Link>
             </div>
           </section>
