@@ -1,16 +1,30 @@
-import Match from "../../../models/Match";
-import { connectDB } from "../../lib/db";
+// src/app/api/matches/route.js
 
-// POST /api/matches  → create a new match (before the toss)
+// Corrected imports:
+import { connectDB } from "../../lib/db"; // Correct module path
+import Match from "../../../models/Match"; // Go up three levels to src, then to models/Match.js
+
+// POST /api/matches  → create a new match
 export async function POST(req) {
   try {
-    const data = await req.json();
+    const { teamA, teamB, overs } = await req.json();
     await connectDB();
 
-    // tossWinner will be added later, so we don't require it here
     const newMatch = new Match({
-      ...data,
-      isOngoing: true, // start live
+      teamA,
+      teamB,
+      overs,
+      isOngoing: true,
+      innings1: {
+        team: teamA[0] || "Team A",
+        score: 0,
+        history: [],
+      },
+      innings2: {
+        team: teamB[0] || "Team B",
+        score: 0,
+        history: [],
+      },
     });
 
     await newMatch.save();
@@ -20,7 +34,10 @@ export async function POST(req) {
       headers: { "Content-Type": "application/json" },
     });
   } catch (err) {
-    return new Response("Error saving match: " + err.message, { status: 500 });
+    return Response.json(
+      { message: "Error saving match", error: err.message },
+      { status: 500 }
+    );
   }
 }
 
@@ -34,8 +51,9 @@ export async function GET() {
       headers: { "Content-Type": "application/json" },
     });
   } catch (err) {
-    return new Response("Error fetching matches: " + err.message, {
-      status: 500,
-    });
+    return Response.json(
+      { message: "Error fetching matches", error: err.message },
+      { status: 500 }
+    );
   }
 }

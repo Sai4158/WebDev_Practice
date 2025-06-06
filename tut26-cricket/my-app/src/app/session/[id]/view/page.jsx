@@ -1,230 +1,189 @@
 /* ------------------------------------------------------------------
-   src/app/session/[id]/view/page.jsx  – spectator scoreboard (modern, split overs)
+   src/app/session/[id]/view/page.jsx – (Corrected)
 -------------------------------------------------------------------*/
 "use client";
+
+import { useState } from "react"; // ✅ FIX: Added the missing import for useState
 import { useParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import useSWR from "swr";
 import Link from "next/link";
+import { FaCopy } from "react-icons/fa";
 
-export default function ViewSession() {
-  const { id } = useParams();
-  const [match, setMatch] = useState(null);
-  const [noMatchYet, setNoMatchYet] = useState(false);
-  const [showA, setShowA] = useState(false);
-  const [showB, setShowB] = useState(false);
+const fetcher = (url) => fetch(url).then((res) => res.json());
 
-  /* ───────── poll match every 5 s ───────── */
-  useEffect(() => {
-    if (!id) return;
-    let timer;
-    const load = async () => {
-      try {
-        const ses = await fetch(`/api/sessions/${id}`).then((r) => r.json());
-        if (!ses?.match) return setNoMatchYet(true);
-        setNoMatchYet(false);
-        const m = await fetch(`/api/matches/${ses.match}`).then((r) =>
-          r.json()
-        );
-        setMatch(m ?? null);
-      } catch (e) {
-        console.error(e);
-      }
-    };
-    load();
-    timer = setInterval(load, 5_000);
-    return () => clearInterval(timer);
-  }, [id]);
-
-  /* ───────── early states ───────── */
-  if (noMatchYet)
-    return (
-      <SplashMsg>
-        The match hasn’t started yet.
-        <p className="mt-6">
-          <NavBack />
-        </p>
-      </SplashMsg>
-    );
-
-  if (!match)
-    return (
-      <SplashMsg>
-        Loading…
-        <p className="mt-6">
-          <NavBack />
-        </p>
-      </SplashMsg>
-    );
-
-  /* ───────── helpers ───────── */
-  const oversPlayed = (match.balls.length / 6).toFixed(1);
-  const runRate = match.balls.length
-    ? (match.score / (match.balls.length / 6)).toFixed(2)
-    : "--";
-  const remaining =
-    match.teamA.length + match.teamB.length ? 10 - match.outs : "--";
-
-  // history already stores `innings` when recorded by the scorer page
-  const oversA = groupByOver(
-    match.history.filter((h) => h.innings === "first")
-  );
-  const oversB = groupByOver(
-    match.history.filter((h) => h.innings === "second")
-  );
-
-  /* ───────── UI ───────── */
+// --- Shared Colorful Ball Component ---
+const Ball = ({ runs, isOut, isExtra }) => {
+  const getBallStyle = () => {
+    if (isOut) return "bg-rose-600 ring-rose-500";
+    if (runs === 6) return "bg-purple-600 ring-purple-500";
+    if (runs >= 4) return "bg-sky-500 ring-sky-400";
+    if (isExtra) return "bg-yellow-500 text-black";
+    if (runs > 0) return "bg-green-600";
+    return "bg-zinc-600";
+  };
   return (
-    <main className="min-h-screen bg-black text-white font-inter px-4 pb-10 flex flex-col items-center">
-      {/* back (top‑left) */}
-      <Link
-        href="/session"
-        className="absolute top-5 left-4 text-amber-300 underline hover:text-amber-200"
-      >
-        ← Back
-      </Link>
+    <div
+      className={`w-9 h-9 rounded-full flex items-center justify-center font-bold text-sm ring-1 ring-inset ring-black/20 ${getBallStyle()}`}
+    >
+      {isOut ? "W" : runs}
+    </div>
+  );
+};
 
-      {/* headline & live score at top */}
-      <section className="w-full max-w-xl bg-[#111]/80 ring-1 ring-zinc-700 rounded-3xl mt-16 p-8 shadow-2xl shadow-rose-700/40 text-center space-y-4">
-        <h1 className="text-4xl font-extrabold drop-shadow-[0_0_10px_rgba(255,80,100,.9)]">
-          Scoreboard
+export default function ViewSessionPage() {
+  const { id: sessionId } = useParams();
+
+  // Step 1: Fetch the session to get the match ID
+  const { data: session } = useSWR(
+    sessionId ? `/api/sessions/${sessionId}` : null,
+    fetcher
+  );
+
+  // Step 2: Conditionally fetch the match data, and poll for live updates
+  const { data: match, error } = useSWR(
+    () => (session?.match ? `/api/matches/${session.match}` : null),
+    fetcher,
+    { refreshInterval: 5000 }
+  );
+
+  const handleCopy = () => {
+    navigator.clipboard.writeText(window.location.href);
+    alert("Link copied!");
+  };
+
+  // ✅ FIX: Handle the case where the ID in the URL is missing or "undefined"
+  if (!sessionId) return <SplashMsg>No Session ID provided.</SplashMsg>;
+  if (!session) return <SplashMsg>Loading Session...</SplashMsg>;
+  if (!session.match)
+    return <SplashMsg>The match hasn't started yet.</SplashMsg>;
+  if (error) return <SplashMsg>Could not load match data.</SplashMsg>;
+  if (!match) return <SplashMsg>Loading Live Score...</SplashMsg>;
+
+  const isFirstInnings = match.innings === "first";
+  const teamABatting =
+    match.tossWinner === match.teamA[0] ? isFirstInnings : !isFirstInnings;
+  const battingTeamName = teamABatting ? "Team A" : "Team B";
+  const runRate =
+    match.innings1?.history.length > 0
+      ? (match.innings1.score / match.innings1.history.length).toFixed(2)
+      : "0.00";
+
+  return (
+    <main className="min-h-screen bg-black text-white font-sans p-4 pb-10 flex flex-col items-center">
+      <header className="w-full max-w-xl text-center my-8 relative">
+        <Link
+          href="/session"
+          className="absolute top-2 left-2 text-amber-300 underline text-sm"
+        >
+          ← All Sessions
+        </Link>
+        <button
+          onClick={handleCopy}
+          className="absolute top-2 right-2 p-2 text-zinc-400 hover:text-white"
+        >
+          <FaCopy />
+        </button>
+        <h1 className="text-4xl font-extrabold text-amber-300">
+          Live Scoreboard
         </h1>
-        <p className="text-lg font-medium text-amber-300">
-          🏏 {match.innings === "first" ? "Team A Batting" : "Team B Batting"}
+        <p className="text-zinc-300">{session.name}</p>
+      </header>
+
+      {/* Live Score */}
+      <section className="w-full max-w-xl bg-black/50 backdrop-blur-sm ring-1 ring-zinc-700 rounded-3xl p-6 text-center space-y-2 shadow-2xl shadow-amber-700/20">
+        <p className="text-xl font-bold text-white">
+          🏏 {battingTeamName} Batting
         </p>
-        <p className="text-6xl font-extrabold">{match.score}</p>
-        <p className="text-lg text-zinc-400">
-          {oversPlayed} overs  |  RR {runRate}
+        <p className="text-7xl font-extrabold">
+          {match.score}/{match.outs}
         </p>
-        <div className="grid grid-cols-2 gap-4 text-center text-lg pt-6">
-          <Stat label="Wickets" value={match.outs} />
-          <Stat label="Remaining" value={remaining} />
-          <Stat label="Max Overs" value={match.overs} />
-          <Stat label="Wide Row" value={match.widesInRow ?? 0} />
+        <div className="text-lg text-zinc-400">
+          <span>
+            Overs:{" "}
+            {match[isFirstInnings ? "innings1" : "innings2"]?.history.length ??
+              0}
+          </span>
+          <span className="mx-2">|</span>
+          <span>Run Rate: {runRate}</span>
         </div>
       </section>
 
-      {/* team cards */}
+      {/* Team Cards with History */}
       <div className="w-full max-w-6xl grid grid-cols-1 md:grid-cols-2 gap-6 mt-10">
         <TeamCard
-          team="A"
+          title="Team A"
           players={match.teamA}
-          overs={oversA}
-          show={showA}
-          setShow={setShowA}
+          inningsData={match.innings1}
         />
         <TeamCard
-          team="B"
+          title="Team B"
           players={match.teamB}
-          overs={oversB}
-          show={showB}
-          setShow={setShowB}
+          inningsData={match.innings2}
         />
       </div>
-
-      {/* back bottom */}
-      <p className="mt-10 text-lg">
-        <NavBack />
-      </p>
     </main>
   );
 }
 
-/* ───────── helpers & small comps ───────── */
-function groupByOver(arr) {
-  return arr.reduce((acc, b) => {
-    (acc[b.over] ||= []).push(b);
-    return acc;
-  }, {});
-}
-
-function TeamCard({ team, players, overs, show, setShow }) {
-  const colour = team === "A" ? "text-sky-300" : "text-pink-300";
+const TeamCard = ({ title, players, inningsData }) => {
+  const [showHistory, setShowHistory] = useState(true);
+  const teamColor = title === "Team A" ? "text-sky-400" : "text-rose-400";
   return (
-    <div className="bg-[#111]/80 p-6 rounded-2xl ring-1 ring-zinc-700 shadow-xl">
-      <h2 className={`text-xl font-bold mb-4 ${colour}`}>🅰️ Team {team}</h2>
-      <ul className="list-disc ml-5 text-base space-y-0.5">
-        {players.map((p, i) => (
-          <li key={i}>{p}</li>
-        ))}
-      </ul>
-      <button
-        onClick={() => setShow((s) => !s)}
-        className="mt-4 underline text-sm text-amber-300 hover:text-amber-200"
+    <div className="bg-zinc-900/50 p-6 rounded-2xl ring-1 ring-zinc-800">
+      <h2
+        className={`text-2xl font-bold mb-4 flex justify-between items-center ${teamColor}`}
       >
-        {show ? "Hide" : "Show"} Over History
+        <span>{title}</span>
+        <span className="text-white text-3xl font-mono">
+          {inningsData?.score ?? 0}
+        </span>
+      </h2>
+
+      <div className="mb-4">
+        <h3 className="font-semibold mb-2 text-zinc-300">Players</h3>
+        <ul className="text-zinc-400 grid grid-cols-2 gap-1">
+          {players.map((p, i) => (
+            <li key={i}>{p}</li>
+          ))}
+        </ul>
+      </div>
+
+      <button
+        onClick={() => setShowHistory((s) => !s)}
+        className="text-amber-300 underline text-sm mb-4"
+      >
+        {showHistory ? "Hide" : "Show"} Over History
       </button>
 
-      {show && (
-        <div className="mt-5 space-y-4 max-h-72 overflow-y-auto pr-2">
-          {Object.entries(overs).length ? (
-            Object.entries(overs).map(([o, balls]) => (
-              <div key={o}>
-                <div className="font-semibold mb-1">Over {+o + 1}</div>
-                <div className="flex gap-2 flex-wrap">
-                  {balls.map((b, i) => (
-                    <Ball key={i} {...b} />
+      {showHistory && (
+        <div className="space-y-4 max-h-72 overflow-y-auto pr-2">
+          {inningsData?.history.length > 0 ? (
+            inningsData.history.map((over) => (
+              <div key={over.overNumber}>
+                <p className="font-semibold text-zinc-200">
+                  Over {over.overNumber}
+                </p>
+                <div className="flex gap-2 flex-wrap mt-1">
+                  {over.balls.map((ball, i) => (
+                    <Ball key={i} {...ball} />
                   ))}
                 </div>
               </div>
             ))
           ) : (
-            <p className="text-sm text-zinc-400">No balls recorded yet.</p>
+            <p className="text-sm text-zinc-500">No overs bowled yet.</p>
           )}
         </div>
       )}
     </div>
   );
-}
+};
 
-function SplashMsg({ children }) {
-  return (
-    <main className="min-h-screen flex flex-col items-center justify-center bg-black text-amber-200 text-center px-4">
-      {children}
-    </main>
-  );
-}
-
-const NavBack = () => (
-  <Link
-    href="/session"
-    className="underline underline-offset-4 text-amber-300 hover:text-amber-100"
-  >
-    ← Back&nbsp;to&nbsp;sessions
-  </Link>
+const SplashMsg = ({ children }) => (
+  <main className="min-h-screen flex flex-col items-center justify-center bg-black text-amber-200 text-center px-4">
+    <p className="text-xl">{children}</p>
+    <Link href="/session" className="mt-6 underline text-lg">
+      ← Back to sessions
+    </Link>
+  </main>
 );
-
-function Stat({ label, value }) {
-  return (
-    <div>
-      <div className="text-3xl font-bold drop-shadow-[0_0_6px_rgba(255,30,70,0.9)]">
-        {value}
-      </div>
-      <div className="uppercase text-sm tracking-wider text-zinc-400">
-        {label}
-      </div>
-    </div>
-  );
-}
-
-function Ball({ type, value }) {
-  const bg =
-    type === "run" && value === 4
-      ? "bg-orange-500"
-      : type === "run" && value === 6
-      ? "bg-violet-600"
-      : type === "run"
-      ? "bg-blue-600"
-      : type === "dot"
-      ? "bg-zinc-500"
-      : type === "out"
-      ? "bg-red-600"
-      : "bg-yellow-400 text-black";
-  const txt = type === "dot" ? "•" : type === "out" ? "W" : value ?? "";
-  return (
-    <span
-      className={`w-9 h-9 rounded-full flex items-center justify-center font-bold text-white ${bg}`}
-    >
-      {txt}
-    </span>
-  );
-}

@@ -1,160 +1,287 @@
 /* ------------------------------------------------------------------
-   src/app/toss/[id]/page.jsx – same logic, black-&-gold look
-------------------------------------------------------------------*/
+   src/app/toss/[id]/page.jsx – (Updated with Redo & 20s Timer)
+-------------------------------------------------------------------*/
 "use client";
+
 import { useEffect, useState } from "react";
 import { useRouter, useParams } from "next/navigation";
+import { motion, AnimatePresence } from "framer-motion";
+import { FaRedo } from "react-icons/fa";
+
+// --- Updated & Bigger SVG Coin Components ---
+const CoinHeads = () => (
+  <svg
+    width="160"
+    height="160"
+    viewBox="0 0 100 100"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <circle
+      cx="50"
+      cy="50"
+      r="48"
+      fill="#ffc700"
+      stroke="#b38b00"
+      strokeWidth="4"
+    />
+    <text
+      x="50"
+      y="58"
+      fontFamily="Arial, sans-serif"
+      fontSize="22"
+      fill="#664d00"
+      textAnchor="middle"
+      fontWeight="bold"
+    >
+      HEADS
+    </text>
+  </svg>
+);
+const CoinTails = () => (
+  <svg
+    width="160"
+    height="160"
+    viewBox="0 0 100 100"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <circle
+      cx="50"
+      cy="50"
+      r="48"
+      fill="#cccccc"
+      stroke="#8e8e8e"
+      strokeWidth="4"
+    />
+    <text
+      x="50"
+      y="58"
+      fontFamily="Arial, sans-serif"
+      fontSize="22"
+      fill="#4f4f4f"
+      textAnchor="middle"
+      fontWeight="bold"
+    >
+      TAILS
+    </text>
+  </svg>
+);
+const SpinningCoin = () => (
+  <svg
+    width="160"
+    height="160"
+    viewBox="0 0 100 100"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <circle
+      cx="50"
+      cy="50"
+      r="48"
+      fill="url(#grad)"
+      stroke="#b38b00"
+      strokeWidth="4"
+    />
+    <defs>
+      <radialGradient id="grad">
+        <stop offset="0%" stopColor="#ffc700" />
+        <stop offset="100%" stopColor="#b38b00" />
+      </radialGradient>
+    </defs>
+  </svg>
+);
 
 export default function TossPage() {
-  const { id: sessionId } = useParams();
+  const { id: matchId } = useParams();
   const router = useRouter();
 
-  const [sec, setSec] = useState(10);
-  const [side, setSide] = useState(null); // "heads" | "tails"
-  const [win, setWin] = useState(null); // "Team A" | "Team B"
-  const [spin, setSpin] = useState(false);
-  const [teamA, setTeamA] = useState([]);
-  const [teamB, setTeamB] = useState([]);
-  const [matchId, setMatchId] = useState(null);
+  // State Management
+  const [status, setStatus] = useState("counting");
+  const [countdown, setCountdown] = useState(5); // CHANGED: Countdown starts from 20
+  const [playerChoice, setPlayerChoice] = useState(null);
+  const [tossResult, setTossResult] = useState({
+    side: null,
+    winner: null,
+    call: null,
+  });
+  const [matchDetails, setMatchDetails] = useState(null);
+  const [error, setError] = useState("");
 
-  /* 🔄 load session once */
+  // --- Core Logic ---
   useEffect(() => {
-    if (!sessionId) return;
-    (async () => {
-      const res = await fetch(`/api/sessions/${sessionId}`);
-      if (!res.ok) {
-        alert("Session not found");
-        router.push("/");
-        return;
-      }
-      const ses = await res.json();
-      setTeamA(ses.teamA ?? []);
-      setTeamB(ses.teamB ?? []);
-      setMatchId(ses.match);
-    })();
-  }, [sessionId, router]);
+    if (!matchId) return;
+    fetch(`/api/matches/${matchId}`)
+      .then((res) =>
+        res.ok ? res.json() : Promise.reject(new Error("Match not found."))
+      )
+      .then((data) => setMatchDetails(data))
+      .catch((e) => setError(e.message));
+  }, [matchId]);
 
-  /* ⏱️ countdown then flip */
   useEffect(() => {
-    const t = setInterval(() => {
-      setSec((s) => {
-        if (s <= 1) {
-          clearInterval(t);
-          setSpin(true);
-          setTimeout(() => {
-            const heads = Math.random() < 0.5;
-            setSide(heads ? "heads" : "tails");
-            setWin(heads ? "Team A" : "Team B");
-            setSpin(false);
-          }, 1_000);
-        }
-        return s - 1;
-      });
-    }, 1_000);
-    return () => clearInterval(t);
-  }, []);
+    if (status !== "counting" || countdown <= 0) return;
+    const timer = setTimeout(() => setCountdown((prev) => prev - 1), 1000);
+    return () => clearTimeout(timer);
+  }, [status, countdown]);
 
+  useEffect(() => {
+    if (countdown === 0 && status === "counting") {
+      setStatus("flipping");
+      setTimeout(() => {
+        const call = playerChoice || "heads";
+        const actualSide = Math.random() < 0.5 ? "heads" : "tails";
+        const winner = call === actualSide ? "Team A" : "Team B";
+
+        setTossResult({ side: actualSide, winner, call });
+        setStatus("finished");
+      }, 2000);
+    }
+  }, [countdown, status, playerChoice]);
+
+  // --- Action Handlers ---
   const startMatch = async () => {
-    await fetch(`/api/sessions/${sessionId}`, {
-      method: "PATCH",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ tossWinner: win }),
-    });
-    router.push(`/match/${matchId}`);
+    if (!tossResult.winner) return;
+    try {
+      const res = await fetch(`/api/matches/${matchId}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ tossWinner: tossResult.winner }),
+      });
+      if (!res.ok) throw new Error("Failed to update toss winner.");
+      router.push(`/match/${matchId}`);
+    } catch (e) {
+      setError(e.message);
+    }
   };
 
-  /* tiny helper */
-  const Roster = ({ title, list, colour }) => (
-    <div className="w-full sm:w-1/2">
-      <h3 className={`font-semibold mb-2 ${colour}`}>{title}</h3>
-      <ul className="list-decimal list-inside space-y-0.5 text-sm leading-6">
-        {list.map((p, i) => (
-          <li key={i}>{p}</li>
-        ))}
-      </ul>
-    </div>
-  );
+  // NEW: Function to reset the toss process
+  const redoToss = () => {
+    setStatus("counting");
+    setCountdown(20); // Reset countdown to 20
+    setPlayerChoice(null);
+    setTossResult({ side: null, winner: null, call: null });
+  };
 
-  /* ───────── UI ───────── */
+  // --- Render Logic ---
+  if (error)
+    return (
+      <main className="min-h-screen flex items-center justify-center bg-black">
+        <p className="text-red-500">{error}</p>
+      </main>
+    );
+  if (!matchDetails)
+    return (
+      <main className="min-h-screen flex items-center justify-center bg-black">
+        <p className="text-white">Loading Match...</p>
+      </main>
+    );
+
   return (
-    <main className="min-h-screen flex items-center justify-center bg-gradient-to-br from-black via-zinc-900 to-black p-6 text-white">
-      <section className="w-full max-w-md bg-[#111]/80 backdrop-blur-lg ring-1 ring-yellow-300/30 rounded-3xl px-8 py-10 shadow-[0_0_30px_#ff1e46aa] space-y-8">
-        <h1 className="text-4xl font-extrabold text-center bg-gradient-to-r from-yellow-200 via-rose-100 to-orange-300 bg-clip-text text-transparent drop-shadow-[0_0_10px_rgba(255,170,0,.8)]">
-          🪙 Toss 🪙
+    <main className="min-h-screen flex items-center justify-center bg-gradient-to-br from-black via-zinc-900 to-black p-6 text-white overflow-hidden">
+      {/* ADDED: `relative` class to position the redo button */}
+      <div className="relative w-full max-w-lg bg-black/50 backdrop-blur-xl ring-1 ring-yellow-400/30 rounded-3xl p-8 sm:p-12 text-center shadow-2xl shadow-yellow-500/10">
+        {/* NEW: Redo Toss Button */}
+        <button
+          onClick={redoToss}
+          className="absolute top-4 right-4 p-3 rounded-full bg-white/10 hover:bg-white/20 transition-colors"
+          aria-label="Redo toss"
+        >
+          <FaRedo />
+        </button>
+
+        <h1 className="text-4xl font-extrabold bg-gradient-to-r from-yellow-300 to-orange-400 bg-clip-text text-transparent mb-8">
+          The Toss
         </h1>
 
-        {/* coin / countdown */}
-        <div className="flex flex-col items-center gap-6">
-          {win ? (
-            <>
-              <img
-                src={
-                  side === "heads"
-                    ? "https://www.clker.com/cliparts/7/d/e/0/139362185558690588heads-hi.png"
-                    : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSdoZLuNlaCnMK2BUyCux5c511ccayIXEIsUg&s"
-                }
-                alt={side ?? "coin"}
-                className="w-32 h-32"
-              />
-              <p className="text-4xl font-bold text-white">{win}</p>
-
-              <button
-                onClick={startMatch}
-                className="mt-6 px-10 py-4 rounded-xl font-semibold bg-gradient-to-r from-yellow-200 via-rose-100 to-orange-300 text-black shadow-lg hover:brightness-110 transition"
+        <div className="h-72 flex flex-col items-center justify-center">
+          <AnimatePresence mode="wait">
+            {status === "counting" && (
+              <motion.div
+                key="counting"
+                initial={{ opacity: 0, scale: 0.5 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.5 }}
+                className="w-full"
               >
-                Start Match
-              </button>
-            </>
-          ) : (
-            <>
-              <p className="text-7xl font-extrabold tracking-wide">{sec}</p>
-              <img
-                src="https://t4.ftcdn.net/jpg/05/89/72/45/360_F_589724537_LlpMPcqLO6NYUhE9yXrUzeVjWShAS1dO.png"
-                alt="coin"
-                className={`w-32 h-32 ${
-                  spin ? "animate-flip" : "animate-spin"
-                }`}
-              />
-            </>
-          )}
+                <p className="text-zinc-300 mb-4">Team A, pick a side:</p>
+                <div className="flex justify-center gap-4 mb-6">
+                  <button
+                    onClick={() => setPlayerChoice("heads")}
+                    className={`w-32 py-3 font-bold rounded-lg text-lg transition ${
+                      playerChoice === "heads"
+                        ? "bg-yellow-400 text-black ring-2 ring-white"
+                        : "bg-zinc-700"
+                    }`}
+                  >
+                    Heads
+                  </button>
+                  <button
+                    onClick={() => setPlayerChoice("tails")}
+                    className={`w-32 py-3 font-bold rounded-lg text-lg transition ${
+                      playerChoice === "tails"
+                        ? "bg-slate-300 text-black ring-2 ring-white"
+                        : "bg-zinc-700"
+                    }`}
+                  >
+                    Tails
+                  </button>
+                </div>
+                <p className="text-8xl font-mono font-bold">{countdown}</p>
+              </motion.div>
+            )}
+            {status === "flipping" && (
+              <motion.div
+                key="flipping"
+                initial={{ scale: 0.5 }}
+                animate={{ scale: 1, rotateY: 1080 }}
+                transition={{ duration: 2, ease: "easeInOut" }}
+              >
+                <SpinningCoin />
+              </motion.div>
+            )}
+            {status === "finished" && (
+              <motion.div
+                key="finished"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="flex flex-col items-center gap-4"
+              >
+                {tossResult.side === "heads" ? <CoinHeads /> : <CoinTails />}
+                <p className="text-xl font-semibold text-center leading-relaxed">
+                  Team A called{" "}
+                  <strong className="text-amber-300 capitalize">
+                    {tossResult.call}
+                  </strong>
+                  . It's{" "}
+                  <strong className="text-amber-300 capitalize">
+                    {tossResult.side}
+                  </strong>
+                  .
+                  <br />
+                  <span className="text-2xl font-bold text-white">
+                    {tossResult.winner} wins the toss!
+                  </span>
+                </p>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
 
-        {/* rosters */}
-        <div className="flex flex-wrap gap-8 justify-center pt-6 text-2xl">
-          <Roster
-            title={`🅰️ Team A (${teamA.length})`}
-            list={teamA}
-            colour="text-sky-300"
-            className="text-xl"
-          />
-          <Roster
-            title={`🅱️ Team B (${teamB.length})`}
-            list={teamB}
-            colour="text-pink-300"
-            className="text-xl"
-          />
-        </div>
-      </section>
-
-      {/* simple keyframes */}
-      <style jsx>{`
-        @keyframes spin {
-          to {
-            transform: rotateY(360deg);
-          }
-        }
-        @keyframes flip {
-          to {
-            transform: rotateY(1080deg);
-          }
-        }
-        .animate-spin {
-          animation: spin 1.2s linear infinite;
-        }
-        .animate-flip {
-          animation: flip 1s ease-in-out forwards;
-        }
-      `}</style>
+        {status === "finished" ? (
+          <motion.button
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.5 }}
+            onClick={startMatch}
+            className="w-full mt-8 py-4 text-xl font-bold rounded-2xl bg-gradient-to-r from-yellow-400 to-orange-500 text-black hover:scale-105 transition-transform"
+          >
+            Start Match
+          </motion.button>
+        ) : (
+          <div className="mt-8 h-16" /> // Placeholder to prevent layout shift
+        )}
+      </div>
     </main>
   );
 }
