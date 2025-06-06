@@ -1,6 +1,6 @@
 /* ------------------------------------------------------------------
-   src/app/toss/[id]/page.jsx – DB-only toss page (pastel UI, fixed)
--------------------------------------------------------------------*/
+   src/app/toss/[id]/page.jsx – same logic, black-&-gold look
+------------------------------------------------------------------*/
 "use client";
 import { useEffect, useState } from "react";
 import { useRouter, useParams } from "next/navigation";
@@ -9,7 +9,7 @@ export default function TossPage() {
   const { id: sessionId } = useParams();
   const router = useRouter();
 
-  const [sec, setSec] = useState(5);
+  const [sec, setSec] = useState(10);
   const [side, setSide] = useState(null); // "heads" | "tails"
   const [win, setWin] = useState(null); // "Team A" | "Team B"
   const [spin, setSpin] = useState(false);
@@ -17,7 +17,7 @@ export default function TossPage() {
   const [teamB, setTeamB] = useState([]);
   const [matchId, setMatchId] = useState(null);
 
-  /* 🔄 fetch session once */
+  /* 🔄 load session once */
   useEffect(() => {
     if (!sessionId) return;
     (async () => {
@@ -36,22 +36,22 @@ export default function TossPage() {
 
   /* ⏱️ countdown then flip */
   useEffect(() => {
-    const timer = setInterval(() => {
-      setSec((n) => {
-        if (n <= 1) {
-          clearInterval(timer);
+    const t = setInterval(() => {
+      setSec((s) => {
+        if (s <= 1) {
+          clearInterval(t);
           setSpin(true);
           setTimeout(() => {
             const heads = Math.random() < 0.5;
             setSide(heads ? "heads" : "tails");
             setWin(heads ? "Team A" : "Team B");
             setSpin(false);
-          }, 1000);
+          }, 1_000);
         }
-        return n - 1;
+        return s - 1;
       });
-    }, 1000);
-    return () => clearInterval(timer);
+    }, 1_000);
+    return () => clearInterval(t);
   }, []);
 
   const startMatch = async () => {
@@ -63,10 +63,11 @@ export default function TossPage() {
     router.push(`/match/${matchId}`);
   };
 
-  const Roster = ({ title, list, color }) => (
+  /* tiny helper */
+  const Roster = ({ title, list, colour }) => (
     <div className="w-full sm:w-1/2">
-      <h3 className={`font-semibold mb-2 ${color}`}>{title}</h3>
-      <ul className="list-decimal list-inside text-sm leading-6 space-y-0.5">
+      <h3 className={`font-semibold mb-2 ${colour}`}>{title}</h3>
+      <ul className="list-decimal list-inside space-y-0.5 text-sm leading-6">
         {list.map((p, i) => (
           <li key={i}>{p}</li>
         ))}
@@ -74,11 +75,15 @@ export default function TossPage() {
     </div>
   );
 
+  /* ───────── UI ───────── */
   return (
-    <main className="min-h-screen flex items-center justify-center bg-gradient-to-br from-indigo-100 via-sky-200 to-cyan-100 p-6 text-gray-900">
-      <section className="w-full max-w-md bg-white/70 backdrop-blur-lg border border-white/40 shadow-xl rounded-3xl px-8 py-10 space-y-8">
-        <h1 className="text-3xl font-extrabold text-center">🪙Toss🪙</h1>
+    <main className="min-h-screen flex items-center justify-center bg-gradient-to-br from-black via-zinc-900 to-black p-6 text-white">
+      <section className="w-full max-w-md bg-[#111]/80 backdrop-blur-lg ring-1 ring-yellow-300/30 rounded-3xl px-8 py-10 shadow-[0_0_30px_#ff1e46aa] space-y-8">
+        <h1 className="text-4xl font-extrabold text-center bg-gradient-to-r from-yellow-200 via-rose-100 to-orange-300 bg-clip-text text-transparent drop-shadow-[0_0_10px_rgba(255,170,0,.8)]">
+          🪙 Toss 🪙
+        </h1>
 
+        {/* coin / countdown */}
         <div className="flex flex-col items-center gap-6">
           {win ? (
             <>
@@ -91,12 +96,11 @@ export default function TossPage() {
                 alt={side ?? "coin"}
                 className="w-32 h-32"
               />
-              <p className="text-4xl font-bold text-green-700">{win}</p>
+              <p className="text-4xl font-bold text-white">{win}</p>
+
               <button
                 onClick={startMatch}
-                className={`mt-6 px-10 py-4 rounded-xl font-semibold
-                            bg-gradient-to-r from-blue-500 to-indigo-600 text-white
-                            shadow-lg hover:brightness-110 transition`}
+                className="mt-6 px-10 py-4 rounded-xl font-semibold bg-gradient-to-r from-yellow-200 via-rose-100 to-orange-300 text-black shadow-lg hover:brightness-110 transition"
               >
                 Start Match
               </button>
@@ -115,20 +119,24 @@ export default function TossPage() {
           )}
         </div>
 
-        <div className="flex flex-wrap gap-8 justify-center pt-6">
+        {/* rosters */}
+        <div className="flex flex-wrap gap-8 justify-center pt-6 text-2xl">
           <Roster
             title={`🅰️ Team A (${teamA.length})`}
             list={teamA}
-            color="text-indigo-600"
+            colour="text-sky-300"
+            className="text-xl"
           />
           <Roster
             title={`🅱️ Team B (${teamB.length})`}
             list={teamB}
-            color="text-pink-600"
+            colour="text-pink-300"
+            className="text-xl"
           />
         </div>
       </section>
 
+      {/* simple keyframes */}
       <style jsx>{`
         @keyframes spin {
           to {
