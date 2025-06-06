@@ -7,13 +7,14 @@ import Match from "../../../models/Match"; // Go up three levels to src, then to
 // POST /api/matches  → create a new match
 export async function POST(req) {
   try {
-    const { teamA, teamB, overs } = await req.json();
+    const { teamA, teamB, overs, sessionId } = await req.json();
     await connectDB();
 
     const newMatch = new Match({
       teamA,
       teamB,
       overs,
+      sessionId,
       isOngoing: true,
       innings1: {
         team: teamA[0] || "Team A",

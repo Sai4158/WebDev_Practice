@@ -76,7 +76,7 @@ export default function NewSessionPage() {
                 id="session-name"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                placeholder="e.g., Summer League Final"
+                placeholder="Game 1, 2, etc."
                 className="w-full p-3 pl-10 rounded-lg bg-zinc-800/50 ring-1 ring-zinc-700 focus:ring-blue-500 outline-none text-white placeholder:text-zinc-500 transition"
               />
             </div>

@@ -149,7 +149,7 @@ export default function HomePage() {
                   How Our App Works 🏏
                 </h2>
                 <p className="mt-4 max-w-2xl mx-auto text-lg text-zinc-300">
-                  Say goodbye to pen and paper. This is a real-time scoring tool
+                  Say goodbye to memorizing. This is a real-time scoring tool
                   designed for our games, perfect for practice matches, league
                   play, or just having fun with friends.
                 </p>
