@@ -101,7 +101,7 @@ const Scorecard = ({ innings1, innings2, tossWinner }) => (
     </div>
     <p className="text-center text-sm text-zinc-400 pt-3 border-t border-white/10">
       Toss won by{" "}
-      <span className="font-semibold text-zinc-200">{tossWinner}'s Team</span>.
+      <span className="font-semibold text-zinc-200">{tossWinner}</span>.
     </p>
   </div>
 );
