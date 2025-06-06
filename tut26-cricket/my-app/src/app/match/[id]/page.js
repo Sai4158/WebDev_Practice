@@ -137,7 +137,7 @@ const useMatch = (matchId) => {
         result = "Match Tied";
       }
       patchAndUpdate({ isOngoing: false, result });
-      router.push(`/session/${match.sessionId}/view`);
+      router.push(`/result/${matchId}`);
     }
   };
 

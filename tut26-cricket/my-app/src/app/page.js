@@ -237,6 +237,7 @@ export default function HomePage() {
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
               {[
                 { clip: "Cricket1", thumb: "Thumb1" },
+                { clip: "Cricket4", thumb: "Thumb4" },
                 { clip: "Cricket2", thumb: "Thumb2" },
                 { clip: "Cricket3", thumb: "Thumb3" },
               ].map((video, i) => (
