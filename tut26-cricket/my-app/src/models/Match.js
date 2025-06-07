@@ -15,14 +15,14 @@ const BallSchema = new mongoose.Schema(
     isOut: { type: Boolean, default: false },
   },
   { _id: false }
-); // _id: false prevents Mongoose from creating IDs for sub-documents
+);
 
 // Define a schema for a single over
 const OverSchema = new mongoose.Schema(
   {
     overNumber: { type: Number, required: true },
-    balls: [BallSchema], // An array of balls bowled in this over
-    bowler: { type: String, default: "" }, // Optional: track the bowler
+    balls: [BallSchema],
+    bowler: { type: String, default: "" },
   },
   { _id: false }
 );
@@ -32,35 +32,31 @@ const MatchSchema = new mongoose.Schema(
     teamA: { type: [String], required: true },
     teamB: { type: [String], required: true },
     overs: { type: Number, required: true },
-
-    // State tracking
-    tossWinner: { type: String, default: "" },
-    // ADD THIS LINE:
     sessionId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Session",
       required: true,
-    },
+    }, // State tracking
+
+    tossWinner: { type: String, default: "" },
+    tossDecision: { type: String, enum: ["bat", "bowl", ""], default: "" }, // Added "" to enum
     score: { type: Number, default: 0 },
     outs: { type: Number, default: 0 },
     isOngoing: { type: Boolean, default: true },
     innings: { type: String, enum: ["first", "second"], default: "first" },
-    result: { type: String, default: "" },
+    result: { type: String, default: "" }, // Inning-specific data
 
-    // Inning-specific data
     innings1: {
-      team: { type: String },
+      team: { type: String, default: "" }, // ✅ Set default to empty string
       score: { type: Number, default: 0 },
-      history: [OverSchema], // Use the structured OverSchema
+      history: [OverSchema],
     },
     innings2: {
-      team: { type: String },
+      team: { type: String, default: "" }, // ✅ Set default to empty string
       score: { type: Number, default: 0 },
-      history: [OverSchema], // Use the structured OverSchema
+      history: [OverSchema],
     },
     widesInRow: { type: Number, default: 0 },
-
-    // You can keep a flat list of all balls for easy processing if needed
     balls: [BallSchema],
   },
   { timestamps: true }

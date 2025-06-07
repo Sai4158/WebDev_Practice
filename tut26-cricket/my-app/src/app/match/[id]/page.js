@@ -1,5 +1,5 @@
 /* ------------------------------------------------------------------
-   src/app/match/[id]/page.jsx – (Final Version with Simple Wide Buttons)
+   src/app/match/[id]/page.jsx – (Corrected Batting Team Display)
 -------------------------------------------------------------------*/
 "use client";
 
@@ -11,10 +11,10 @@ import {
   FaBookOpen,
   FaShareAlt,
   FaSyncAlt,
-  FaUndo,
   FaInfoCircle,
   FaTimes,
 } from "react-icons/fa";
+import { LuUndo2 } from "react-icons/lu";
 
 // --- Custom Hook for All Match Logic & Data ---
 const useMatch = (matchId) => {
@@ -80,30 +80,27 @@ const useMatch = (matchId) => {
     const payload = structuredClone(match);
     const activeInningsKey =
       payload.innings === "first" ? "innings1" : "innings2";
-
-    // ✅ NEW: Greatly simplified logic. The runs are passed directly from the button.
     const runsToAdd = runs;
-
-    // The complex `widesInRow` logic has been completely removed.
 
     payload[activeInningsKey].score += runsToAdd;
     payload.score = payload[activeInningsKey].score;
-
     if (isOut) {
       payload.outs++;
     }
-
     const newBall = { runs: runsToAdd, isOut, extraType };
     payload.balls.push(newBall);
     addBallToHistory(payload, newBall);
-
     if (
       payload.innings === "second" &&
       payload.score > payload.innings1.score
     ) {
       payload.isOngoing = false;
+      // Calculate result here when match ends by chasing
+      const wicketsLeft = (match.teamB?.length || 11) - 1 - payload.outs;
+      payload.result = `${
+        payload[activeInningsKey].team
+      } won by ${wicketsLeft} ${wicketsLeft === 1 ? "wicket" : "wickets"}.`;
     }
-
     patchAndUpdate(payload);
   };
 
@@ -117,7 +114,6 @@ const useMatch = (matchId) => {
 
   const handleNextInningsOrEnd = () => {
     if (match.innings === "first") {
-      // ✅ REMOVED: `widesInRow` is no longer needed.
       patchAndUpdate({ score: 0, outs: 0, balls: [], innings: "second" });
     } else {
       const innings1Score = match.innings1.score;
@@ -156,20 +152,40 @@ const useMatch = (matchId) => {
 
 // --- UI Sub-components ---
 
+// ✅ FIX: This component now has corrected and simplified logic
 const Header = ({ match }) => {
-  const isFirstInnings = match.innings === "first";
-  const battingTeam = isFirstInnings ? match.innings1 : match.innings2;
-  const target = isFirstInnings ? null : (match.innings1.score ?? 0) + 1;
+  const { innings, tossWinner, tossDecision, teamA, teamB } = match;
+
+  // Determine which team bats first based on toss
+  let firstBattingTeamName;
+  const teamAName = teamA[0];
+  const teamBName = teamB[0];
+
+  if (tossWinner === teamAName) {
+    firstBattingTeamName = tossDecision === "bat" ? teamAName : teamBName;
+  } else {
+    firstBattingTeamName = tossDecision === "bat" ? teamBName : teamAName;
+  }
+
+  // Determine the team currently batting
+  const currentBattingTeam =
+    innings === "first"
+      ? firstBattingTeamName
+      : firstBattingTeamName === teamAName
+      ? teamBName
+      : teamAName;
+  const target = innings === "first" ? null : (match.innings1.score ?? 0) + 1;
+
   return (
     <header className="text-center mb-6">
       <h1 className="text-5xl md:text-6xl font-bold text-white tracking-tight">
-        Empire View
+        Umpire View
       </h1>
       <br />
       <h1 className="text-xl md:text-2xl font-bold text-white tracking-tight">
-        {battingTeam.team}'s Team Is Batting Now!
+        {currentBattingTeam}'s Team Is Batting Now!
       </h1>
-      {target && (
+      {target !== null && (
         <p className="text-zinc-400 text-lg mt-1">
           Target: <span className="font-bold text-amber-300">{target}</span>
         </p>
@@ -280,8 +296,6 @@ const Controls = ({ onScore, disabled }) => {
       >
         OUT
       </button>
-
-      {/* ✅ NEW: Two simpler buttons for handling wides */}
       <button
         onClick={() => onScore(0, false, "wide")}
         className={`${baseBtnClass} bg-green-600 hover:bg-amber-500 col-span-2`}
@@ -318,6 +332,7 @@ const Splash = ({ children }) => (
 
 const HistoryModal = ({ history, onClose }) => (
   <ModalBase title="Over History" onExit={onClose}>
+    {" "}
     <div className="max-h-[60vh] overflow-y-auto space-y-4 pr-2 text-left">
       {history.length > 0 ? (
         [...history].reverse().map((over, i) => (
@@ -367,7 +382,6 @@ const InningsEndModal = ({ match, onNext }) => (
 const RulesModal = ({ onClose }) => (
   <div className="fixed inset-0 z-50 bg-black bg-opacity-70 flex items-center justify-center p-4">
     <div className="relative w-full max-w-3xl max-h-[90vh] bg-zinc-900 rounded-2xl overflow-hidden ring-1 ring-white/10 shadow-lg flex flex-col">
-      {/* Top bar with close button */}
       <div className="flex items-center justify-between px-6 py-4 border-b border-zinc-800">
         <button
           onClick={onClose}
@@ -380,10 +394,7 @@ const RulesModal = ({ onClose }) => (
           Scoring Rules
         </h2>
       </div>
-
-      {/* Scrollable content */}
       <div className="overflow-y-auto p-6 space-y-6 text-left text-zinc-300">
-        {/* Wide Balls */}
         <div>
           <h3 className="font-bold text-white">Wide Balls</h3>
           <p>There are two wide ball options:</p>
@@ -403,8 +414,6 @@ const RulesModal = ({ onClose }) => (
             This gives umpires control over how wides impact the score.
           </p>
         </div>
-
-        {/* Core Gameplay */}
         <div>
           <h3 className="font-bold text-green-400">Core Gameplay Rules</h3>
           <ul className="list-disc list-inside mt-2 pl-2">
@@ -423,8 +432,6 @@ const RulesModal = ({ onClose }) => (
             </li>
           </ul>
         </div>
-
-        {/* Fair Play */}
         <div>
           <h3 className="font-bold text-teal-400">
             Fair Play & Team Selection
@@ -447,8 +454,6 @@ const RulesModal = ({ onClose }) => (
             </li>
           </ul>
         </div>
-
-        {/* Umpiring & Dismissals */}
         <div>
           <h3 className="font-bold text-red-400">Umpiring & Dismissals</h3>
           <ul className="list-disc list-inside mt-2 pl-2">
@@ -467,8 +472,6 @@ const RulesModal = ({ onClose }) => (
           </ul>
         </div>
       </div>
-
-      {/* Bottom close button */}
       <div className="p-4 border-t border-zinc-800 text-center">
         <button
           onClick={onClose}
@@ -538,25 +541,23 @@ export default function MatchPage() {
   const [showHistory, setShowHistory] = useState(false);
   const [showInningsEnd, setShowInningsEnd] = useState(false);
   const [showRules, setShowRules] = useState(false);
+
   const isFirstInnings = match?.innings === "first";
   const activeInningsKey = isFirstInnings ? "innings1" : "innings2";
   const oversHistory = match?.[activeInningsKey]?.history ?? [];
-  const legalBallsInInnings =
-    oversHistory
-      .flatMap((o) => o.balls)
-      .filter((b) => b.extraType !== "wide" && b.extraType !== "noball")
-      .length ?? 0;
-  const oversDone = match ? legalBallsInInnings >= match.overs * 6 : false;
-  const isAllOut = match
-    ? match.outs >= (match[isFirstInnings ? "teamA" : "teamB"]?.length || 10)
-    : false;
 
   useEffect(() => {
     if (!match) return;
+    const legalBallsInInnings = oversHistory
+      .flatMap((o) => o.balls)
+      .filter((b) => b.extraType !== "wide" && b.extraType !== "noball").length;
+    const oversDone = legalBallsInInnings >= match.overs * 6;
+    const isAllOut =
+      match.outs >= (match[isFirstInnings ? "teamA" : "teamB"]?.length || 10);
     const endCondition =
-      oversDone || isAllOut || match.result || !match.isOngoing;
+      oversDone || isAllOut || !!match.result || !match.isOngoing;
     setShowInningsEnd(endCondition);
-  }, [match, oversDone, isAllOut]);
+  }, [match, oversHistory]);
 
   const handleCopyShareLink = () => {
     const link = `${window.location.origin}/session/${match.sessionId}/view`;
@@ -585,7 +586,7 @@ export default function MatchPage() {
           <Scoreboard match={match} history={oversHistory} />
           <BallTracker history={oversHistory} />
           <Controls onScore={handleScoreEvent} disabled={controlsDisabled} />
-          <div className="flex items-center justify-around gap-2 mt-8 border-t border-white/10 pt-4">
+          <div className="flex items-center justify-around gap-2 mt-8 border-t border-white pt-4">
             <ActionButton
               onClick={() => setShowRules(true)}
               icon={<FaInfoCircle size={40} />}
@@ -609,7 +610,7 @@ export default function MatchPage() {
             />
             <ActionButton
               onClick={handleUndo}
-              icon={<FaUndo size={50} />}
+              icon={<LuUndo2 size={50} />}
               label="Undo"
               disabled={isUpdating || historyStack.length === 0}
             />

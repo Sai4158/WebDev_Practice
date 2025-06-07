@@ -26,14 +26,14 @@ export async function PATCH(req, { params }) {
     const updatableFields = [
       "score",
       "outs",
-      "result", // Be cautious with this one - ideally, the server calculates the result.
+      "result",
       "isOngoing",
       "innings",
-      "widesInRow",
       "innings1",
       "innings2",
       "balls",
-      "tossWinner", // ✅ FIX: Added tossWinner to the whitelist.
+      "tossWinner",
+      "tossDecision",
     ];
 
     // Build the $set operator from the received data
@@ -51,8 +51,8 @@ export async function PATCH(req, { params }) {
     }
 
     const updated = await Match.findByIdAndUpdate(params.id, updateQuery, {
-      new: true, // Return the updated document
-      runValidators: true, // ✅ FIX: Ensure schema rules are enforced on update
+      new: true,
+      runValidators: true,
     });
 
     if (!updated) {
@@ -67,7 +67,6 @@ export async function PATCH(req, { params }) {
       headers: { "Content-Type": "application/json" },
     });
   } catch (err) {
-    // Return a more specific error for validation issues
     if (err.name === "ValidationError") {
       return Response.json(
         { message: "Validation Error", error: err.message },

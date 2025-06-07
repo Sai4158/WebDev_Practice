@@ -4,7 +4,7 @@
 import { connectDB } from "../../lib/db"; // Correct module path
 import Match from "../../../models/Match"; // Go up three levels to src, then to models/Match.js
 
-// POST /api/matches  → create a new match
+// POST /api/matches → create a new match
 export async function POST(req) {
   try {
     const { teamA, teamB, overs, sessionId } = await req.json();
@@ -17,12 +17,10 @@ export async function POST(req) {
       sessionId,
       isOngoing: true,
       innings1: {
-        team: teamA[0] || "Team A",
         score: 0,
         history: [],
       },
       innings2: {
-        team: teamB[0] || "Team B",
         score: 0,
         history: [],
       },
@@ -35,6 +33,7 @@ export async function POST(req) {
       headers: { "Content-Type": "application/json" },
     });
   } catch (err) {
+    console.error("Error creating match:", err);
     return Response.json(
       { message: "Error saving match", error: err.message },
       { status: 500 }
@@ -42,7 +41,7 @@ export async function POST(req) {
   }
 }
 
-// GET /api/matches  → list recent matches (optional helper)
+// GET /api/matches → list recent matches (optional helper)
 export async function GET() {
   try {
     await connectDB();
