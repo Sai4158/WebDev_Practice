@@ -247,7 +247,7 @@ export default function Home() {
             ← Back
           </button>
           <h2 className="text-3xl sm:text-4xl font-bold mb-10 text-center text-white drop-shadow-md">
-            All Medicines💊
+            All Medicines
           </h2>
           <div className="flex flex-col gap-8 w-full max-w-4xl">
             {medicineSlots.map((slot, i) => (
