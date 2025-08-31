@@ -16,7 +16,7 @@ export const metadata = {
   description:
     "Get timely reminders for all scheduled medicines throughout the day.",
   openGraph: {
-    title: "Sarada Devi's Tablet Reminder",
+    title: "Sarada Devi's Simpe Tablet Reminder",
     description:
       "Timely reminders to keep medicine schedules safe and organized.",
     url: "https://www.designnominees.com/application/upload/Apps/2021/03/medicine-reminder-app-39.png",
