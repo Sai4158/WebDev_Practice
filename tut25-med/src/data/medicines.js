@@ -2,7 +2,7 @@
 const medicineSlots = [
   {
     label: "Early Morning",
-    timeRange: "6:00 AM – 9:14 AM",
+    timeRange: "6:00 AM – 9:25 AM",
     tablets: [
       { name: "Thyronorm 75 mg", desc: "for thyroid" },
       { name: "Lasix 40 mg", desc: "removes extra fluid, lowers BP" },
