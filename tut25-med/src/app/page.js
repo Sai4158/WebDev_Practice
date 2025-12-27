@@ -182,7 +182,7 @@ export default function Home() {
               <div className="text-center mb-4 text-lg sm:text-xl font-semibold text-purple-200">
                 {currentSlot.timeRange}
               </div>
-              <div className="flex flex-wrap gap-4 sm:gap-5 justify-center mb-6">
+              <div className="flex flex-wrap gap-4 sm:gap-4 justify-center mt-5 mb-6">
                 {currentSlot.tablets.map((tab) => (
                   <div
                     key={tab.name}
