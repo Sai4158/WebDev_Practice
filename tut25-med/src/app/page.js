@@ -146,7 +146,7 @@ export default function Home() {
           <header className="flex flex-col items-center gap-4 mb-10 text-center">
             <h1 className="text-4xl sm:text-5xl font-bold tracking-tight text-white drop-shadow-lg">
               Sarada Devi's <br />
-              Tablet Reminder <span>⏰📅</span>
+              Tablet Reminder <span>📅</span>
             </h1>
             <div className="flex flex-col items-center mt-4">
               <div className="flex items-center gap-2 bg-white/10 px-5 py-2 sm:px-6 sm:py-3 rounded-xl shadow-md text-xl sm:text-2xl font-bold backdrop-blur-md text-purple-100">
@@ -165,7 +165,7 @@ export default function Home() {
                 </span>
               </div>
               <span className="text-sm sm:text-base text-gray-300 mt-2">
-                Indian Standard Time
+                IST TIME ZONE
               </span>
             </div>
           </header>
