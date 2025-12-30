@@ -202,7 +202,7 @@ export default function Home() {
                   className={`px-5 py-2 sm:px-7 sm:py-3 rounded-full font-bold text-white shadow-xl flex items-center gap-2 transition-all duration-300 text-sm sm:text-lg ${
                     speakingIndex === -1
                       ? "bg-red-600 hover:shadow-red-400/50"
-                      : "bg-purple-600 hover:shadow-purple-400/50"
+                      : "bg-purple-600 hover:shadow-blue-400/50"
                   }`}
                   onClick={() => toggleSpeak(currentSlot, -1, true)}
                 >
@@ -213,18 +213,18 @@ export default function Home() {
           ) : (
             <section className="w-full max-w-3xl  p-6 sm:p-10 rounded-3xl shadow-2xl backdrop-blur-lg bg-white/10 text-center text-white animate-fade-in">
               <div className="text-2xl  mb-2">
-                ✅✅✅All Medicines Taken✅✅✅ <br />
+                ✅✅All Medicines Taken✅✅ <br />
                 <br />
                 <br />
                 <a className=" text-blue-100 font-sans underline">
                   {" "}
                   {nextSlot ? (
                     <>
-                      Please check again at "{nextSlot.label}"
+                      Please check again later at "{nextSlot.label}"
                       <br /> ({nextSlot.timeRange}).
                     </>
                   ) : (
-                    "No more medicines for today. 🎉"
+                    "No more medicines for today. good job!"
                   )}
                 </a>
               </div>
