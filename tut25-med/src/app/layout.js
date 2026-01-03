@@ -14,7 +14,7 @@ const geistMono = Geist_Mono({
 export const metadata = {
   title: "Sarada Devi's Tablet Reminder",
   description:
-    "Get timely reminders for all scheduled medicines throughout the day.",
+    "Receive timely reminders for all your scheduled medications throughout the day.",
   openGraph: {
     title: "Sarada Devi's Simpe Tablet Reminder",
     description:
