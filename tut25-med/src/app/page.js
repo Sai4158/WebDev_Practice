@@ -211,20 +211,20 @@ export default function Home() {
               </div>
             </section>
           ) : (
-            <section className="w-full max-w-3xl  p-6 sm:p-10 rounded-3xl shadow-2xl backdrop-blur-lg bg-white/10 text-center text-white animate-fade-in">
-              <div className="text-2xl  mb-2">
-                ✅✅All Medicines Taken✅✅ <br />
+            <section className=“w-full max-w-3xl p-6 sm:p-10 rounded-3xl shadow-2xl backdrop-blur-lg bg-white/10 text-center text-white animate-fade-in”>
+              <div className=“text-2xl mb-2”>
+                ✅ All Medicines done ✅ <br />
                 <br />
                 <br />
-                <a className=" text-blue-100 font-sans underline">
-                  {" "}
+                <a className=“text-blue-100 font-sans underline”>
+                  {“ “}
                   {nextSlot ? (
                     <>
-                      Please check again later at "{nextSlot.label}"
+                      Please check again later at “{nextSlot.label}”
                       <br /> ({nextSlot.timeRange}).
                     </>
                   ) : (
-                    "No more medicines for today. good job!"
+                    “No more medicines for today. Good job!”
                   )}
                 </a>
               </div>
@@ -259,7 +259,7 @@ export default function Home() {
                   <span className="text-xl sm:text-2xl font-bold text-white">
                     {slot.label}
                   </span>
-                  <span className="text-sm sm:text-base px-4 py-1 rounded bg-purple-700 text-purple-100 font-semibold shadow">
+                  <span className="text-sm sm:text-base px-6 py-1 rounded bg-purple-700 text-purple-100 font-semibold shadow">
                     {slot.timeRange}
                   </span>
                 </div>
@@ -294,7 +294,7 @@ export default function Home() {
             ))}
           </div>
           <button
-            className="mt-12 px-6 py-3 sm:px-8 sm:py-4 rounded-xl bg-purple-800 text-white font-bold shadow hover:shadow-purple-500/50 transition duration-300 text-lg sm:text-xl"
+            className="mt-12 px-6 py-3 sm:px-6 sm:py-4 rounded-xl bg-purple-800 text-white font-bold shadow hover:shadow-purple-500/50 transition duration-300 text-lg sm:text-xl"
             onClick={() => setViewAll(false)}
           >
             ← Back
