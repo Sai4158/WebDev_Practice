@@ -175,8 +175,8 @@ export default function Home() {
           ) : error ? (
             <div className="text-red-400 font-semibold">{error}</div>
           ) : currentSlot ? (
-            <section className="w-full max-w-3xl p-6 sm:p-10 rounded-3xl shadow-2xl backdrop-blur-lg bg-white/10 animate-fade-in">
-              <div className="text-center mb-4 text-2xl sm:text-3xl font-bold text-white">
+            <section className="w-full max-w-5xl p-6 sm:p-10 rounded-3xl shadow-2xl backdrop-blur-lg bg-white/10 animate-fade-in">
+              <div className="text-center mb-4 text-4xl sm:text-3xl font-bold text-white">
                 Current: {currentSlot.label}
               </div>
               <div className="text-center mb-4 text-lg sm:text-xl font-semibold text-purple-200">
